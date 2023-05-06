@@ -33,6 +33,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         head();
     ?>
 
+    <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
+
     <!-- jQuery -->
     <script src="<?= asset('vendors/adminlte/plugins/jquery/jquery.min.js') ?>"></script>
 
@@ -316,7 +318,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 ~
             </div>
             <!-- Default to the left -->
-            Copyright &copy; 2022-2023, <strong>Cabildo de La Palma</strong>. Todos los derechos reservados.
+            Copyright &copy; 2023, <strong>Fabio Istrefi</strong>
         </footer>
     </div>
     <!-- ./wrapper -->

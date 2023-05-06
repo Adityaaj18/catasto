@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
     layout: "fitDataFill",
     // responsiveLayout: "collapse",
     resizableColumnFit: true,
-    placeholder: "Sin datos",
+    placeholder: "No data",
 
     /** Filtro de selección: habilita / deshabilita la selección en base al propietario del registro */
     selectableCheck: function (row) {

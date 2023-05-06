@@ -14,9 +14,9 @@ class AdminController extends MyController
 
 	public $tpl           = 'templates/adminlte_tpl.php'; //
 	public $tpl_params    = [
-		'brand_name' => 'Planex',
-		'logo'       => 'img/planex_logo.png',
-		'logo_alt'   => 'Planex'
+		'brand_name' => 'Catasto',
+		'logo'       => 'img/gmap.png',
+		'logo_alt'   => 'Catasto'
 	];	
 	
 	// ..
