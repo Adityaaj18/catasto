@@ -1,0 +1,34 @@
+ROLES REMOTOS (SERVIDOR DE DSI)
+==============================
+
+ROL ???  <generado por Jhonatan>
+
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImlhdCI6MTYzMjU4NTg0OSwiZXhwIjoxNjQxNTg1ODQ5LCJpcCI6Ijo6MSIsInVzZXJfYWdlbnQiOiJNb3ppbGxhXC81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXRcLzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZVwvOTMuMC40NTc3LjgyIFNhZmFyaVwvNTM3LjM2IiwidWlkIjo1MCwicm9sZXMiOlsiZHNpIl0sInBlcm1pc3Npb25zIjp7InRiIjpbXSwic3AiOltdfSwiYWN0aXZlIjoxLCJkYl9hY2Nlc3MiOlsiZGJfbGVnaW9uIl19.1cU36WptvKoqwwYK34lvjhmwqN5uIzrrZ95Sp1egcAE
+
+
+ROL SUPERVISOR
+
+{
+	"use_varUsuario": "s100",
+	"use_decPassword": "gogogo",
+	"use_varEmail": "s100@g.com",
+	"roles": "supervisor"
+}
+
+
+{
+  "data": {
+    "uid": "225",
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImlhdCI6MTYzNzQxNTQ3OSwiZXhwIjoxNjQ2NDE1NDc5LCJpcCI6IjEyNy4wLjAuMSIsInVzZXJfYWdlbnQiOiJpbnNvbW5pYVwvMjAyMS41LjMiLCJ1aWQiOiIyMjUiLCJyb2xlcyI6WyJzdXBlcnZpc29yIl0sInBlcm1pc3Npb25zIjpbXSwiYWN0aXZlIjp0cnVlLCJkYl9hY2Nlc3MiOltdfQ.CplQxSIBjRuElj5zF9c4xm25YGydwcGOkOTbzsSuEMM",
+    "token_type": "bearer",
+    "expires_in": 9000000,
+    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImlhdCI6MTYzNzQxNTQ3OSwiZXhwIjoxOTUyNzc1NDc5LCJpcCI6IjEyNy4wLjAuMSIsInVzZXJfYWdlbnQiOiJpbnNvbW5pYVwvMjAyMS41LjMiLCJ1aWQiOiIyMjUifQ.TxmClL16KNwR2pbygAM79OQqGb8Kz_8XlTe8pG2mOig",
+    "roles": [
+      "supervisor"
+    ],
+    "db_access": []
+  },
+  "status_code": 200,
+  "error": []
+}

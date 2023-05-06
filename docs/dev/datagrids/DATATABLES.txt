@@ -1,0 +1,55 @@
+DATAGRIDS
+---------
+
+El DataTables original hoy es de pago y la version free no permite tiene los botones de agregar, borrar, exportar,....
+
+Alternativas:
+
+* Tabulator +++++
+
+https://tabulator.info/
+
+
+* GridJs.Io +++
+
+https://gridjs.io/docs/examples/pagination
+
+Tampoco permite borrar?
+
+Permite ¨row buttons¨ donde podrian colocarse edit / delete
+
+https://gridjs.io/docs/examples/row-buttons/
+
+
+* FidusWritter ++
+
+https://github.com/fiduswriter/Simple-DataTables
+
+Tampoco permite borrar?
+
+Ej:
+
+https://fiduswriter.github.io/Simple-DataTables/
+
+Tiene ¨column manipulation¨
+
+https://fiduswriter.github.io/Simple-DataTables/5-column-manipulation/
+
+
+* ZingGrid
+
+* jqGrid
+
+* Handsontable
+
+* Backgrid.js
+
+* Ag-grid
+
+* Vuetable 2
+
+* Vue-Easytable
+
+* Vue Good Table
+
+* Vueye-Table

@@ -1,0 +1,63 @@
+INTEGRACIONES
+=============
+
+Hacer integraciones con:
+
+# Alamcenamiento de archivos en la nube
+
+- Amazon S3 - Cloud Object Storage (buckets)
+
+
+# Medios de pago
+
+- Stripe y/o
+- PayPal y/o
+- MercadoPago
+
+
+# Internacionalización
+
+- Google Translate
+
+
+# Seguridad
+
+- Google Recatcha
+
+
+# Emails / Marketing
+
+- Amazon Simple Email Service (SES)
+- Klaviyo
+- Mailerlite
+
+
+# Marketing
+
+- Hotjar
+
+
+# Advertising
+
+- Google Adwords
+
+
+# Analitics
+
+- Google analitics
+
+
+# SEO
+
+- Google Webmaster tools
+- Bing Webmaster tools
+
+
+# Otros
+
+- Google Tag Manager
+
+- Facebook Pixel
+
+- Facebook (API) 
+

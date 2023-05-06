@@ -1,0 +1,22 @@
+{
+    "name": "boctulus/catasto",
+    "description": "Catasto",
+    "type": "project",
+    "license": "",
+    "authors": [
+        {
+            "name": "Pablo Gabriel Bozzolo <boctulus>",
+            "email": "boctulus@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "simplerest\\": "app/",
+            "boctulus\\grained_acl\\": "packages/boctulus/grained_acl/src",
+            "boctulus\\basic_acl\\": "packages/boctulus/basic_acl/src"
+        }
+    }
+}

@@ -1,0 +1,44 @@
+;
+; Files to be ignored by Make
+;
+
+; Models
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+FilesModel.php
+ApiKeysModel.php
+TblUsuarioEmpresaModel.php
+#TblUsuarioModel.php
+TblUsuarioEmpresaModel.php
+EmailNotificationsModel.php
+UserRolesModel.php
+
+
+; Controllers
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+UsersController.php
+MyController.php
+MyApiController.php
+MakeController.php
+LoginController.php
+GoogleController.php
+FacebookController.php
+WebhooksModel.php
+
+
+; Apis 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+controllers/api/Me.php
+controllers/api/Roles.php
+controllers/api/UserRoles.php
+controllers/api/UserSpPermissions.php
+controllers/api/UserTbPermissions.php
+controllers/api/Migrations.php
+controllers/api/Files.php
+controllers/api/Hello.php
+
+; Others
+interfaces/IGol.php
+

@@ -1,0 +1,41 @@
+
+Urgente:
+
+Plantilla para envio de correos
+Pruebas en Nginx                        ~~
+
+- pre-Alpha
+
+    Seeders + fakers
+    Response re-escrito                 ~~
+    ApiController pullido con una sola instancia y 5 métodos separados
+    Folders normalizados y funcionando correctamente
+
+- Alpha 1 .. 4
+
+    Middlewares                         -- OK parcial
+    X-Rate-Limit-Limit, X-Rate-Limit-Remaining y X-Rate-Limit-Reset    
+
+- Beta 1 .. 2
+
+    Documentación en línea
+    Traducciones del fw + documentación
+    Soporte para REDIS, Memcached, etc
+    Probado en Nginx
+    Pruebas unitarias para todo
+    Corrección de errores
+
+- 1.0
+
+    SubRecursos                         ~~
+    JsonAPI
+    Soporte para SQLite, Postgres       -- OK
+
+- 1.1
+
+    Soporte para MongoDB
+
+- 1.2
+
+    ORM mayormente compatible con Eloquent
+
