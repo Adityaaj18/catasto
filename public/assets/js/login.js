@@ -163,7 +163,12 @@ function login() {
                 localStorage.setItem('refresh_token', data.refresh_token);
                 localStorage.setItem('expires_in', data.expires_in);
                 localStorage.setItem('exp', parseInt((new Date).getTime() / 1000) + data.expires_in);
+                
+                localStorage.setItem('uid', data.uid);
                 localStorage.setItem('username', data.username);
+                localStorage.setItem('roles', data.roles);
+                localStorage.setItem('db_access', data.access);
+
                 console.log('Tokens obtenidos');
 
                 window.location.href = admin_page;
@@ -196,6 +201,11 @@ function renew() {
                 localStorage.setItem('access_token', data.access_token);
                 localStorage.setItem('expires_in', data.expires_in);
                 localStorage.setItem('exp', parseInt((new Date).getTime() / 1000) + data.expires_in);
+
+                localStorage.setItem('uid', data.uid);
+                localStorage.setItem('username', data.username);
+                localStorage.setItem('roles', data.roles);
+                localStorage.setItem('db_access', data.access);
 
                 return true;
             } else {

@@ -315,5 +315,16 @@ return [
 	*/
 
 	'use_composer' => true,
-		
+
+	/*
+		Podria provenir de una tabla -campo JSON- y ni siquiera estar referenciado aca.
+	*/
+	'admin_menu_linked_pages' => [
+		'Ricerca' => [
+			'Italy' => '/admin/tabulator/ricerca',
+			// ...
+		],
+
+		// ..
+	]
 ];

@@ -7,18 +7,6 @@ use simplerest\core\libs\Files;
 
 $route = Route::getInstance();
 
-Route::post('api/v1/save_demo', function(){
-	$req = request()->as_array()->getBody();
-	
-	Files::dump($req);
-});
-
-Route::get('hello', function(){
-	return "Hellooooo";
-});
-
-Route::get('api/v1/cool',  'DumbAuthController@super_cool_action');
-
 /*
 	Actualmente el orden es importante...... 
 	... que debe corregirse.
@@ -32,7 +20,7 @@ Route::get('admin/migrate', function(){
 	exec("php com migrations migrate", $output_lines, $res_code);
 	
 	foreach($output_lines as $output_line){
-		d($output_line);
+		dd($output_line);
 	}
 
 	dd($res_code, 'RES_CODE');
@@ -52,8 +40,8 @@ Route::get('admin/test_smtp', function(){
 		'Hola!<p/>Esto es una más <b>prueba</b> con el server de Planex<p/>Chau'
 	);
 
-	d(Mail::errors(), 'Error');
-	d(Mail::status(), 'Status');
+	dd(Mail::errors(), 'Error');
+	dd(Mail::status(), 'Status');
 });
 
 

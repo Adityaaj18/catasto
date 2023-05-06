@@ -34,9 +34,9 @@ echo tag('shadow')
 
                         <div class="bd-blockcontent bd-tagstyles">
                             <div class="custom">
-                                <p><img class="bd-imagelink-54 bd-own-margins bd-imagestyles   " style="display: block; margin-left: auto; margin-right: auto;" src="<?= asset('img/icons/teams_icon.jpg') ?>" width="80"></p>
+                                <p><img class="bd-imagelink-54 bd-own-margins bd-imagestyles" style="display: block; margin-left: auto; margin-right: auto;" src="<?= asset('img/icons/teams_icon.jpg') ?>" width="80"></p>
                                 <p class=" bd-textblock-105 bd-content-element" style="text-align: center;">Get personal data</p>
-                                <p style="text-align: center;"><a class="btn btn-primary" href="/catalogo"> OPEN</a></p>
+                                <p style="text-align: center;"><a class="btn btn-primary" href="/admin/tabulator/ricerca"> OPEN</a></p>
                             </div>
                         </div>
 
