@@ -23,9 +23,9 @@ foreach ($defs as $field => $info)
 $defs = array_merge($defs, $textAreas);
 
 
-echo var_encode('defs'    , $defs);
-echo var_encode('entity'  , $entity);
-echo var_encode('tenantId', $tenantId ?? 'main');
+var_encode('defs'    , $defs);
+var_encode('entity'  , $entity);
+var_encode('tenantId', $tenantId ?? 'main');
 
 
 /** Hojas de estilo */

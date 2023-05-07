@@ -5,3 +5,15 @@
 .input-group-append {
 	cursor: pointer;
 }
+
+@media screen and (min-width: 676px) {
+	.modal-dialog {
+	  max-width: 600px; /* New width for default modal */
+	}
+}
+
+@media screen and (min-width: 800px) {
+	.modal-dialog {
+	  max-width: 800px; /* New width for default modal */
+	}
+}

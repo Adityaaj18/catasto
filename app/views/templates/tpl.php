@@ -31,7 +31,7 @@
     <script src="<?= asset('js/login.js') ?>"></script>
 
     <!-- ICONOS FONTAWESOME -->
-    <script src="https://kit.fontawesome.com/3f60db90e4.js" crossorigin="anonymous"></script>
+    <script src="<?= asset('vendors/fontawesome/fontawesome_kit.js') ?>" crossorigin="anonymous"></script>
     
     <!-- TEMPLATE ADMIN LTE -->
 
@@ -42,11 +42,10 @@
     <link rel="stylesheet" href="<?= asset('vendors/adminlte/plugins/fontawesome-free/css/all.min.css') ?>">
     
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="<?= asset('vendors/ionicframework/ionicons.min.css') ?>">
 
-    <!-- bootstrap 5.2.2 solo css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <!-- bootstrap 5.1.3 solo css -->
+    <link rel="stylesheet" href="<?= asset('vendors/bootstrap/bootstrap.min.css') ?>">
     
     <!-- iCheck -->
     <link rel="stylesheet" href="<?= asset('vendors/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
@@ -67,8 +66,8 @@
     <link rel="stylesheet" href="<?= asset('css/lib/datatables-net/datatables.min.css') ?>">
     <link rel="stylesheet" href="<?= asset('css/lib/datatables-net/datatables-net.min.css') ?>">
      
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <!-- Bootstrap 5.1.3 -->
+    <script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
     
     <!-- FILEPOND -->
     <!--link rel="stylesheet" href="... 'js/plugins/filepond/dist/filepond.css') ?>"-->

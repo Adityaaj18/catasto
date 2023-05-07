@@ -26,14 +26,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!--
         https://jsfiddle.net/u910ed2L/6/v
     -->
-    <link href="https://unpkg.com/tabulator-tables@5.4/dist/css/tabulator_midnight.min.css" rel="stylesheet">
+    <link href="<?= asset('vendors/tabulator/dist/css/tabulator_midnight.min.css') ?>" rel="stylesheet">
 
     <?=
         umodel();
         head();
     ?>
 
-    <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
+     <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
 
     <!-- jQuery -->
     <script src="<?= asset('vendors/adminlte/plugins/jquery/jquery.min.js') ?>"></script>
@@ -81,10 +81,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
+                    <a href="/" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="https://wa.me/447541919915" class="nav-link" target="_blank">Contact</a>
                 </li>
             </ul>
 
@@ -318,15 +318,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 ~
             </div>
             <!-- Default to the left -->
-            Copyright &copy; 2023, <strong>Fabio Istrefi</strong>
+            Copyright &copy; 2023, <strong>Fabio Istrefi</strong> ~ 
+            Developed by P. Bozzolo < <a href="mailto:boctulus@gmail.com">boctulus@gmail.com</a> >
         </footer>
     </div>
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
 
-    <!-- Bootstrap 5.2.2 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap 5.1.3 -->
+    <script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
+    
     <!-- AdminLTE App -->
     <script src="<?= asset('vendors/adminlte/dist/js/adminlte.min.js') ?>"></script>
     <script src="<?= asset('vendors/adminlte/dist/js/darktheme.js') ?>"></script>

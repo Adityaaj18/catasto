@@ -19,7 +19,7 @@ if (!$acl_cache || is_file($acl_file) !== true) {
     $acl = new Acl();
 
     $acl
-    ->addRole('guest', -1)
+    ->addRole('guest', -1)   
 
     // ...
     //->setAsGuest('guest')
@@ -27,6 +27,8 @@ if (!$acl_cache || is_file($acl_file) !== true) {
     ->addRole('registered', 1)
     ->setAsRegistered('registered')
     ->addInherit('guest') 
+    ->addResourcePermissions('ricerca', ['read', 'write'])
+    //->addSpecialPermissions(['read_all', 'write_all'])
     
 
     ->addRole('admin', 50) 

@@ -2,8 +2,9 @@
 
 namespace simplerest\controllers\datagrids;
 
-use simplerest\controllers\MyController;
+use simplerest\core\libs\DB;
 use simplerest\core\Request;
+use simplerest\controllers\MyController;
 
 class TabulatorController extends MyController
 {
@@ -19,16 +20,32 @@ class TabulatorController extends MyController
 
     function index()
     {
-        /*
-            /?v={version}
-        */
         $v = Request::getInstance()
-        ->getQuery('v') ?? '1';
+        ->getQuery('v') ?? null;
 
-        $v = str_pad($v, 2, '0', STR_PAD_LEFT);
+        if ($v === null){
+            $entity = Request::getInstance()
+            ->getQuery('entity') ?? null;
 
-        view("datagrids/tabulator/test{$v}");
-    }                
+            if ($entity == null){
+                throw new \Exception("Debe pasarse el parametro 'entity' por url");
+            }
+
+            view("datagrids/tabulator/tabulator", [
+                'entity'   => $entity,
+                'tenantid' => DB::getCurrentConnectionId(true)
+            ]);
+
+        } else {
+
+            $v = str_pad($v, 2, '0', STR_PAD_LEFT);
+
+            view("datagrids/tabulator/test{$v}");
+        }
+      
+    }   
+    
+
 
 }
 
