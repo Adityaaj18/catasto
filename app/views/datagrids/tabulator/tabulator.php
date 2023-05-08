@@ -22,11 +22,9 @@ foreach ($defs as $field => $info)
 
 $defs = array_merge($defs, $textAreas);
 
-
-var_encode('defs'    , $defs);
-var_encode('entity'  , $entity);
-var_encode('tenantId', $tenantId ?? 'main');
-
+var_encode('defs', $defs);
+var_encode('entity', $entity);
+var_encode('tenantid', $tenantid ?? 'main');
 
 /** Hojas de estilo */
 css_file('css/bt-custom.css');
@@ -47,7 +45,7 @@ echo tag('div')->content([
     ->target("row-form-modal")
     ->content('<span class="label-icon">
         <i class="fa fa-plus"></i>
-        </span>New')
+        </span>Nuevo')
     ->class('btn btn-label text-white mb-3')
     ->id('btn-create')
     ->info()
@@ -56,7 +54,7 @@ echo tag('div')->content([
     tag('button')
     ->content('<span class="label-icon">
         <i class="fa fa-trash"></i>
-        </span>Delete')
+        </span>Eliminar')
     ->class('btn btn-label mb-3')
     ->id('btn-multiple-delete')
     ->danger()
@@ -173,7 +171,7 @@ $buttons = tag('div')
         
         tag('submit')
         ->id("save_row")
-        ->value('Save')
+        ->value('Guardar')
         //->borderRad(0)
     ])   
 )->class('col-md-12 position-relative');
@@ -199,7 +197,7 @@ $form = tag('form')
 
 echo tag('modal')
 ->header(
-    tag('modalTitle')->text('Create / Edit') . 
+    tag('modalTitle')->text('Nuevo / Editar') . 
     tag('closeButton')->dataBsDismiss('modal')
 )
 ->body(
@@ -212,4 +210,4 @@ echo tag('modal')
 ])
 //->show() ///
 ->id('row-form-modal');
-?>
+

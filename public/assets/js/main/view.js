@@ -1,4 +1,5 @@
 /** Constantes Globales */
+
 const uid   = localStorage.getItem("uid");
 const token = localStorage.getItem("access_token");
 const roles = localStorage.getItem("roles");
@@ -25,13 +26,13 @@ const columns = [];
 // * Los parámetros están codificados en base64
 document.addEventListener("DOMContentLoaded", () => {
   viewData.defs     = var_decode('defs');
-  viewData.tenantId = var_decode('tenantId');
+  viewData.tenantid = var_decode('tenantid');
   viewData.entity   = var_decode('entity');
   viewData.userId   = uid;
-  viewData.roles = roles
-  
-  defaultHeaders["X-TENANT-ID"] = viewData.tenantId
+  viewData.roles    = roles
+  viewData.api_url  = `${window.location.origin}/api/v1/${viewData.entity}`;
 
+  defaultHeaders["X-TENANT-ID"] = viewData.tenantid
 })
 
 /** Event Listeners y definición del DataGrid */
@@ -58,32 +59,79 @@ document.addEventListener("DOMContentLoaded", () => {
       $("#col-id").val(""); // Limpia el campo oculto del Id
     });
 
+
+  async function create_collection(entity, selectedRows) {
+    return axiosInstance
+      .post("collections", {
+        entity: entity,
+        refs: selectedRows,
+      })
+  }
+
+  async function mass_delete(colection_id) {
+    const url = `${window.location.origin}/api/v1/collections/${colection_id}?entity=${viewData.entity}`;
+    const headers = new Headers();
+
+    headers.append("X-TENANT-ID", viewData.tenantid);
+    headers.append("Authorization", `Bearer ${token}`);
+    headers.append("Accept", "application/json");
+
+    var requestOptions = {
+      method: "DELETE",
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: headers,
+    };
+
+    return await fetch(url, requestOptions)
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        console.log("error", error);
+        Promise.reject(error);
+      });
+  }
+
   /** Botón de eliminación masiva */
   document.getElementById("btn-multiple-delete").onclick = function () {
+    // checked
     const selectedRows = table.getSelectedData().map((item) => item.id);
 
-    if (selectedRows.length > 0) {
-      if (
-        !confirm(
-          `Está por borrar ${selectedRows.length} registros. Está seguro?`
-        )
-      ) {
-        return;
-      }
-      console.log("Procedo a borrar .... !", selectedRows);
-      axiosInstance
-        .post("collections", {
-          entity: viewData.entity,
-          refs: selectedRows,
-        })
-        .then(({ data }) => {
-          return axiosInstance.delete(
-            `collections/${data.data.id}?entity=${viewData.entity}`
-          );
-        })
-        .then(({ data }) => console.log(data));
+    // checked_count
+    const checked_count = selectedRows.length
+
+    if (checked_count < 0) {
+      return;
     }
+
+    if (!confirm(`Está por borrar ${checked_count} registros. Está seguro?`)) {
+      return;
+    }
+
+    console.log("Procedo a borrar .... !", selectedRows);
+
+    const col_res = create_collection(viewData.entity, selectedRows);
+
+    col_res.then((res) => {
+      // console.log(res) //
+
+      let col_id = res.data.data.id;   /// BUG hace que ApiController o Response entrguen data.data
+
+      // console.log('col_id', col_id) //
+
+      let resp = mass_delete(col_id);
+
+      resp.then(res => {
+
+        table.setData(viewData.api_url)
+          .catch(function (error) {
+            //handle error loading data
+            console.log('error loading data');
+          });
+      })
+    });
   };
+
 
   /** Definición del DataGrid */
 
@@ -154,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     obj.field = field;
     obj.title = def.name === undefined ? ucfirst(field) : def.name;
     obj.formatter = getFormatter(def.type),
-    obj.formatterParams = getFormatterParams(def.type, field)
+      obj.formatterParams = getFormatterParams(def.type, field)
     obj.editor = viewData.defs[field].fillable != 0;
     obj.hozAlign = getAlignment(def.type)
     obj.vertAlign = "middle"; // TODO: Ajustar según el tipo de campo
@@ -168,21 +216,23 @@ document.addEventListener("DOMContentLoaded", () => {
       const { id } = cell.getRow().getData();
       const belongs_to = cell.getRow().getData().belongs_to;
       const deleteAllowed = allowDelete(belongs_to, viewData.userId, viewData.roles)
-      const del_btn = deleteAllowed ? `<button type="button" onclick="deleteBtn(${id})" class="btn btn-danger tabulator-btn" ><i class="fa fa-trash text-white"></i></button>` : ''
+
+      const del_btn = `<button type="button" onclick="deleteBtn(${id})" class="btn btn-danger tabulator-btn" ><i class="fa fa-trash text-white"></i></button>`
       const edt_btn = `<button type="button" onclick='editBtn(${id})' class="btn btn-success tabulator-btn" ><i class="fa fa-pen text-black"></i></button>`;
+
       return `<div class="d-flex gap-2 justify-content-center">${edt_btn}${del_btn}</div>`;
     },
     maxWidth: 70,
     width: 70,
     hozAlign: "right",
-    frozen:true
+    frozen: true
   });
 
   table = new Tabulator("#example-table", {
     /** AJAX */
     ajaxURL: `${window.location.origin}/api/v1/${viewData.entity}`,
     ajaxParams: {
-      tenantid: viewData.tenantId,
+      tenantid: viewData.tenantid,
       token,
     },
     ajaxResponse: function (url, params, response) {
@@ -221,7 +271,9 @@ document.addEventListener("DOMContentLoaded", () => {
     /** Filtro de selección: habilita / deshabilita la selección en base al propietario del registro */
     selectableCheck: function (row) {
       const belongs_to = row.getData().belongs_to;
-      return allowDelete(belongs_to, viewData.userId, viewData.roles)
+      //return allowDelete(belongs_to, viewData.userId, viewData.roles)
+
+      return true
     },
   })
 
@@ -269,7 +321,7 @@ const getFormatter = (fieldType) => {
       return 'link'
     case 'bool':
       return 'tickCross'
-  
+
     default:
       return 'plaintext'
   }
@@ -284,7 +336,7 @@ const getAlignment = (fieldType) => {
       return 'left'
     case 'bool':
       return 'center'
-  
+
     default:
       return 'plaintext'
   }
@@ -298,10 +350,10 @@ const getFormatterParams = (fieldType, fieldName) => {
     case 'email':
       return {
         labelField: fieldName,
-        urlPrefix:"mailto://",
-        target:"_blank",
+        urlPrefix: "mailto://",
+        target: "_blank",
       }
-  
+
     default:
       return {}
   }
@@ -363,11 +415,11 @@ async function save_row(jsonData, id = null) {
       hideModal("row-form-modal");
     })
     .catch((error) => {
-      
+
       const errors = error?.response?.data?.error?.detail; // Errores de validación
-      
-      if (errors) {  
-        
+
+      if (errors) {
+
         let validations = {};
         for (let field in jsonData) {
           validations[field] = [{ error: false }]; // Inicializa con error false todos los campos
@@ -376,7 +428,7 @@ async function save_row(jsonData, id = null) {
         setFormValidations(validations);
 
       } else {
-        
+
         // TODO Incluir un sweet alert de error en el servidor
         console.log(error.toJSON())
 
@@ -384,25 +436,3 @@ async function save_row(jsonData, id = null) {
     });
 }
 
-async function mass_delete(col_id) {
-  const url = `${window.location.origin}/api/v1/collections/${col_id}?entity=${viewData.entity}`;
-  var headers = new Headers();
-  headers.append("X-TENANT-ID", viewData.tenantId);
-  headers.append("Authorization", `Bearer ${token}`);
-  headers.append("Accept", "application/json");
-
-  var requestOptions = {
-    method: "DELETE",
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: headers,
-  };
-
-  return await fetch(url, requestOptions)
-    .then((response) => {
-      return response.json();
-    })
-    .catch((error) => {
-      console.log("error", error);
-      Promise.reject(error);
-    });
-}
