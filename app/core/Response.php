@@ -5,8 +5,9 @@ namespace simplerest\core;
 use simplerest\core\libs\DB;
 use simplerest\core\libs\Url;
 use simplerest\core\libs\Files;
-use simplerest\core\libs\Factory;
 use simplerest\core\libs\Logger;
+use simplerest\core\libs\System;
+use simplerest\core\libs\Factory;
 use simplerest\core\libs\Strings;
 
 class Response
@@ -29,6 +30,13 @@ class Response
     protected function __construct() { 
         static::$config = config();
         static::$pretty = static::$config['pretty'];
+
+        dd(System::getMemoryLimit(), 'Memory limit');
+        dd(System::getMemoryUsage(), 'Memory usage');
+        dd(System::getMemoryUsage(true), 'Memory usage (real)');
+
+        dd(System::getMemoryPeakUsage(), 'Memory peak usage');
+        dd(System::getMemoryPeakUsage(true), 'Memory peak usage (real)');
     }
 
     public function __destruct()
