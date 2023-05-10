@@ -250,7 +250,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <?php
                             $pg_grps= config()['admin_menu_linked_pages'];
 
-                            echo tag('navItemSideMenu')->items($pg_grps);
+                            echo tag('navItemSideMenu')->items($pg_grps)
+                            ->openAll();
                         ?>
                 
                         <!-- <li class="nav-item">

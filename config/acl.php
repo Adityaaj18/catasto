@@ -47,7 +47,10 @@ if (!$acl_cache || is_file($acl_file) !== true) {
         'read_all_trashcan',
         'write_all_trashcan',
         'write_all_folders', 
-        'write_all_collections',
+
+         // necesario para borrar en masa en tablas sin belongs_to
+        'write_all_collections', 
+        
         'transfer',
         'grant'
     ]);     

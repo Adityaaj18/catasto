@@ -1,0 +1,23 @@
+TODO CATASTO
+------------
+
+- Recordar seleccion de campos del filtro guardando seleccion en localStorage
+
+- Arreglar permisos del lado del frontEnd
+
+    - Del lado del backend debe de haber algo que le diga al front, a priori, que posibilidades
+    hay de:
+
+        . Borrar en masa
+        . Borrar un registro
+        . Editar un registro
+
+	- selectableCheck ----> checkbox para borrrado masivo
+
+	- formatter  ---------> botones de editar y borrado
+
+- Intentar mediante relacion 1:1 relacionar los modelos de cada request-response 
+
+    . Deberia poder mostrar en una sola Datatable
+
+    

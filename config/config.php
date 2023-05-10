@@ -320,10 +320,23 @@ return [
 		Podria provenir de una tabla -campo JSON- y ni siquiera estar referenciado aca.
 	*/
 	'admin_menu_linked_pages' => [
-		'Ricerca' => [
-			'Italy' => '/admin/tabulator/ricerca',
+		'Realstate' => [
+			'Elenco immobili'    => '/admin/tabulator/elenco_immobili',
+			'Prospeto catastale' => '/admin/tabulator/prospeto_catastale',
+			'Ricerca persona'    => '/admin/tabulator/ricerca_persona',
+			'Ricerca nazionale'  => '/admin/tabulator/ricerca_nazionale',
+			'Indirizzo'          => '/admin/tabulator/indirizzo',
+			// '' => '/admin/tabulator/',
 			// ...
 		],
+
+		'Imprese' => [
+			'Cerca Imprese' => '/admin/tabulator/cerca_imprese',
+		],
+
+		'Person reports' => [
+			'Rintraccio tel' => '/admin/tabulator/rintraccio_telefono',
+		]
 
 		// ..
 	]

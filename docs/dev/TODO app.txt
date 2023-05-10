@@ -16,10 +16,6 @@ https://www.twilio.com/whatsapp
 
 Considerar que se vuelve aún más importante para poder encontrar el último registro creado el campo created_at ya que no hay una PRT KEY autoincremental como es el caso cuando se usa UUID.
 
-- Probar algun servicio para enviar correos
-
-https://www.sendinblue.com/pricing/
-
 - Gráficos con Plotly
 
 https://www.npmjs.com/package/vue-plotly

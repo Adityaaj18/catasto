@@ -69,6 +69,7 @@ use simplerest\core\libs\HtmlBuilder\Bt5Form;
             }
 
             const col_res = create_collection(entity, checked);
+            
             col_res.then((res) => {
                 let col_id = res.data.id;
                 let resp   = mass_delete(col_id);

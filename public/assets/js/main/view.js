@@ -19,7 +19,7 @@ const axiosInstance = axios.create({
 const viewData = {};
 
 /** Variables y constantes globales para el DataGrid*/
-var table = undefined;
+var   table = undefined;
 const columns = [];
 
 // * Obtiene los parámetros para la vista provistos desde el servidor mediante campos ocultos
@@ -112,14 +112,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const col_res = create_collection(viewData.entity, selectedRows);
 
-    col_res.then((res) => {
-      // console.log(res) //
-
-      let col_id = res.data.data.id;   /// BUG hace que ApiController o Response entrguen data.data
-
-      // console.log('col_id', col_id) //
-
-      let resp = mass_delete(col_id);
+    col_res
+    .then((res) => {
+      return res.data;
+    })
+    .then((res) => {
+      let col_id = res.data.id;   
+      let resp   = mass_delete(col_id);
 
       resp.then(res => {
 
@@ -198,14 +197,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   for (var field in viewData.defs) {
     let obj = {};
-    let def = viewData.defs[field];
-    obj.field = field;
-    obj.title = def.name === undefined ? ucfirst(field) : def.name;
-    obj.formatter = getFormatter(def.type),
-      obj.formatterParams = getFormatterParams(def.type, field)
-    obj.editor = viewData.defs[field].fillable != 0;
-    obj.hozAlign = getAlignment(def.type)
-    obj.vertAlign = "middle"; // TODO: Ajustar según el tipo de campo
+    
+    let def             = viewData.defs[field];
+    obj.field           = field;
+    obj.title           = def.name === undefined ? ucfirst(field) : def.name;
+    obj.formatter       = getFormatter(def.type),
+    obj.formatterParams = getFormatterParams(def.type, field)
+    obj.editor          = viewData.defs[field].fillable != 0;
+    obj.hozAlign        = getAlignment(def.type)
+    obj.vertAlign       = "middle"; // TODO: Ajustar según el tipo de campo
 
     columns.push(obj);
   }

@@ -28,7 +28,7 @@ class Research implements IMigration
         $sc->varchar("comune")->nullable();
         $sc->varchar("sezione")->nullable();
         $sc->varchar("foglio")->nullable();
-        $sc->varchar("particella")->nullable();
+        $sc->varchar("particella")->nullable(); 
 
         /*
             OUTPUT for Real State ("elenco_immobili")
