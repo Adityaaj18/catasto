@@ -333,7 +333,7 @@ class Response
         $cli = (php_sapi_name() == 'cli');
 
         if (isset(static::$data['error']) && !empty(static::$data['error'])){
-            print_r('*');
+            print_r('*'); // *
 
             if (!$cli){
                 view('error.php', [

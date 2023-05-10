@@ -15,6 +15,8 @@ class FrontController
     {
         global $argv;
         global $api_version;
+
+        print_r(__FUNCTION__ . '<br>'); //
         
         $config      = config();
         $middlewares = include CONFIG_PATH . 'middlewares.php';
