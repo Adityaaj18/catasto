@@ -60,6 +60,11 @@ use simplerest\core\libs\i18n\Translate;
     $config = include __DIR__ . '/../config/config.php';
             
 
+    /*
+        No esta sirviendo al menos con:
+        
+        Fatal error: Allowed memory size of XXXXXXX bytes exhausted (tried to allocate XXX bytes)
+    */
     register_shutdown_function(function(){
         $error = error_get_last();
         if(null !== $error)

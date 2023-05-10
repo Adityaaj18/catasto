@@ -311,6 +311,8 @@ class Response
         https://tutsforweb.com/how-to-create-custom-404-page-laravel/
     */
     function flush(){
+        gc_collect_cycles();
+        
         if (self::$to_be_encoded){
             static::$data = $this->encode(static::$data);
             header('Content-type:application/json;charset=utf-8');
