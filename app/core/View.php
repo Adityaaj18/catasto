@@ -21,41 +21,41 @@ class View
 
     function __construct(string $view_path, array $vars  = null, ?string $layout = null, int $expiration_time = 0)
     {
-		// $this->config = config();
+		$this->config = config();
 
-		// if ($this->config['error_handling']) {
-        //     set_exception_handler([$this, 'exception_handler']);
-        // }
+		if ($this->config['error_handling']) {
+            set_exception_handler([$this, 'exception_handler']);
+        }
 
-        // if (empty($layout)){
-        //     $layout = $this->config['template'];
-        // } 
+        if (empty($layout)){
+            $layout = $this->config['template'];
+        } 
 
-        // $layout_path = VIEWS_PATH . "$layout";
+        $layout_path = VIEWS_PATH . "$layout";
 
-        // if (!file_exists($layout_path)){
-        //     response("Layout path '$layout_path' not found", 404);
-        // }
+        if (!file_exists($layout_path)){
+            response("Layout path '$layout_path' not found", 404);
+        }
 
-        // if ($expiration_time !== 0){
-        //     $cached_path = CACHE_PATH . 'views/'. str_replace(['\\', '/'], '__dir__',  $view_path);
+        if ($expiration_time !== 0){
+            $cached_path = CACHE_PATH . 'views/'. str_replace(['\\', '/'], '__dir__',  $view_path);
 
-        //     $expired = Cache::expiredFile($cached_path, $expiration_time);
-        //     $cached  = !$expired;
+            $expired = Cache::expiredFile($cached_path, $expiration_time);
+            $cached  = !$expired;
 
-        //     if ($expired){
-        //         $this->onCacheExpired($view_path);
-        //     }
-        // } else {
-        //     $cached = false;
-        // }
+            if ($expired){
+                $this->onCacheExpired($view_path);
+            }
+        } else {
+            $cached = false;
+        }
        
-        // if ($cached){
-        //     $content = Files::reader($cached_path);
-        // } else {          
-        //     if (!empty($vars)){
-        //         extract($vars);
-        //     }      
+        if ($cached){
+            $content = Files::reader($cached_path);
+        } else {          
+            if (!empty($vars)){
+                extract($vars);
+            }      
 
             ob_start();
             include VIEWS_PATH . $view_path;
@@ -65,16 +65,16 @@ class View
 
             $footer =  static::$footer;
             $head   =  static::$head;            
-        //}
+        }
 
-        // if ($expiration_time != 0 && !$cached){
-        //     Files::writableOrFail($cached_path);
-        //     $bytes = Files::writter($cached_path, $content);
+        if ($expiration_time != 0 && !$cached){
+            Files::writableOrFail($cached_path);
+            $bytes = Files::writter($cached_path, $content);
 
-        //     if ($bytes != 0){
-        //         $this->onCacheWritten($view_path);
-        //     }
-        // }
+            if ($bytes != 0){
+                $this->onCacheWritten($view_path);
+            }
+        }
 
         include $layout_path; 
     }
