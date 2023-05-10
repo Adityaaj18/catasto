@@ -70,6 +70,7 @@ trait ExceptionHandler
             error($error_msg, 500);
         }
         
+        exit(1);
     }
     
 }

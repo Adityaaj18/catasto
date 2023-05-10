@@ -312,9 +312,8 @@ class Response
         https://tutsforweb.com/how-to-create-custom-404-page-laravel/
     */
     function flush(){
-
-        print_r(['Memory usage'=> System::getMemoryUsage()]);
-        print_r("<br>");
+        // print_r(['Memory usage'=> System::getMemoryUsage()]);
+        // print_r("<br>");
 
         if (self::$to_be_encoded){
             static::$data = $this->encode(static::$data);
@@ -333,19 +332,19 @@ class Response
         $cli = (php_sapi_name() == 'cli');
 
         if (isset(static::$data['error']) && !empty(static::$data['error'])){
-            print_r('*'); // *
+            // print_r('*'); // *
 
-            // if (!$cli){
-            //     view('error.php', [
-            //         'status'    => static::$http_code,
-            //         'type'      => static::$data['error']['type'],
-            //         'code'      => static::$data['error']['code'],
-            //         'location'  => static::$data['error']['location'] ?? '',
-            //         'message'   => static::$data['error']['message'] ?? '',
-            //         'detail'    => static::$data['error']['detail'] ?? '',
-            //     ], 'templates\tpl_basic.php');
+            if (!$cli){
+                view('error.php', [
+                    'status'    => static::$http_code,
+                    'type'      => static::$data['error']['type'],
+                    'code'      => static::$data['error']['code'],
+                    'location'  => static::$data['error']['location'] ?? '',
+                    'message'   => static::$data['error']['message'] ?? '',
+                    'detail'    => static::$data['error']['detail'] ?? '',
+                ], 'templates\tpl_basic.php');
 
-            // } else {
+            } else {
                 $message  = static::$data['error']['message'] ?? '--';
                 $type     = static::$data['error']['type'] ?? '--';
                 $code     = static::$data['error']['code'] ?? '--';
@@ -353,7 +352,7 @@ class Response
                 $location = static::$data['error']['location'] ?? '--';
 
                 echo "--| Error: \"$message\". -|Type: $type. -|Code: $code -| Location: $location -|Detail: $detail" .  PHP_EOL. PHP_EOL;
-            // }
+            }
             
         } else {
             if (is_array(static::$data) && !self::$to_be_encoded){
