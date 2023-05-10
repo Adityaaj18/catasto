@@ -9,10 +9,6 @@ class AdminController extends MyController
 {    
 	use PagesTrait;
 
-	function index(){
-		return 'NADA POR AQUI';
-	}
-
 	// 'tabulator', 'main',...
 	public $default_page  = 'tabulator';
 

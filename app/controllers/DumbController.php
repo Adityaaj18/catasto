@@ -2,12 +2,13 @@
 
 namespace simplerest\controllers;
 
+use simplerest\core\libs\System;
 use simplerest\core\controllers\Controller;
 
 class DumbController extends Controller
 {
     function index(){
-        return "Nada por aqui";
+        return System::getPHP();
     }
 
     function decode_catasto()
@@ -34,7 +35,8 @@ class DumbController extends Controller
         dd(
             $str
         );
-
     }
+
+
 }
 // end class

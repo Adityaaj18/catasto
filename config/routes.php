@@ -3,9 +3,24 @@
 use simplerest\core\Route;
 use simplerest\libs\Debug;
 use simplerest\core\libs\Mail;
-use simplerest\core\libs\Files;
+use simplerest\core\libs\System;
 
 $route = Route::getInstance();
+
+Route::get('mem', function(){
+	dd(System::getMemoryLimit(), 'Memory limit');
+	dd(System::getMemoryUsage(), 'Memory usage');
+	dd(System::getMemoryUsage(true), 'Memory usage (real)');
+
+	dd(System::getMemoryPeakUsage(), 'Memory peak usage');
+	dd(System::getMemoryPeakUsage(true), 'Memory peak usage (real)');
+});
+
+Route::get('git/pull', function(){
+	dd(
+		exec("git pull")
+	);
+});
 
 /*
 	Actualmente el orden es importante...... 
