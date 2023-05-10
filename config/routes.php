@@ -2,7 +2,7 @@
 
 use simplerest\core\Route;
 use simplerest\libs\Debug;
-use simplerest\core\libs\Mail;
+use simplerest\core\libs\Mail;;;
 use simplerest\core\libs\System;
 
 $route = Route::getInstance();
