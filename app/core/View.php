@@ -24,7 +24,7 @@ class View
 		$this->config = config();
 
 		if ($this->config['error_handling']) {
-            set_exception_handler([$this, 'exception_handler']);
+            //set_exception_handler([$this, 'exception_handler']);
         }
 
         if (empty($layout)){
