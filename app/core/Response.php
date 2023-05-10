@@ -333,6 +333,8 @@ class Response
         $cli = (php_sapi_name() == 'cli');
 
         if (isset(static::$data['error']) && !empty(static::$data['error'])){
+            print_r('*');
+
             if (!$cli){
                 view('error.php', [
                     'status'    => static::$http_code,
@@ -352,8 +354,6 @@ class Response
 
                 echo "--| Error: \"$message\". -|Type: $type. -|Code: $code -| Location: $location -|Detail: $detail" .  PHP_EOL. PHP_EOL;
             }
-
-            exit(1);
             
         } else {
             if (is_array(static::$data) && !self::$to_be_encoded){
