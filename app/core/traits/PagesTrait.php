@@ -52,7 +52,7 @@ trait PagesTrait
         $ctrl_seg = strtolower($ctrl_seg);
         $extra    = !empty($ctrl_seg) ? "$ctrl_seg\\" : "";
         
-        $default_page = ucfirst(str_replace('/', '\\', $this->default_page));
+        $default_page = str_replace('/', '\\', $this->default_page);
 
         $class_name   = "simplerest\\pages\\{$extra}{$default_page}";;
 
