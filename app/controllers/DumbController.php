@@ -6,6 +6,10 @@ use simplerest\core\controllers\Controller;
 
 class DumbController extends Controller
 {
+    function index(){
+        return "Nada por aqui";
+    }
+
     function decode_catasto()
     {
         /*
