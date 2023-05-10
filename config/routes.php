@@ -18,7 +18,7 @@ Route::get('mem', function(){
 
 Route::get('git/pull', function(){
 	dd(
-		exec("git pull")
+		System::exec("git pull")
 	);
 });
 

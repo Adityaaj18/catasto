@@ -109,20 +109,28 @@ class System
     }
 
     /*
-        Ejecuta un comado "com"
+        Ejecuta un comando / script situandose primero en el root del proyecto
     */
-    static function com($command, ...$args){
+    static function exec($command, ...$args){
         $extra = implode(' ', array_values($args));
 
         $current_dir = getcwd();
 
 		chdir(ROOT_PATH);
-        $ret =  shell_exec(static::getPHP() . " com $command $extra");
+        $ret =  shell_exec("$command $extra");
         chdir($current_dir);
         
         return $ret;
     }
-    
+
+    /*
+        Ejecuta un comando "com"
+    */
+    static function com($command, ...$args){
+        return static::exec(static::getPHP() . " com $command". $args);
+    }
+
+
     /*        
        "Memory profilers"
         
@@ -140,7 +148,7 @@ class System
 
         - New Relic
     */
-    
+
 
     /*
         dd(System::getMemoryLimit(), 'Memory limit');
