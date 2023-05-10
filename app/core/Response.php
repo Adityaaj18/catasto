@@ -315,8 +315,6 @@ class Response
 
         print_r(['Memory usage'        => System::getMemoryUsage()]);
         print_r("<br>");
-        print_r(['Memory usage (real)' => System::getMemoryUsage(true)]);
-        print_r("<p>");
 
         if (self::$to_be_encoded){
             static::$data = $this->encode(static::$data);
@@ -354,6 +352,8 @@ class Response
 
                 echo "--| Error: \"$message\". -|Type: $type. -|Code: $code -| Location: $location -|Detail: $detail" .  PHP_EOL. PHP_EOL;
             }
+
+            exit(1);
             
         } else {
             if (is_array(static::$data) && !self::$to_be_encoded){
