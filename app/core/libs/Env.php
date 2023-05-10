@@ -7,6 +7,14 @@ class Env
     static $data;
 
     static function setup(){
+        register_shutdown_function(function(){
+            $error = error_get_last();
+            if(null !== $error)
+            {
+                dd(error_get_last(), 'Caught at shutdown');
+            }
+        });
+        
         if (!file_exists(ROOT_PATH . '.env')){
             if (!file_exists(ROOT_PATH . '/.env')){
                 if (!file_exists(ROOT_PATH . '/env.example')){
