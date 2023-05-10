@@ -38,8 +38,8 @@ if (!$acl_cache || is_file($acl_file) !== true) {
     ->addRole('superadmin', 10000)
     ->addInherit('admin')
     ->addSpecialPermissions([
-        //'read_all', 
-        //'write_all', 
+        'read_all', 
+        'write_all', 
         'read_all_folders', 
         'lock', 
         'fill_all', 
