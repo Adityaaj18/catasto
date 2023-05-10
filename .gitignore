@@ -3,6 +3,5 @@ vendor/
 *.rar
 *.tar
 uploads/
-app/schemas/
 logs/*
 .env
