@@ -8,6 +8,7 @@ use simplerest\core\libs\i18n\Translate;
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+    
     require_once  __DIR__ . '/../config/constants.php';
 
     if (!file_exists(ROOT_PATH .'composer.json')){
@@ -58,6 +59,15 @@ use simplerest\core\libs\i18n\Translate;
         
     $config = include __DIR__ . '/../config/config.php';
             
+
+    register_shutdown_function(function(){
+        $error = error_get_last();
+        if(null !== $error)
+        {
+            dd(error_get_last(), 'Caught at shutdown');
+        }
+    });
+
     /*
         i18n
     */
