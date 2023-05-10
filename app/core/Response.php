@@ -312,13 +312,12 @@ class Response
         https://tutsforweb.com/how-to-create-custom-404-page-laravel/
     */
     function flush(){
-        dd(System::getMemoryLimit(), 'Memory limit');
-        dd(System::getMemoryUsage(), 'Memory usage');
-        dd(System::getMemoryUsage(true), 'Memory usage (real)');
 
-        dd(System::getMemoryPeakUsage(), 'Memory peak usage');
-        dd(System::getMemoryPeakUsage(true), 'Memory peak usage (real)');
-        
+        print_r(['Memory usage'        => System::getMemoryUsage()]);
+        print_r("<br>");
+        print_r(['Memory usage (real)' => System::getMemoryUsage(true)]);
+        print_r("<p>");
+
         if (self::$to_be_encoded){
             static::$data = $this->encode(static::$data);
             header('Content-type:application/json;charset=utf-8');
