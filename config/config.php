@@ -331,11 +331,11 @@ return [
 		],
 
 		'Imprese' => [
-			'Cerca Imprese' => '/admin/tabulator/cerca_imprese',
+			'Cerca Imprese' => '/admin/tabulator/soci',
 		],
 
 		'Person reports' => [
-			'Rintraccio tel' => '/admin/tabulator/rintraccio_telefono',
+			'Rintraccio tel' => '/admin/tabulator/telefono',
 		]
 
 		// ..

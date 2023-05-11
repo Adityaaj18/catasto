@@ -19,8 +19,8 @@ class RicercaModel extends MyModel
 		'last_req'     => 'Request',
 		'cf_ditta'     => 'CF ditta',
 		'tipo_catasto' => 'Tipo catasto'
-
 	];
+	
 	protected $formatters    = [];
 
     function __construct(bool $connect = false){

@@ -1,0 +1,71 @@
+<?php
+
+namespace simplerest\schemas\main;
+
+use simplerest\core\interfaces\ISchema;
+
+### IMPORTS
+
+class RicercaPersonaSchema implements ISchema
+{ 
+	static function get(){
+		return [
+			'table_name'	=> 'ricerca_persona',
+
+			'id_name'		=> 'id',
+
+			'fields'		=> ['id', 'cf_piva', 'tipo_catasto', 'provincia', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
+
+			'attr_types'	=> [
+				'id' => 'INT',
+				'cf_piva' => 'STR',
+				'tipo_catasto' => 'STR',
+				'provincia' => 'STR',
+				'result' => 'STR',
+				'status' => 'STR',
+				'created_at' => 'STR',
+				'updated_at' => 'STR',
+				'deleted_at' => 'STR'
+			],
+
+			'primary'		=> ['id'],
+
+			'autoincrement' => 'id',
+
+			'nullable'		=> ['id', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
+
+			'required'		=> ['cf_piva', 'tipo_catasto', 'provincia'],
+
+			'uniques'		=> [],
+
+			'rules' 		=> [
+				'id' => ['type' => 'int'],
+				'cf_piva' => ['type' => 'str', 'max' => 30, 'required' => true],
+				'tipo_catasto' => ['type' => 'str', 'max' => 5, 'required' => true],
+				'provincia' => ['type' => 'str', 'max' => 2, 'required' => true],
+				'result' => ['type' => 'str'],
+				'status' => ['type' => 'str', 'max' => 20],
+				'created_at' => ['type' => 'datetime'],
+				'updated_at' => ['type' => 'datetime'],
+				'deleted_at' => ['type' => 'datetime']
+			],
+
+			'fks' 			=> [],
+
+			'relationships' => [
+				
+			],
+
+			'expanded_relationships' => array (
+),
+
+			'relationships_from' => [
+				
+			],
+
+			'expanded_relationships_from' => array (
+)
+		];
+	}	
+}
+
