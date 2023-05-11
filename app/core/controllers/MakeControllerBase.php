@@ -1042,33 +1042,35 @@ class MakeControllerBase extends Controller
             }
         }
 
-        if (!isset($from_db)){
-            $from_db = get_default_connection_id();
-        }
-
-        if (empty($table) && $name == 'all'){
-            $tables = Schema::getTables();
-
-            $tables = array_diff($tables, $excluded);
-
-            foreach ($tables as $table){
-                $this->schema($table, ...$opt);
+        if (!$remove){            
+            if (!isset($from_db)){
+                $from_db = get_default_connection_id();
             }
 
-            $this->db_scan(...$opt);
+            if (empty($table) && $name == 'all'){
+                $tables = Schema::getTables();
 
-            return;
-        }
+                $tables = array_diff($tables, $excluded);
 
-        $this->setup($name);
+                foreach ($tables as $table){
+                    $this->schema($table, ...$opt);
+                }
 
-        if (!empty($table)){
-            $name = $table;
-        }
+                $this->db_scan(...$opt);
 
-        if (!Schema::hasTable($name)){
-            StdOut::pprint("Table '$name' not found. It's case sensitive\r\n");
-            return;
+                return;
+            }
+
+            $this->setup($name);
+
+            if (!empty($table)){
+                $name = $table;
+            }
+
+            if (!Schema::hasTable($name)){
+                StdOut::pprint("Table '$name' not found. It's case sensitive\r\n");
+                return;
+            }
         }
 
         if (!$this->all_uppercase){
