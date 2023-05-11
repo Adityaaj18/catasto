@@ -270,7 +270,7 @@ class Response
             'code'     => $code    ?? null,
             'message'  => $message,
             'detail'   => $detail,
-            'location' => $location
+            'location' => $location  // <--- location deberia ser rellado automaticamente leyendo el stack
         ];
        
         static::$instance->set($res);  

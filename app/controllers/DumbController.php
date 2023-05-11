@@ -3,6 +3,7 @@
 namespace simplerest\controllers;
 
 use simplerest\core\libs\System;
+use simplerest\core\libs\Strings;
 use simplerest\core\controllers\Controller;
 
 class DumbController extends Controller
@@ -35,6 +36,35 @@ class DumbController extends Controller
         dd(
             $str
         );
+    }
+
+
+    function is_json(){
+        // false
+        dd(Strings::isJSON(2));
+        
+        // false
+        dd(Strings::isJSON('Pablo'));
+        
+        // true
+        dd(Strings::isJSON('{
+            "nombre": "Pablo"   
+        }'));
+
+        // true
+        dd(Strings::isJSON('{
+            "nombre": "Pablo"   
+        }'));
+
+        // false (el JSON, de hecho, es invalido)
+        dd(Strings::isJSON('{
+            "nombre": "Pablo",    
+        }', false));
+
+        // true (el JSON, de hecho, es invalido pero el chequeo rapido no hace el decode)
+        dd(Strings::isJSON('{
+            "nombre": "Pablo",    
+        }', true));
     }
 
 
