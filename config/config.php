@@ -53,7 +53,7 @@ return [
 		Intercepta errores
 	*/
 	
-	'error_handling' => true,
+	'error_handling' => false,
 
 	/*
 		Puede mostrar detalles como consultas SQL fallidas 
