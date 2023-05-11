@@ -266,13 +266,13 @@ class Response
         }
 
         $res['error'] = [ 
-            'type'    => $type    ?? null,
-            'code'    => $code    ?? null,
-            'message' => $message,
-            'detail'  => $detail
+            'type'     => $type    ?? null,
+            'code'     => $code    ?? null,
+            'message'  => $message,
+            'detail'   => $detail,
+            'location' => $location
         ];
-
-            
+       
         static::$instance->set($res);  
         static::$instance->flush();
 
