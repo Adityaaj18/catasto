@@ -63,7 +63,7 @@ return [
 
 	'debug'   		 => true,  //env('APP_DEBUG', true),
 
-	'log_file' => 'log.txt',
+	'log_file'       => 'log.txt',
 	
 	/*
 		Loguea cada consulta / statement -al menos las ejecutadas usando Model-

@@ -970,7 +970,7 @@ function process_sql_file(string $path, string $delimeter = ';', bool $stop_if_e
 
         try {
             $ok = DB::statement($sentence);
-        } catch (\Exception $e){
+        } catch (SqlException $e){
             dd($e->getMessage(), 'Sql Exception');
 
             if ($stop_if_error){
