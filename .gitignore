@@ -3,6 +3,6 @@ vendor/
 *.rar
 *.tar
 uploads/
-logs/*
+logs/
 .env
 storage/security/acl.cache
