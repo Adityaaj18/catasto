@@ -16,7 +16,14 @@ class AdminController extends MyController
 	public $tpl_params    = [
 		'brand_name' => 'Catasto',
 		'logo'       => 'img/gmap.png',
-		'logo_alt'   => 'Catasto'
+		'logo_alt'   => 'Catasto',
+		'footer'     => '	<!-- To the right -->
+							<div class="float-right d-none d-sm-inline">
+							</div>
+							
+							<!-- Default to the left -->
+							Copyright &copy; 2023, <strong>Fabio Istrefi</strong> ~ 
+							Developed by P. Bozzolo < <a href="mailto:boctulus@gmail.com">boctulus@gmail.com</a> >'
 	];	
 	
 	// ..
