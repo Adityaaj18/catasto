@@ -28,6 +28,10 @@ class Logger
 
         $path = LOGS_PATH . $file;
 
+		if (!file_exists($path)){
+			return false;
+		}
+
         return file_get_contents($path);
     }
 
