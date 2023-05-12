@@ -1115,7 +1115,7 @@ abstract class ApiController extends ResourceController implements IApi, ISubRes
             }  
 
             if (!isset($data[$this->instance->createdAt()]) && $this->instance->inSchema([$this->instance->createdAt()])){
-                $data[$this->instance->createdAt()] = at();
+                $data[$this->instance->createdAt()] = at();  /// <<-------------- *
             }
 
             /*

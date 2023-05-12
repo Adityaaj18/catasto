@@ -26,7 +26,7 @@ class Model {
 	// Schema
 	protected $schema;
 
-	protected $fillable = [];
+	protected $fillable     = [];
 	protected $not_fillable = [];
 	protected $hidden   = [];
 	protected $attributes = [];
@@ -241,7 +241,6 @@ class Model {
 			}
 		}
 		
-		
 		if ($this->schema == null){
 			return;
 		}	
@@ -251,9 +250,8 @@ class Model {
 		if (in_array('', $this->attributes, true)){
 			throw new \Exception("An attribute is invalid");
 		}
-		
 
-		if ($this->fillable == NULL){
+		if ($this->fillable == null){
 			$this->fillable = $this->attributes;
 			$this->unfill([
 							$this->is_locked, 
@@ -266,12 +264,7 @@ class Model {
 							$this->deletedBy
 			]);	
 		}
-		
-		$this->unfill($this->not_fillable);
 
-		// dd($this->not_fillable, 'NOT FILLABLE');
-		// dd($this->getFillables(), 'FILLABLES');
-		// exit;
 
 		$this->schema['nullable'][] = $this->is_locked;		
 		$this->schema['nullable'][] = $this->createdAt;
@@ -325,6 +318,21 @@ class Model {
 			}
 		}
 
+		//dd($this->not_fillable, 'NF');
+
+		/*
+			Remuevo los campos no-fillables de los fillables
+		*/
+		foreach ($this->not_fillable as $f){
+			$pos = array_search($f, $this->fillable);
+			
+			if ($pos !== false){
+				unset($this->fillable[$pos]);
+			}
+		}
+
+		//$this->setValidator(new Validator());
+
 		// event handler
 		$this->init();
 	}
@@ -370,7 +378,7 @@ class Model {
 	}
 
 	function noValidation(){
-		$this->validator = [];
+		$this->validator = null;
 		return $this;
 	}
 
@@ -684,6 +692,15 @@ class Model {
 		foreach ($fields as $f){
 			if (!in_array($f, $this->not_fillable)){
 				$this->not_fillable[] = $f;
+			}
+
+			/*
+				Remuevo los campos no-fillables del array de los fillables	
+			*/
+			$pos = array_search($f, $this->fillable);
+			
+			if ($pos !== false){
+				unset($this->fillable[$pos]);
 			}
 		}
 
@@ -1325,6 +1342,7 @@ class Model {
 		// Validación
 		if (!empty($this->validator)){
 			$validado = $this->validator->validate(array_combine($vars, $values), $this->getRules());
+
 			if ($validado !== true){
 				throw new InvalidValidationException(json_encode(
 					$this->validator->getErrors()
@@ -3156,22 +3174,22 @@ class Model {
 			$vals = array_values($data);
 		}
 
+		// no entiendo como puede estar null algunas veces y otras no !!!!
+		$this->validator = new Validator();			
+
 		// Validación
-		if (!empty($this->validator)){
-			if(!empty($this->fillable) && is_array($this->fillable)){
-				foreach($vars as $var){
-					if (!in_array($var,$this->fillable))
-						throw new \InvalidArgumentException("`{$this->table_name}`.`$var` is no fillable");
-				}
-			}
-			
-			$validado = $this->validator->validate($data, $this->getRules());
+		if (!empty($this->validator))
+		{			
+			$validado = $this->validator->validate($data, $this->getRules(), $this->fillable, $this->not_fillable);
 			if ($validado !== true){
 				throw new InvalidValidationException(json_encode(
 					$this->validator->getErrors()
 				));
 			} 
 		}
+
+		dd($this->fillable, 'FILLABLE');
+		dd($this->not_fillable, 'NOT FILLABLE');
 		
 		$symbols  = array_map(function(?string $e = null){
 			if ($e === null){

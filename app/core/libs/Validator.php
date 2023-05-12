@@ -235,7 +235,7 @@ class Validator implements IValidator
 				}
 			}
 
-			// Por eficiencia si hay campos no-fillables, aborto.
+			// Por eficiencia si hay errores, aborto.
 			if (!empty($errors)){
 				$this->errors = $errors;
 				return false;
