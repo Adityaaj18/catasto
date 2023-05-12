@@ -21,7 +21,7 @@ class Telefono extends MyApiController
 
     function onPostingAfterCheck($id, Array &$data)
     {       
-        $url = 'https://rintraccio.openapi.it/telefoni';
+        $url = 'https://rintraccio.openapi.it/telefoni/';
 
         $res = OpenApiIT::makeRequest($data, $url, "?r=rintracio&sub=telefoni");
 
@@ -47,7 +47,6 @@ class Telefono extends MyApiController
                 'trace' => 'WyJpbmRleC5waHBAMjE0IiwiY2xhc3MuQXZXcy5waHBAMjE3IiwiaW5kZXgucGhwQDQ0MiJd',
             )
         */
-        
 
         /*
             Ej:
