@@ -4,7 +4,9 @@ namespace simplerest\controllers;
 
 use simplerest\core\libs\System;
 use simplerest\core\libs\Strings;
+use simplerest\core\libs\ApiClient;
 use simplerest\core\controllers\Controller;
+use simplerest\libs\OpenApiIT;
 
 class DumbController extends Controller
 {
@@ -66,7 +68,59 @@ class DumbController extends Controller
             "nombre": "Pablo",    
         }', true));
     }
+    /*
+        {
+            "data": {
+                "cf_piva": "GBTGTR30C19H890H",
+                "callback": {
+                    "url": "https:\/\/ticiwe.com\/callbacks?r=rintracio&sub=telefoni",
+                    "field": "data",
+                    "method": "POST",
+                    "data": {}
+                },
+                "tipo": [
+                    "telefoni"
+                ],
+                "esito": null,
+                "timestamp": 1683883415,
+                "owner": "fabio56istrefi@gmail.com",
+                "id": "645e05973eb9f85044607a87",
+                "soggetto": null,
+                "status": "PENDING",
+                "date_request": null,
+                "date_completion": null
+            },
+            "success": true,
+            "message": "",
+            "error": null
+        }
+    */
+   function test_post(){
+        $data = [
+            "cf_piva" => "GBTGTR30C19H890H"
+        ];
 
+        $url = 'https://rintraccio.openapi.it/telefoni';
+
+        $res = OpenApiIT::makeRequest($data, $url, "?r=rintracio&sub=telefoni");
+
+        /*
+            La respuesta puede ser variada, incluyendo:
+
+            Array
+            (
+                [success] =>
+                [message] => Insufficient Credit in Wallet: 0.7 > 0.6
+                [error] => 223
+                [data] =>
+                [trace] => WyJpbmRleC5waHBAMjY2IiwiY2xhc3MuQXZXcy5waHBAMjE3IiwiaW5kZXgucGhwQDQ0MiJd
+            )
+        */
+
+        dd(
+            $res
+        );
+    }
 
 }
 // end class

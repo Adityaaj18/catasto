@@ -65,13 +65,13 @@ use simplerest\core\libs\i18n\Translate;
         
         Fatal error: Allowed memory size of XXXXXXX bytes exhausted (tried to allocate XXX bytes)
     */
-    register_shutdown_function(function(){
-        $error = error_get_last();
-        if(null !== $error)
-        {
-            dd(error_get_last(), 'Caught at shutdown');
-        }
-    });
+    // register_shutdown_function(function(){
+    //     $error = error_get_last();
+    //     if(null !== $error)
+    //     {
+    //         dd(error_get_last(), 'Caught at shutdown');
+    //     }
+    // });
 
     /*
         i18n

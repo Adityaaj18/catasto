@@ -2,6 +2,7 @@
 
 namespace simplerest\controllers\api;
 
+use simplerest\core\libs\Logger;
 use simplerest\controllers\MyApiController; 
 
 class Soci extends MyApiController
@@ -20,5 +21,9 @@ class Soci extends MyApiController
     function __construct()
     {       
         parent::__construct();
-    }        
+    }     
+    
+    function onPost($id, Array &$data){
+        Logger::log($data);
+    }
 } 

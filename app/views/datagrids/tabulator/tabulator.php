@@ -45,7 +45,7 @@ echo tag('div')->content([
     ->target("row-form-modal")
     ->content('<span class="label-icon">
         <i class="fa fa-plus"></i>
-        </span>Nuevo')
+        </span>New')
     ->class('btn btn-label text-white mb-3')
     ->id('btn-create')
     ->info()
@@ -54,7 +54,7 @@ echo tag('div')->content([
     tag('button')
     ->content('<span class="label-icon">
         <i class="fa fa-trash"></i>
-        </span>Eliminar')
+        </span>Delete')
     ->class('btn btn-label mb-3')
     ->id('btn-multiple-delete')
     ->danger()
@@ -109,8 +109,6 @@ foreach ($defs as $field => $info)
     $is_fillable = $info['fillable'];
     $is_nullable = $info['nullable'];
     $formatter   = $info['formatter'] ?? null;
-
-    // dd($is_fillable, $field);
 
     if (!$is_fillable && $field !== 'id'){
         continue;
@@ -173,7 +171,7 @@ $buttons = tag('div')
         
         tag('submit')
         ->id("save_row")
-        ->value('Guardar')
+        ->value('Save')
         //->borderRad(0)
     ])   
 )->class('col-md-12 position-relative');
@@ -199,7 +197,7 @@ $form = tag('form')
 
 echo tag('modal')
 ->header(
-    tag('modalTitle')->text('Nuevo / Editar') . 
+    tag('modalTitle')->text('New / Edit') . 
     tag('closeButton')->dataBsDismiss('modal')
 )
 ->body(

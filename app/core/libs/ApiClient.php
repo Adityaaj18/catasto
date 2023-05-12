@@ -192,12 +192,12 @@ class ApiClient
     }
 
     function getError(){
-        return $this->error;
+        return Strings::isJSON($this->error) ? json_decode($this->error, true) : $this->error;
     }
 
     // alias de getError()
     function error(){
-        return $this->error;
+        return $this->getError();
     }
 
     function data(){

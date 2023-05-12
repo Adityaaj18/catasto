@@ -8,6 +8,15 @@ require_once __DIR__ . '/constants.php';
 // setlocale(LC_ALL, 'es_AR.UTF-8');
 
 return [
+	
+	'openapi_it_key'      => '643a8732a6bdca67ac259004',
+	'callback_base_url'   => 'https://ticiwe.com/callbacks',
+
+	/*
+		DO NOT EDIT HERE ------>
+	*/
+
+
 	'app_url' => env('APP_URL'),
 
 	/*
@@ -53,7 +62,7 @@ return [
 		Intercepta errores
 	*/
 	
-	'error_handling' => true,
+	'error_handling' => false,
 
 	/*
 		Puede mostrar detalles como consultas SQL fallidas 

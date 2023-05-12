@@ -50,7 +50,6 @@ class MyModel extends Model
 
     function __destruct()
     {
-        Logger::dd($this->hidden, 'HIDDEN');
-		Logger::dd($this->not_fillable, 'NOT FILLABLE'); ///////////////////
+
     }
 }
