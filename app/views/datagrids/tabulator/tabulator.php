@@ -110,6 +110,8 @@ foreach ($defs as $field => $info)
     $is_nullable = $info['nullable'];
     $formatter   = $info['formatter'] ?? null;
 
+    // dd($is_fillable, $field);
+
     if (!$is_fillable && $field !== 'id'){
         continue;
     }

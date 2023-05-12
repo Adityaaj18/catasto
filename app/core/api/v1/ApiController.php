@@ -303,6 +303,7 @@ abstract class ApiController extends ResourceController implements IApi, ISubRes
 
         if (!empty($defs)){         
             $the_defs = get_defs($this->table_name, null, false, true);  
+
             return [ 'defs' => $the_defs ];
         }
 
