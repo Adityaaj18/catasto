@@ -253,18 +253,7 @@ class Model {
 
 		if ($this->fillable == null){
 			$this->fillable = $this->attributes;
-			$this->unfill([
-							$this->is_locked, 
-							$this->belongsTo,
-							$this->createdAt,							
-							$this->updatedAt, 							
-							$this->deletedAt, 
-							$this->createdBy, 
-							$this->updatedBy, 
-							$this->deletedBy
-			]);	
 		}
-
 
 		$this->schema['nullable'][] = $this->is_locked;		
 		$this->schema['nullable'][] = $this->createdAt;
@@ -683,6 +672,15 @@ class Model {
 			if (!in_array($f, $this->fillable)){
 				$this->fillable[] = $f;
 			}
+		
+			/*
+				Remuevo los campos fillables del array de los no-fillables	
+			*/
+			$pos = array_search($f, $this->not_fillable);
+			
+			if ($pos !== false){
+				unset($this->not_fillable[$pos]);
+			}
 		}
 
 		return $this;	
@@ -711,7 +709,9 @@ class Model {
 		Make all fields fillable
 	*/
 	function fillAll(){
-		$this->fillable = $this->attributes;
+		$this->fillable     = $this->attributes;
+		$this->not_fillable = [];
+
 		return $this;	
 	}
 	
@@ -741,6 +741,7 @@ class Model {
 
 		return $this;
 	}
+	
 
 	// INNER | LEFT | RIGTH JOIN
 	function join($table, $on1 = null, $op = '=', $on2 = null, string $type = 'INNER JOIN')
@@ -3177,6 +3178,9 @@ class Model {
 		// no entiendo como puede estar null algunas veces y otras no !!!!
 		$this->validator = new Validator();			
 
+		// dd($this->fillable, 'FILLABLE');
+		// dd($this->not_fillable, 'NOT FILLABLE');
+
 		// Validación
 		if (!empty($this->validator))
 		{			
@@ -3188,9 +3192,6 @@ class Model {
 			} 
 		}
 
-		dd($this->fillable, 'FILLABLE');
-		dd($this->not_fillable, 'NOT FILLABLE');
-		
 		$symbols  = array_map(function(?string $e = null){
 			if ($e === null){
 				$e = '';
@@ -3681,7 +3682,7 @@ class Model {
 	}
 
 	function isFillable(string $field){
-		return in_array($field, $this->fillable);
+		return in_array($field, $this->fillable) && !in_array($field, $this->not_fillable);
 	}
 
 	function getFillables(){
