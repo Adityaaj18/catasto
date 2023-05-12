@@ -4,5 +4,6 @@ vendor/
 *.tar
 uploads/
 logs/
+tmp/
+storage/security/
 .env
-storage/security/acl.cache
