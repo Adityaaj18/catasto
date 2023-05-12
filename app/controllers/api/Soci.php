@@ -2,10 +2,11 @@
 
 namespace simplerest\controllers\api;
 
+use simplerest\libs\OpenApiIT;
 use simplerest\core\libs\Logger;
-use simplerest\controllers\MyApiController; 
+use simplerest\core\api\v1\ApiController;
 
-class Soci extends MyApiController
+class Soci extends ApiController
 { 
     static protected $soft_delete = true;
     static protected $connect_to = [
@@ -23,7 +24,5 @@ class Soci extends MyApiController
         parent::__construct();
     }     
     
-    function onPost($id, Array &$data){
-        Logger::log($data);
-    }
+    
 } 

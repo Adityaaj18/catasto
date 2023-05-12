@@ -260,7 +260,7 @@ class Response
         if (Url::isPostman() || Url::isInsomnia()){
             if (is_string($detail)){
                 $detail = trim($detail);
-                $detail = Strings::isJSON($detail) ? json_decode($detail, true) : '';
+                $detail = Strings::isJSON($detail) ? json_decode($detail, true) : $detail;
             }
         }
 
