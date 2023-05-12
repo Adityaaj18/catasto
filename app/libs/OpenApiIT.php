@@ -32,7 +32,7 @@ class OpenApiIT
         ->post()
         ->getResponse();
 
-        $res = json_decode($client->data(), true);  
+        $res = $client->data();  
 
         return $res;
     }

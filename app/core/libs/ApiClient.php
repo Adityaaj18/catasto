@@ -29,7 +29,7 @@ class ApiClient
     protected $response;
     protected $filename;
     protected $res_headers;
-    protected $auto_decode;
+    protected $auto_decode = true;
     protected $status;
     protected $error;
 
@@ -201,7 +201,7 @@ class ApiClient
     }
 
     function data(){
-        return $this->response;
+        return ($this->auto_decode && Strings::isJSON($this->response)) ? json_decode($this->response, true) : $this->response;
     }
 
     function getResponse(?bool $decode = null, ?bool $as_array = null){       
@@ -455,7 +455,6 @@ class ApiClient
 
         $body    = $body    ?? $this->body    ?? null;
         $headers = $headers ?? $this->req_headers ?? null;        
-        $decode  = $this->auto_decode; 
 
         if ($this->expiration == null){
             $expired = true;
