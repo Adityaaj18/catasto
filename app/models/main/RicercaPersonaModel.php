@@ -7,15 +7,13 @@ use simplerest\schemas\main\RicercaPersonaSchema;
 
 class RicercaPersonaModel extends MyModel
 {
-	protected $hidden = [
-		'created_at',
-		'updated_at',
-		'deleted_at'
-	];
-	
+	protected $hidden       = [];
+
 	protected $not_fillable = [];
 
-	protected $field_names  = [];
+	protected $field_names  = [
+	];
+	
 	protected $formatters    = [];
 
     function __construct(bool $connect = false){

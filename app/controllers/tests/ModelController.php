@@ -2763,14 +2763,14 @@ class ModelController extends MyController
         Para auto-joins si necesito los schemas
     */
     function j_test_3(){
-        DB::getConnection('az');
+        // DB::getConnection('az');
 
-        $autos = (new AutomovilesModel())
-        ->join('medios_transporte');
+        // $autos = (new AutomovilesModel())
+        // ->join('medios_transporte');
         
-        dd(
-            $autos->get()
-        );
+        // dd(
+        //     $autos->get()
+        // );
     }
 
     /*
@@ -3452,7 +3452,7 @@ class ModelController extends MyController
         DB::setConnection('db2');
         $conn = DB::getConnection();
 
-        $m = new ProductsModel($conn);
+        //$m = new ProductsModel($conn);
     }
 
     /*
