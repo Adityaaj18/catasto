@@ -21,7 +21,7 @@ class Telefono implements IMigration
         $sc->int('id')->pri()->auto();
 
 
-        $sc->varchar("cf_piva")->nullable();
+        $sc->varchar("cf_piva");
 
    
         /*

@@ -30,15 +30,15 @@ class TelefonoSchema implements ISchema
 
 			'autoincrement' => 'id',
 
-			'nullable'		=> ['id', 'cf_piva', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
+			'nullable'		=> ['id', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
 
-			'required'		=> [],
+			'required'		=> ['cf_piva'],
 
 			'uniques'		=> [],
 
 			'rules' 		=> [
 				'id' => ['type' => 'int'],
-				'cf_piva' => ['type' => 'str', 'max' => 60],
+				'cf_piva' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'result' => ['type' => 'str'],
 				'status' => ['type' => 'str', 'max' => 20],
 				'created_at' => ['type' => 'datetime'],
