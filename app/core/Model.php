@@ -268,7 +268,6 @@ class Model {
 		}
 		
 		$this->unfill($this->not_fillable);
-		
 
 		// dd($this->not_fillable, 'NOT FILLABLE');
 		// dd($this->getFillables(), 'FILLABLES');
@@ -653,8 +652,11 @@ class Model {
 	 * @return void
 	 */
 	function hide(array $fields){
-		foreach ($fields as $f)
-			$this->hidden[] = $f;
+		foreach ($fields as $f){
+			if (!in_array($f, $this->hidden)){
+				$this->hidden[] = $f;
+			}
+		}
 
 		return $this;	
 	}
@@ -669,8 +671,21 @@ class Model {
 	 * @return object
 	 */
 	function fill(array $fields){
-		foreach ($fields as $f)
-			$this->fillable[] = $f;
+		foreach ($fields as $f){
+			if (!in_array($f, $this->fillable)){
+				$this->fillable[] = $f;
+			}
+		}
+
+		return $this;	
+	}
+
+	function unfill(array $fields){
+		foreach ($fields as $f){
+			if (!in_array($f, $this->not_fillable)){
+				$this->not_fillable[] = $f;
+			}
+		}
 
 		return $this;	
 	}
@@ -691,7 +706,7 @@ class Model {
 	 *
 	 * @return void
 	 */
-	function unfill(array $fields){
+	protected function unfillAll(array $fields){
 		if (!empty($this->fillable) && !empty($fields)){		
 			foreach ($this->fillable as $ix => $f){
 				foreach ($fields as $to_unset){

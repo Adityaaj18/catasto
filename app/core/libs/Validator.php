@@ -201,7 +201,7 @@ class Validator implements IValidator
 		@return boolean
 
 	*/
-	function validate(array $data, ?array $rules = null, $fillables = null) : bool 
+	function validate(array $data, ?array $rules = null, $fillables = null, $not_fillables = null) : bool 
 	{
 		if (empty($rules))
 			throw new \InvalidArgumentException('No validation rules!');
@@ -213,6 +213,23 @@ class Validator implements IValidator
 				if (!in_array($field, $fillables)){
 					$errors[$field][] = [
 						"error" => "fillable",
+						"error_detail" => "Field is not fillable"
+					];
+				}
+			}
+
+			// Por eficiencia si hay campos no-fillables, aborto.
+			if (!empty($errors)){
+				$this->errors = $errors;
+				return false;
+			}
+		}
+
+		if ($not_fillables !== null){
+			foreach ($data as $field => $value){
+				if (in_array($field, $not_fillables)){
+					$errors[$field][] = [
+						"error"        => "not_fillable",
 						"error_detail" => "Field is not fillable"
 					];
 				}

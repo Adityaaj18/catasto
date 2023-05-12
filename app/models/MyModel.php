@@ -4,6 +4,7 @@ namespace simplerest\models;
 
 use simplerest\core\Model;
 use simplerest\core\libs\DB;
+use simplerest\core\libs\Logger;
 
 class MyModel extends Model 
 {
@@ -13,6 +14,11 @@ class MyModel extends Model
     
     function __construct(bool $connect = false, $schema = null, bool $load_config = true){
         parent::__construct($connect, $schema, $load_config);
+
+        $this->unfill([
+            'status',
+            'result'
+        ]);
 
         $this->hide([
             'created_at',
@@ -40,6 +46,11 @@ class MyModel extends Model
     }
 
     protected function init(){		
-		
 	}
+
+    function __destruct()
+    {
+        Logger::dd($this->hidden, 'HIDDEN');
+		Logger::dd($this->not_fillable, 'NOT FILLABLE'); ///////////////////
+    }
 }

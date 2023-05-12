@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const deleteAllowed = allowDelete(belongs_to, viewData.userId, viewData.roles)
 
       const del_btn = `<button type="button" onclick="deleteBtn(${id})" class="btn btn-danger tabulator-btn" ><i class="fa fa-trash text-white"></i></button>`
-      const edt_btn = `<button type="button" onclick='editBtn(${id})' class="btn btn-success tabulator-btn" ><i class="fa fa-pen text-black"></i></button>`;
+      const edt_btn = `<button type="button" onclick='editBtn(${id})' class="btn btn-success tabulator-btn" ><i class="fa fa-pen text-white"></i></button>`;
 
       return `<div class="d-flex gap-2 justify-content-center">${edt_btn}${del_btn}</div>`;
     },

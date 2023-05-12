@@ -122,6 +122,99 @@ class ValidatorController extends MyController
         } 
     }
 
+    function test_fillables_validation(){
+        $data = [
+            'frutas_favoritas'  => ['bananas','manzanas'],  
+            'frutas_todas'      => ['bananas', 'manzanas', 'peras', 'mandarinas', 'uvas'],
+            'colecciones'       => 'XYZ',
+            'magia'             => 22,            
+        ];
+
+        $rules = [
+            'frutas_favoritas' 	=> ['type'=>'array','len'=>3, 'min' => 50],    
+            'frutas_todas'      => ['type'=>'array','min_len'=> 5],   
+            'colecciones'       => ['type' => 'array'],
+            'magia'             => ['in' => [3, 21, 81]], //
+        ];
+
+        $fillables = [
+            'frutas_favoritas',
+            'colecciones',
+            'magia'
+        ];
+
+        $v = new Validator;
+
+        /*
+            --| Errores de validacion
+
+            Array
+            (
+                [frutas_todas] => Array
+                    (
+                        [0] => Array
+                            (
+                                [error] => fillable
+                                [error_detail] => Field is not fillable
+                            )
+
+                    )
+
+            )
+         */                       
+        if ($v->validate($data, $rules, $fillables)){
+            dd('Valido');
+        } else {
+           dd($v->getErrors(), 'Errores de validacion');
+        } 
+    }
+
+    function test_not_fillables_validation(){
+        $data = [
+            'frutas_favoritas'  => ['bananas','manzanas'],  
+            'frutas_todas'      => ['bananas', 'manzanas', 'peras', 'mandarinas', 'uvas'],
+            'colecciones'       => 'XYZ',
+            'magia'             => 22,            
+        ];
+
+        $rules = [
+            'frutas_favoritas' 	=> ['type'=>'array','len'=>3, 'min' => 50],    
+            'frutas_todas'      => ['type'=>'array','min_len'=> 5],   
+            'colecciones'       => ['type' => 'array'],
+            'magia'             => ['in' => [3, 21, 81]], //
+        ];
+
+        $not_fillables = [
+            'magia'
+        ];
+
+        $v = new Validator;
+
+        /*
+            --| Errores de validacion
+
+            Array
+            (
+                [magia] => Array
+                    (
+                        [0] => Array
+                            (
+                                [error] => not_fillable
+                                [error_detail] => Field is not fillable
+                            )
+
+                    )
+
+            )
+         */                       
+        if ($v->validate($data, $rules, null, $not_fillables)){
+            dd('Valido');
+        } else {
+           dd($v->getErrors(), 'Errores de validacion');
+        } 
+    }
+
+
     function test_validator_rules(){
         $data = [
             "fname" => "Tomas Juan",
