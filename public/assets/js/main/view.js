@@ -430,7 +430,7 @@ async function save_row(jsonData, id = null) {
       } else {
 
         // TODO Incluir un sweet alert de error en el servidor
-        console.log(error.toJSON())
+        console.log(error)
 
       }
     });
