@@ -1,7 +1,7 @@
 <?php
 
-use simplerest\core\libs\Files; // Debug only
 use simplerest\core\libs\HtmlBuilder\Tag;
+
 Tag::registerBuilder(\simplerest\core\libs\HtmlBuilder\Bt5Form::class);
 
 /** Definiciones de la vista */
