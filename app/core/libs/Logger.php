@@ -82,7 +82,7 @@ class Logger
 		return ($bytes > 0);
 	}
 
-	static function log($data, ?string $path = null, $append = true){	
+	static function log($data, ?string $path = null, $append = true, bool $extra_cr = false){	
 		if ($path === null){
 			$path = LOGS_PATH . static::getLogFilename();
 		} else {
@@ -96,7 +96,7 @@ class Logger
 		
 		$data = date("Y-m-d H:i:s"). "\t" .$data;
 
-		return Files::writeOrFail($path, $data. "\n",  $append ? FILE_APPEND : 0);
+		return Files::writeOrFail($path, $data. "\n" . ($extra_cr ? "\n" : ""),  $append ? FILE_APPEND : 0);
 	}
 
 	static function dump($object, ?string $path = null, $append = false){

@@ -286,7 +286,11 @@ class Strings
 		@param bool $trim
 		@param bool $empty_lines
 	*/
-	static function lines(string $str, bool $trim = false, bool $empty_lines = true){
+	static function lines(?string $str, bool $trim = false, bool $empty_lines = true){
+		if ($str == null){
+			return [];
+		}
+
 		$lines = explode(static::carriageReturn($str), $str);
 
 		if (!$empty_lines){

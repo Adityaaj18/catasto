@@ -2,10 +2,21 @@
 
 use simplerest\core\Route;
 use simplerest\libs\Debug;
+use simplerest\core\libs\Logger;
 use simplerest\core\libs\Mail;;;
 use simplerest\core\libs\System;
+use simplerest\core\libs\Strings;
 
 $route = Route::getInstance();
+
+Route::get('reqs', function(){
+	$lines = Strings::lines(Logger::getContent('reqs.txt'), true, false);
+	
+	dd(
+		$lines
+	);
+});
+
 
 Route::get('mem', function(){
 	dd(System::getMemoryLimit(), 'Memory limit');

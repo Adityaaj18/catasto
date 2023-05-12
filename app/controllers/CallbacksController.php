@@ -64,8 +64,7 @@ class CallbacksController extends MyController
         dd($status, 'STATUS');
         dd($result, 'RESULT');
 
-        Logger::log($dec, 'reqs.txt');
-
+        file_put_contents(LOGS_PATH . 'reqs.txt', json_encode($dec) . "\n", FILE_APPEND);
 
         /*
             - Generar un log con cada respuesta para que no se pierdan
