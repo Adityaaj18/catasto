@@ -12,7 +12,10 @@ class SociModel extends MyModel
 	protected $not_fillable = [
 	];
 
-	protected $field_names  = [];
+	protected $field_names  = [
+		'piva_cf_or_id' => 'P.IVA / CF / ID'
+	];
+
 	protected $formatters   = [];
 
     function __construct(bool $connect = false){

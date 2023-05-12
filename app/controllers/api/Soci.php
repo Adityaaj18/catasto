@@ -19,10 +19,21 @@ class Soci extends ApiController
 
     static protected $hide_in_response = false;
 
-    function __construct()
+    /*
+        Este no requiere callback
+    */
+    function onPostingAfterCheck($id, Array &$data)
     {       
-        parent::__construct();
-    }     
+        $piva_cf_or_id = $data['piva_cf_or_id'];
+
+        $url = 'https://imprese.openapi.it/soci/' . $piva_cf_or_id;
+
+        $res = OpenApiIT::makeRequest($data, $url);
+
+        if ($res['error'] !== null){
+            response()->error("OpenAPI error", $res['error'], $res['message']);
+        }
+    }        
     
     
 } 
