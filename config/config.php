@@ -9,8 +9,12 @@ require_once __DIR__ . '/constants.php';
 
 return [
 	
-	'openapi_it_key'      => '643a8732a6bdca67ac259004',
-	'callback_base_url'   => 'https://ticiwe.com/callbacks',
+	'openapi_it_key'           => '643a8732a6bdca67ac259004',
+	'sanbbox_openapi_it_key'   => '6446e9e42a5a2958251a51f2',
+
+	'callback_base_url'        => 'https://ticiwe.com/callbacks',
+		
+	'openapi_testing_mode'     => false, 
 
 	/*
 		DO NOT EDIT HERE ------>
@@ -62,7 +66,7 @@ return [
 		Intercepta errores
 	*/
 	
-	'error_handling' => false,
+	'error_handling' => true,
 
 	/*
 		Puede mostrar detalles como consultas SQL fallidas 

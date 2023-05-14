@@ -1,5 +1,6 @@
 <?php
 
+use simplerest\core\libs\Date;
 use simplerest\core\libs\i18n\Translate;
 
     // App bootstraping
@@ -88,3 +89,15 @@ use simplerest\core\libs\i18n\Translate;
         $p->boot();
     }
     
+    /*
+        TimeZone adjust
+    */
+
+    $cfg = config();
+    if (isset($cfg['DateTimeZone'])){
+        $ok = date_default_timezone_set($cfg['DateTimeZone']);
+        
+        if (!$ok){
+            dd("FALLO AL INTENTAR CAMBIAR TIMEZONE");
+        }
+    }

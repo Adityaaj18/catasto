@@ -2,7 +2,7 @@
 
 namespace simplerest\controllers;
 
-use simplerest\libs\OpenApiIT;
+use simplerest\libs\OpenApi;
 use simplerest\core\libs\Logger;
 use simplerest\controllers\MyController;
 
@@ -19,7 +19,7 @@ class CallbacksController extends MyController
 
         https://ticiwe.com/callbacks?r=rintracio&sub=telefoni
 
-        Hacer uso de OpenApiIT::getParams($table) para saber que parametri buscar en la response
+        Hacer uso de OpenApi::getParams($table) para saber que parametri buscar en la response
         y poder asi "poblar" la tabla
     */
     function index()
@@ -30,7 +30,7 @@ class CallbacksController extends MyController
             return;
         }
 
-        $dec = OpenApiIT::decode($req);
+        $dec = OpenApi::decode($req);
 
         if (empty($dec)){
             return;
@@ -54,7 +54,7 @@ class CallbacksController extends MyController
         if (isset($dec['parametri'])){
             $parametri   = $dec['parametri'];
         } else {
-            //$param_names = OpenApiIT::getParams($table);
+            //$param_names = OpenApi::getParams($table);
         }
 
         dd($endpoint, 'ENDPOINT');

@@ -1,0 +1,25 @@
+{
+  "data": {
+      "cf_piva": "GBTGTR30C19H890H",
+      "callback": {
+          "url": "https://ticiwe.com/callbacks?r=rintracio&sub=telefoni",
+          "field": "data",
+          "method": "POST",
+          "data": {}
+      },
+      "tipo": [
+          "telefoni"
+      ],
+      "esito": null,
+      "timestamp": 1684035146,
+      "owner": "fabio56istrefi@gmail.com",
+      "id": "6460564a659b2c4a9f4b7de7",
+      "soggetto": null,
+      "status": "PENDING",
+      "date_request": null,
+      "date_completion": null
+  },
+  "success": true,
+  "message": "",
+  "error": null
+}

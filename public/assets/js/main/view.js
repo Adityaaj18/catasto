@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hozAlign: "center",
     headerSort: false,
     maxWidth: 40,
-    width: 40,
+    width: 40
   });
 
   for (var field in viewData.defs) {
@@ -404,6 +404,8 @@ async function save_row(jsonData, id = null) {
       data: jsonData,
     })
     .then(({ data }) => {
+      console.log(data)
+
       // TODO: Importante revisar, el data response devuelto en POST difiere mucho del devuelto en PATCH
       if (id) {
         const row = { ...data.data, id: id };

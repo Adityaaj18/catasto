@@ -6,7 +6,7 @@ use simplerest\core\libs\System;
 use simplerest\core\libs\Strings;
 use simplerest\core\libs\ApiClient;
 use simplerest\core\controllers\Controller;
-use simplerest\libs\OpenApiIT;
+use simplerest\libs\OpenApi;
 
 class DumbController extends Controller
 {
@@ -40,34 +40,6 @@ class DumbController extends Controller
         );
     }
 
-
-    function is_json(){
-        // false
-        dd(Strings::isJSON(2));
-        
-        // false
-        dd(Strings::isJSON('Pablo'));
-        
-        // true
-        dd(Strings::isJSON('{
-            "nombre": "Pablo"   
-        }'));
-
-        // true
-        dd(Strings::isJSON('{
-            "nombre": "Pablo"   
-        }'));
-
-        // false (el JSON, de hecho, es invalido)
-        dd(Strings::isJSON('{
-            "nombre": "Pablo",    
-        }', false));
-
-        // true (el JSON, de hecho, es invalido pero el chequeo rapido no hace el decode)
-        dd(Strings::isJSON('{
-            "nombre": "Pablo",    
-        }', true));
-    }
     /*
         {
             "data": {
@@ -102,7 +74,7 @@ class DumbController extends Controller
 
         $url = 'https://rintraccio.openapi.it/telefoni';
 
-        $res = OpenApiIT::makeRequest($data, $url, "?r=rintracio&sub=telefoni");
+        $res = OpenApi::makeRequest($data, $url, "?r=rintracio&sub=telefoni");
 
         /*
             La respuesta puede ser variada, incluyendo:
@@ -122,5 +94,32 @@ class DumbController extends Controller
         );
     }
 
+    function test_post_fake_response(){
+        $data = [
+            "cf_piva" => "GBTGTR30C19H890H"
+        ];
+
+        $url = 'https://rintraccio.openapi.it/telefoni';
+
+        OpenApi::mock(ETC_PATH . 'mocks/telefono.json'); // <--------------------------------------------- especifico del endpoint
+        $res = OpenApi::makeRequest($data, $url, "?r=rintracio&sub=telefoni");
+
+        /*
+            La respuesta puede ser variada, incluyendo:
+
+            Array
+            (
+                [success] =>
+                [message] => Insufficient Credit in Wallet: 0.7 > 0.6
+                [error] => 223
+                [data] =>
+                [trace] => WyJpbmRleC5waHBAMjY2IiwiY2xhc3MuQXZXcy5waHBAMjE3IiwiaW5kZXgucGhwQDQ0MiJd
+            )
+        */
+
+        dd(
+            $res
+        );
+    }
 }
 // end class

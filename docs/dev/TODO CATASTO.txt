@@ -1,6 +1,10 @@
 TODO CATASTO
 ------------
 
+- Arreglar el checkbox perdido para seleccionar multiples rows 
+
+https://tabulator.info/docs/5.4/select
+
 - Recordar seleccion de campos del filtro guardando seleccion en localStorage
 
 - Arreglar permisos del lado del frontEnd
@@ -15,6 +19,11 @@ TODO CATASTO
 	- selectableCheck ----> checkbox para borrrado masivo
 
 	- formatter  ---------> botones de editar y borrado
+
+- Ver la posibilidad de seleccionar o no determinados registros para el borrado masivo :
+
+https://stackoverflow.com/questions/65765534/how-can-i-remove-hide-one-checkbox-when-using-formatterrowselection-in-tabul
+
 
 - Intentar mediante relacion 1:1 relacionar los modelos de cada request-response 
 

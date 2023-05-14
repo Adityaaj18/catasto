@@ -2,11 +2,11 @@
 
 namespace simplerest\controllers\api;
 
-use simplerest\libs\OpenApiIT;
+use simplerest\libs\OpenApi;
 use simplerest\core\libs\Logger;
-use simplerest\core\api\v1\ApiController;
+use simplerest\controllers\MyApiController; 
 
-class Soci extends ApiController
+class Soci extends MyApiController
 { 
     static protected $soft_delete = true;
     static protected $connect_to = [
@@ -19,7 +19,7 @@ class Soci extends ApiController
 
     static protected $hide_in_response = false;
 
-    /*
+     /*
         Este no requiere callback
     */
     function onPostingAfterCheck($id, Array &$data)
@@ -28,12 +28,10 @@ class Soci extends ApiController
 
         $url = 'https://imprese.openapi.it/soci/' . $piva_cf_or_id;
 
-        $res = OpenApiIT::makeRequest($data, $url);
+        $res = OpenApi::makeRequest($data, $url);
 
         if ($res['error'] !== null){
             response()->error("OpenAPI error", $res['error'], $res['message']);
         }
-    }        
-    
-    
+    }         
 } 

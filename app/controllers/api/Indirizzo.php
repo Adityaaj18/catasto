@@ -2,7 +2,7 @@
 
 namespace simplerest\controllers\api;
 
-use simplerest\libs\OpenApiIT;
+use simplerest\libs\OpenApi;
 use simplerest\controllers\MyApiController; 
 
 class Indirizzo extends MyApiController
@@ -22,7 +22,7 @@ class Indirizzo extends MyApiController
     {       
         $url = 'https://catasto.openapi.it/richiesta/indirizzo/';
 
-        $res = OpenApiIT::makeRequest($data, $url, "?r=realstate&sub=indirizzo");
+        $res = OpenApi::makeRequest($data, $url, "?r=realstate&sub=indirizzo");
 
         if ($res['error'] !== null){
             response()->error("OpenAPI error", $res['error'], $res['message']);

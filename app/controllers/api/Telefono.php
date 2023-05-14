@@ -2,8 +2,9 @@
 
 namespace simplerest\controllers\api;
 
-use simplerest\libs\OpenApiIT;
+use simplerest\libs\OpenApi;
 use simplerest\core\libs\Logger;
+use simplerest\core\libs\Strings;
 use simplerest\controllers\MyApiController; 
 
 class Telefono extends MyApiController
@@ -21,9 +22,9 @@ class Telefono extends MyApiController
 
     function onPostingAfterCheck($id, Array &$data)
     {       
-        $url = 'https://rintraccio.openapi.it/telefoni/';
+        $url  = "https://rintraccio.openapi.it/telefoni/";
 
-        $res = OpenApiIT::makeRequest($data, $url, "?r=rintracio&sub=telefoni");
+        $res  = OpenApi::makeRequest($data, $url, "?r=rintracio&sub=telefoni");
 
         /*
             La respuesta puede ser variada, incluyendo:
@@ -63,6 +64,7 @@ class Telefono extends MyApiController
             }
         */
 
+    
         if ($res['error'] !== null){
             response()->error("OpenAPI error", $res['error'], $res['message']);
         }

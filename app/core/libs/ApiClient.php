@@ -29,7 +29,7 @@ class ApiClient
     protected $response;
     protected $filename;
     protected $res_headers;
-    protected $auto_decode = true;
+    protected $auto_decode;
     protected $status;
     protected $error;
 
@@ -41,6 +41,39 @@ class ApiClient
     protected $expiration;
     protected $read_only = false;
 
+    // Mock
+    protected $mocked;
+
+    /*
+        Debe usarse *antes* de llamar a request(), get(), post(), etc
+
+        $mock puede ser la ruta a un archivo .json, .php o un array
+    */
+    function mock($mock)
+    {   
+        if (is_string($mock) && Strings::endsWith('.php', $mock)){
+            if (!file_exists($mock)){
+                throw new \Exception("Mock file '$mock' not found");
+            }
+
+            $mock = require $mock;
+        }
+
+        if (is_string($mock) && Strings::endsWith('.json', $mock)){
+            if (!file_exists($mock)){
+                throw new \Exception("Mock file '$mock' not found");
+            }
+
+            $mock = file_get_contents($mock);
+        }
+
+        if (is_array($mock)){
+            $mock = json_encode($mock, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_SLASHES);
+        }
+
+        $this->response = $mock;
+        $this->mocked   = true;
+    }
 
     function dump(){
         return [
@@ -177,6 +210,17 @@ class ApiClient
         return $this->setCache($expiration_time);
     }
 
+    /*
+        Revisar. No funciona bien
+    */
+    function cacheUntil(string $datetime){
+        $expiration_time = Date::diffInSeconds($datetime);
+
+        dd($expiration_time, 'EXP TIME (SECS)');
+
+        return $this->setCache($expiration_time);
+    }
+
     function clearCache(){
         unlink($this->getCachePath());
         return $this;
@@ -192,16 +236,16 @@ class ApiClient
     }
 
     function getError(){
-        return Strings::isJSON($this->error) ? json_decode($this->error, true) : $this->error;
+        return $this->error;
     }
 
     // alias de getError()
     function error(){
-        return $this->getError();
+        return $this->error;
     }
 
     function data(){
-        return ($this->auto_decode && Strings::isJSON($this->response)) ? json_decode($this->response, true) : $this->response;
+        return $this->response;
     }
 
     function getResponse(?bool $decode = null, ?bool $as_array = null){       
@@ -429,6 +473,10 @@ class ApiClient
     }
 
     function request(string $url, string $http_verb, $body = null, ?Array $headers = null, ?Array $options = null){
+        if ($this->mocked){
+            return $this;
+        }
+
         $this->url  = $url;
         $this->verb = strtoupper($http_verb);
 
@@ -455,6 +503,7 @@ class ApiClient
 
         $body    = $body    ?? $this->body    ?? null;
         $headers = $headers ?? $this->req_headers ?? null;        
+        $decode  = $this->auto_decode; 
 
         if ($this->expiration == null){
             $expired = true;
@@ -614,6 +663,8 @@ class ApiClient
         CACHE
 
         En vez de guardar en disco..... usar Transientes con drivers como Memcached o REDIS !
+
+        Debe generar un HASH con todos los parametros y sino son iguales... se considera otra cache
     */
 
     function getCachePath(){
