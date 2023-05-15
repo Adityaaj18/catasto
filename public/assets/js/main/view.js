@@ -26,12 +26,16 @@ const viewData = {};
 var   table = undefined;
 const columns = [];
 
+// create, edit, see
+let view_mode;
+
 // * Obtiene los parámetros para la vista provistos desde el servidor mediante campos ocultos
 // * Los parámetros están codificados en base64
 document.addEventListener("DOMContentLoaded", () => {
   viewData.defs     = var_decode('defs');
   viewData.tenantid = var_decode('tenantid');
   viewData.entity   = var_decode('entity');
+  viewData.fields   = Object.keys(viewData.defs)
   viewData.userId   = uid;
   viewData.roles    = roles
   viewData.api_url  = `${window.location.origin}/api/v1/${viewData.entity}`;
@@ -388,23 +392,30 @@ const allowDelete = (belongsTo, userId, userRole) => {
 
 /** Funciones para los botones del DataGrid */
 const deleteBtn = (id) => {
+  setMode('delete')
+
   if (!confirm("Seguro de borrar?")) {
     // TODO: Agregar notificación de SweetAlert
     return;
   }
+
   axiosInstance
     .delete(`${viewData.entity}/${id}`)
     .then(() => table.deleteRow(id));
 };
 
 const editBtn = (id) => {
+  setMode('edit')
+
   axiosInstance
     .get(`${viewData.entity}/${id}`)
-    .then(({ data }) => fillForm(data.data, "col-"))
+    .then(({ data }) => fillForm(data.data, "col-", { readonly: false }))
     .then(() => showModal("row-form-modal"));
 };
 
 const seeBtn = (id) => {
+  setMode('see')
+
   axiosInstance
     .get(`${viewData.entity}/${id}`)
     .then(({ data }) => fillForm(data.data, "col-", { readonly: true }))
@@ -483,3 +494,36 @@ async function save_row(jsonData, id = null) {
     });
 }
 
+
+const setMode = (mode) => {
+  view_mode = mode
+
+  if (mode == 'see'){
+    $('#save_row').hide();
+  } else {
+    $('#save_row').show();
+  }
+
+  if (mode == 'create'){
+    $('.modal-title').text('New')
+    return
+  }
+
+  if (mode == 'edit'){
+    $('.modal-title').text('Edit')
+    return
+  }
+
+  if (mode == 'see'){
+    $('.modal-title').text('')
+    return
+  }
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  document.getElementById('btn-create').onclick = function () { 
+    setMode('create')
+
+    setAttr(viewData.fields, 'col-', { readonly: false })
+  };
+})
