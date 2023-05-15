@@ -411,11 +411,12 @@ let tmp;
 
 async function save_row(jsonData, id = null) {
   delete jsonData.id;
-  // TODO: Implementar setNotification(error)
+  
   const uri = id
     ? `${window.location.origin}/api/v1/${viewData.entity}/${id}`
     : `${window.location.origin}/api/v1/${viewData.entity}`;
-  axiosInstance
+  
+    axiosInstance
     .request({
       url: uri,
       method: id ? "PATCH" : "POST",
@@ -433,7 +434,15 @@ async function save_row(jsonData, id = null) {
         const row = { ...data.data[viewData.entity], id: data.data.id };
         table.addData([row], true);
       }
+
       hideModal("row-form-modal");
+    
+      Swal.fire(
+        'Request accepted',
+        '',
+        'success'
+      )
+
     })
     .catch((error) => {
       tmp = error
@@ -442,7 +451,7 @@ async function save_row(jsonData, id = null) {
       const err_msg = tmp?.response?.data?.error?.message || tmp?.message || (!Array.isArray(detail) ? errors : null) || "Unknown error"
         
       console.log(err_msg)  
-      
+
       if (Array.isArray(detail)) {
 
         let validations = {};
