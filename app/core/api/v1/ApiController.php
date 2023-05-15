@@ -1185,6 +1185,7 @@ abstract class ApiController extends ResourceController implements IApi, ISubRes
                 // event hook    
                 $this->onPostingFolderAfterCheck($id, $data, $this->folder);
             }
+        
 
             // event hook             
             $this->onPostingAfterCheck($id, $data);

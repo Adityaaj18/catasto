@@ -1,3 +1,7 @@
+/*
+  Renombrar a main.js
+*/
+
 /** Constantes Globales */
 
 const uid   = localStorage.getItem("uid");
@@ -6,7 +10,7 @@ const roles = localStorage.getItem("roles");
 
 const defaultHeaders = {
   "Authorization": `Bearer ${token}`,
-  "Accept-Language": 'es'
+  "Accept-Language": 'it'
 };
 
 const axiosInstance = axios.create({
@@ -53,11 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /** Limpieza del formulario al cerrar modal */
   document
-    .getElementById("row-form-modal")
-    .addEventListener("hidden.bs.modal", function (e) {
-      clearForm("mainForm"); // Reinicia los campos visibles del formulario
-      $("#col-id").val(""); // Limpia el campo oculto del Id
-    });
+  .getElementById("row-form-modal")
+  .addEventListener("hidden.bs.modal", function (e) {
+    clearForm("mainForm"); // Reinicia los campos visibles del formulario
+    $("#col-id").val(""); // Limpia el campo oculto del Id
+  });
 
 
   async function create_collection(entity, selectedRows) {
@@ -107,6 +111,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!confirm(`Está por borrar ${checked_count} registros. Está seguro?`)) {
       return;
     }
+
+     // Cambiar por sweet alert
+    // Swal.fire({
+    //   title: `You are going to delete ${checked_count} rows. Are you sure?`,
+    //   showCancelButton: true,
+    //   confirmButtonText: 'Proceed',
+    //   denyButtonText: `Cancel`,
+    // }).then((result) => {
+    //   /* Read more about isConfirmed, isDenied below */
+    //   if (!result.isConfirmed) {
+    //     return;
+    //   }
+    // })
 
     console.log("Procedo a borrar .... !", selectedRows);
 
@@ -390,6 +407,8 @@ const editBtn = (id) => {
 
 /** Funciones de CRUD */
 
+let tmp;
+
 async function save_row(jsonData, id = null) {
   delete jsonData.id;
   // TODO: Implementar setNotification(error)
@@ -417,22 +436,33 @@ async function save_row(jsonData, id = null) {
       hideModal("row-form-modal");
     })
     .catch((error) => {
+      tmp = error
 
-      const errors = error?.response?.data?.error?.detail; // Errores de validación
-
-      if (errors) {
+      const detail  = error?.response?.data?.error?.detail; // Errores de validación
+      const err_msg = tmp?.response?.data?.error?.message || tmp?.message || (!Array.isArray(detail) ? errors : null) || "Unknown error"
+        
+      console.log(err_msg)  
+      
+      if (Array.isArray(detail)) {
 
         let validations = {};
         for (let field in jsonData) {
-          validations[field] = [{ error: false }]; // Inicializa con error false todos los campos
+          validations[field] =
+           [{ error: false }]; // Inicializa con error false todos los campos
         }
-        validations = { ...validations, ...errors }; // Incorpora los errores de validación
+
+        validations = { ...validations, ...detail }; // Incorpora los errores de validación
+        
         setFormValidations(validations);
 
-      } else {
-
-        // TODO Incluir un sweet alert de error en el servidor
-        console.log(error)
+      } else {        
+  
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops... something went wrong',
+          text: err_msg,
+          // footer: '<a href="">Why do I have this issue?</a>'
+        })
 
       }
     });

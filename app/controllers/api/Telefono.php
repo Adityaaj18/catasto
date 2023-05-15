@@ -21,9 +21,15 @@ class Telefono extends MyApiController
     static protected $hide_in_response = false;
 
     function onPostingAfterCheck($id, Array &$data)
-    {       
+    {  
+        //throw new \Exception("FOO");
+
         $url  = "https://rintraccio.openapi.it/telefoni/";
 
+        if (config()['mock_responses']){
+            OpenApi::mock(ETC_PATH . 'mocks/telefono.json'); // <------- especifico del endpoint
+        }
+        
         $res  = OpenApi::makeRequest($data, $url, "?r=rintracio&sub=telefoni");
 
         /*
@@ -64,9 +70,8 @@ class Telefono extends MyApiController
             }
         */
 
-    
         if ($res['error'] !== null){
-            response()->error("OpenAPI error", $res['error'], $res['message']);
-        }
+            response()->error("OpenAPI error", $res['error'] ?? "Error", $res['message'] ?? null);
+        } 
     }     
 } 

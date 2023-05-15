@@ -1421,14 +1421,6 @@ class Strings
 			return false;
 		}
 
-		if (substr($val, 0, 1) != '{'){
-			return false;
-		}
-
-		if (substr($val, strlen($val)-1, 1) != '}'){
-			return false;
-		}
-
 		if (!$fast_check){
 			if (json_decode($val) === null){
 				return false;
