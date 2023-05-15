@@ -230,17 +230,17 @@ document.addEventListener("DOMContentLoaded", () => {
   columns.push({
     //column definition in the columns array
     formatter: function (cell) {
-      const { id } = cell.getRow().getData();
-      const belongs_to = cell.getRow().getData().belongs_to;
-      const deleteAllowed = allowDelete(belongs_to, viewData.userId, viewData.roles)
+      const { id }         = cell.getRow().getData();
+      const belongs_to     = cell.getRow().getData().belongs_to;
+      const deleteAllowed  = allowDelete(belongs_to, viewData.userId, viewData.roles)
 
       const del_btn = `<button type="button" onclick="deleteBtn(${id})" class="btn btn-danger tabulator-btn" ><i class="fa fa-trash text-white"></i></button>`
       const edt_btn = `<button type="button" onclick='editBtn(${id})' class="btn btn-success tabulator-btn" ><i class="fa fa-pen text-white"></i></button>`;
+      const see_btn = `<button type="button" onclick='seeBtn(${id})' class="btn btn-info tabulator-btn" ><i class="fa fa-eye text-white"></i></button>`;
 
-      return `<div class="d-flex gap-2 justify-content-center">${edt_btn}${del_btn}</div>`;
+      return `<div class="d-flex justify-content-center">${see_btn}${edt_btn}${del_btn}</div>`;
     },
-    maxWidth: 70,
-    width: 70,
+    width: 160,
     hozAlign: "right",
     frozen: true
   });
@@ -281,6 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /** Renderización */
     height: "325px",
     layout: "fitDataFill",
+
     // responsiveLayout: "collapse",
     resizableColumnFit: true,
     placeholder: "No data",
@@ -297,16 +298,14 @@ document.addEventListener("DOMContentLoaded", () => {
   /** Edición de celdas del DataGrid */
   table.on("cellEdited", async (proxy) => {
     const { oldValue, value } = proxy._cell;
-    const { field } = proxy.getColumn()._column;
-    const row = proxy.getData();
+    const { field }           = proxy.getColumn()._column;
+    const row                 = proxy.getData();
 
     if (value === oldValue) {
       return;
     }
-
-    const editedData = {};
-    editedData[field] = value;
-    save_row(editedData, row.id);
+    
+    save_row({ [field]: value }, row.id);
   });
 
   /** Descarga del DataGrid */
@@ -402,6 +401,13 @@ const editBtn = (id) => {
   axiosInstance
     .get(`${viewData.entity}/${id}`)
     .then(({ data }) => fillForm(data.data, "col-"))
+    .then(() => showModal("row-form-modal"));
+};
+
+const seeBtn = (id) => {
+  axiosInstance
+    .get(`${viewData.entity}/${id}`)
+    .then(({ data }) => fillForm(data.data, "col-", { readonly: true }))
     .then(() => showModal("row-form-modal"));
 };
 

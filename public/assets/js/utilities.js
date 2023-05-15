@@ -112,9 +112,17 @@ const getFormDataByClassName = (elem_class, use_id = true, prefix = null) => {
 
     fillForm(obj, 'col-')
 */
-const fillForm = (data_obj, prefix = null) => {
+const fillForm = (data_obj, prefix = null, attributes = {}) => {
     for (const [key, value] of Object.entries(data_obj)) {
-        $('#' + (prefix == null ? '' : prefix) + key).val(value)
+        const selector = $('#' + (prefix == null ? '' : prefix) + key)
+        
+        selector.val(value)
+
+        for (const a in attributes) {
+            selector.attr(a, attributes[a]); 
+        }
+
+        
     }
 }
 

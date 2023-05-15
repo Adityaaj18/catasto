@@ -2,42 +2,45 @@
 
 .tabulator {
 	font-size: 1rem;
-  }
-  
-  .tabulator-row .tabulator-cell {
+}
+
+.tabulator-row .tabulator-cell {
 	padding: 5px;
-  }
-  
-  .tabulator-cell {
+}
+
+.tabulator-cell {
 	height: 40px;
-  }
-  .tabulator-btn {
+}
+
+.tabulator-btn {
+	width: 30px;
 	padding: 0.1rem 0.3rem;
-  }
-  .tabulator-unselectable input[type='checkbox'] {
+}
+
+.tabulator-unselectable input[type='checkbox'] {
 	display: none;
-  }
-  
-  #tabulator-columns-toggler-container {
-	  display: flex;
-	  flex-direction: column;
-	  max-height: 200px;
-	  overflow-y: scroll;
-	  padding-left: 15px;
-  }
-  
-  /** Estilos de los botones */
-  
-  .label-icon {
-	  position: relative;
-	  left: -12px;
-	  display: inline-block;
-	  padding: 6px 12px;
-	  background: rgba(0, 0, 0, 0.15);
-	  border-radius: 3px 0 0 3px;
-  }
-  
-  .btn-label {
-	  padding-top: 0;
-	  padding-bottom: 0;
-  }
+}
+
+#tabulator-columns-toggler-container {
+	display: flex;
+	flex-direction: column;
+	max-height: 200px;
+	overflow-y: scroll;
+	padding-left: 15px;
+}
+
+/** Estilos de los botones */
+
+.label-icon {
+	position: relative;
+	left: -12px;
+	display: inline-block;
+	padding: 6px 12px;
+	background: rgba(0, 0, 0, 0.15);
+	border-radius: 3px 0 0 3px;
+}
+
+.btn-label {
+	padding-top: 0;
+	padding-bottom: 0;
+}
