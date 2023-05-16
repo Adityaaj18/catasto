@@ -17,7 +17,7 @@ class OpenApi
     static function getParams($table){
         $defs = get_defs($table, 'main', false, false);
 
-        return $defs;
+        return array_keys($defs);
     }
 
     /*

@@ -3,7 +3,9 @@
 namespace simplerest\controllers;
 
 use simplerest\libs\OpenApi;
+use simplerest\core\libs\Url;
 use simplerest\core\libs\Logger;
+use simplerest\core\libs\Strings;
 use simplerest\controllers\MyController;
 
 class CallbacksController extends MyController
@@ -30,23 +32,52 @@ class CallbacksController extends MyController
             return;
         }
 
-        $dec = OpenApi::decode($req);
+        // Admito JSON para poder probar en POSTMAN con respuestas ya decodificadas
+        $dec = Strings::isJSON($req) ? json_decode($req, true) : OpenApi::decode($req);
 
         if (empty($dec)){
             return;
         }
 
-        // $r         = $_GET['r']   ?? null;
-        // $sub       = $_GET['sub'] ?? null;
-        
-        // dd($r, 'R');
-        // dd($sub, 'SUB');
-
         $status    = $dec['status']   ?? $dec['stato'] ?? '';
-        $callback  = $dec['callback'] ?? null;
-        $callback  = $callback['url'] ?? null;
         $result    = $dec['soggetto'] ?? $dec['risultato'] ?? '';
-        $endpoint  = $dec['endpoint'] ?? null;
+        $callback  = $dec['callback']['url'] ?? null;
+        
+        $cb_params = Url::getQueryParams($callback);
+        $r_sub     = 'r='.$cb_params['r'] .'&sub='. $cb_params['sub'];
+
+        switch($r_sub){
+            case 'r=realstate&sub=elenco_immobili':
+                $endpoint = 'elenco_immobili';
+            break;
+        
+            case 'r=realstate&sub=prospetto_catastale':
+                $endpoint = 'prospetto_catastale';
+            break;
+        
+            case 'r=realstate&sub=ricerca_persona':
+                $endpoint = 'ricerca_persona';
+            break;
+        
+            case 'r=realstate&sub=ricerca_nazionale':
+                $endpoint = 'ricerca_nazionale';
+            break;
+        
+            case '=realstate&sub=indirizzo':
+                $endpoint = 'indirizzo';
+            break;
+        
+            case 'r=company_info&sub=soci':
+                $endpoint = 'soci';
+            break;
+        
+            case 'r=rintracio&sub=telefoni':
+                $endpoint = 'telefono';
+            break;
+        
+            default:
+                throw new \Exception("Invalid callback for '$callback'");            
+        }
 
 
         $parametri = [];
@@ -54,7 +85,11 @@ class CallbacksController extends MyController
         if (isset($dec['parametri'])){
             $parametri   = $dec['parametri'];
         } else {
-            //$param_names = OpenApi::getParams($table);
+            $param_names = OpenApi::getParams($endpoint);
+
+            foreach($param_names as $pn){
+                $parametri[$pn] = $dec[$pn] ?? null;
+            }
         }
 
         dd($endpoint, 'ENDPOINT');
