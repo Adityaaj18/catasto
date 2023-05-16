@@ -6,7 +6,7 @@ use simplerest\core\libs\DB;
 use simplerest\libs\OpenApi;
 use simplerest\controllers\MyApiController; 
 
-class ProspetoCatastale extends MyApiController
+class ProspettoCatastale extends MyApiController
 { 
     static protected $soft_delete = true;
     static protected $connect_to = [
@@ -62,5 +62,5 @@ class ProspetoCatastale extends MyApiController
 
         $data['status']   = $status;
         $data['response'] = $res;
-    }          
+    }      
 } 

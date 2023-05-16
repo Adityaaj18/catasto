@@ -336,7 +336,7 @@ return [
 	'admin_menu_linked_pages' => [
 		'Realstate' => [
 			'Elenco immobili'    => '/admin/tabulator/elenco_immobili',
-			'Prospeto catastale' => '/admin/tabulator/prospeto_catastale',
+			'Prospeto catastale' => '/admin/tabulator/prospetto_catastale',
 			'Ricerca persona'    => '/admin/tabulator/ricerca_persona',
 			'Ricerca nazionale'  => '/admin/tabulator/ricerca_nazionale',
 			'Indirizzo'          => '/admin/tabulator/indirizzo',
