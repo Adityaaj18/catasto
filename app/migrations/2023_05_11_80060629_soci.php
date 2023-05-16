@@ -20,9 +20,7 @@ class Soci implements IMigration
         $sc = new Schema($this->table);
         $sc->int('id')->pri()->auto();
 
-
         $sc->varchar("piva_cf_or_id");
-
 
         /*
             Extras

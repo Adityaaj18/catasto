@@ -21,7 +21,7 @@ class CallbacksController extends MyController
 
         https://ticiwe.com/callbacks?r=rintracio&sub=telefoni
 
-        Hacer uso de OpenApi::getParams($table) para saber que parametri buscar en la response
+        Se hace uso de OpenApi::getParams($table) para saber que parametri buscar en la response
         y poder asi "poblar" la tabla
     */
     function index()
