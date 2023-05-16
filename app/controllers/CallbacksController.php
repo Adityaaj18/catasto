@@ -109,11 +109,11 @@ class CallbacksController extends MyController
 
         $data = $parametri;
 
-        foreach ($data as $key => $dato){
-            if (!in_array($key, DB::table($endpoint)->getFillables())){
-                unset($data[$key]);
-            }
-        }
+        // foreach ($data as $key => $dato){
+        //     if (!in_array($key, DB::table($endpoint)->getFillables())){
+        //         unset($data[$key]);
+        //     }
+        // }
 
         // dd($data, $endpoint);
         // exit;

@@ -86,7 +86,7 @@ class OpenApi
 
         $res = $client->data();  
 
-        // a veces viene basura antes y luego del JSON 
+        // A veces viene basura antes y luego del JSON 
         if (isset($res['message']) && Strings::contains('{', $res['message']) && Strings::contains('}', $res['message'])){
             $res['message'] = '{' . Strings::after($res['message'], '{');
             $res['message'] =       Strings::beforeLast($res['message'], '}') . '}';

@@ -2772,6 +2772,9 @@ class Model {
 			throw new SqlException('Array of data should be associative');
 		}
 
+		$this->ignoreFieldsNotPresentInSchema($data);
+
+	
 		$data = $this->applyInputMutator($data, 'UPDATE');
 		$vars = array_keys($data);
 		$vals = array_values($data);
@@ -3134,6 +3137,22 @@ class Model {
 	}
 
 	/*
+		Si un campo es enviado al Modelo pero realmente no existe en el schema
+		entonces se debe ignorar para evitar generar un error innecesario.
+	*/
+	protected function ignoreFieldsNotPresentInSchema(array &$data){
+		if (empty($this->schema)){
+			return;
+		}
+
+		foreach ($data as $key => $dato){
+			if (!in_array($key, $this->getFillables())){
+				unset($data[$key]);
+			}
+		}
+	}
+
+	/*
 		@return mixed false | integer 
 
 		Si la data es un array de arrays, intenta un INSERT MULTIPLE
@@ -3159,6 +3178,8 @@ class Model {
 		if (isset($data[0]) && is_array($data[0])){
 			return $last_id ?? null;
 		}
+
+		$this->ignoreFieldsNotPresentInSchema($data);
 
 		$this->data = $data;	
 		
