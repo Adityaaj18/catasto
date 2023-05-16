@@ -462,14 +462,17 @@ async function save_row(jsonData, id = null) {
 
     })
     .catch((error) => {
-      tmp = error
+      //tmp = error
 
       const detail  = error?.response?.data?.error?.detail; // Errores de validación
-      const err_msg = tmp?.response?.data?.error?.message || tmp?.message || (!Array.isArray(detail) ? errors : null) || "Unknown error"
+      const err_msg = error?.response?.data?.error?.message || error?.message || (!Array.isArray(detail) ? detail : null) || "Unknown error"
         
-      console.log(err_msg)  
+      console.log(err_msg) 
+      console.log(detail) 
 
-      if (Array.isArray(detail)) {
+      //tmp = detail
+
+      if (typeof(detail) == 'object') {
 
         let validations = {};
         for (let field in jsonData) {
@@ -478,6 +481,8 @@ async function save_row(jsonData, id = null) {
         }
 
         validations = { ...validations, ...detail }; // Incorpora los errores de validación
+
+        console.log(validations)
         
         setFormValidations(validations);
 
