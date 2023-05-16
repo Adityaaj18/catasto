@@ -2773,7 +2773,7 @@ class Model {
 		}
 
 		$data = $this->applyInputMutator($data, 'UPDATE');
-		$vars   = array_keys($data);
+		$vars = array_keys($data);
 		$vals = array_values($data);
 
 
@@ -2830,6 +2830,10 @@ class Model {
 			$where = '';
 		}
 
+		if (trim($where) == ''){
+			throw new SqlException("WHERE can not be empty in UPDATE statement");
+		}
+
 		$q = "UPDATE ". DB::quote($this->from()) .
 				" SET $set WHERE " . $where;		
 
@@ -2867,9 +2871,9 @@ class Model {
 		if ($this->semicolon_ending){
 			$q .= ';';
 		}
-	
-		// d($vals, 'vals');
-		// d($q, 'q');
+
+		// dd($vals, 'vals');
+		// dd($q, 'q');
 
 		$st = $this->conn->prepare($q);
 

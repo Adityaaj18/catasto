@@ -295,8 +295,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
       return true
     },
+
+    initialSort:[
+      {column:"id", dir:"desc"}, //sort by this first
+    ]
   })
 
+  /*
+    table.setSort() con un timeout funciona pero
+    estoy usando initialSort()
+  */
+
+  // setTimeout(() => {
+  //   table.setSort([
+  //     {column:"id", dir:"desc"},
+  //   ]);
+  // }, 100);
+
+ 
   /** Edición de celdas del DataGrid */
   table.on("cellEdited", async (proxy) => {
     const { oldValue, value } = proxy._cell;
@@ -473,12 +489,12 @@ async function save_row(jsonData, id = null) {
       const detail  = error?.response?.data?.error?.detail; // Errores de validación
       const err_msg = error?.response?.data?.error?.message || error?.message || (!Array.isArray(detail) ? detail : null) || "Unknown error"
         
-      console.log(err_msg) 
-      console.log(detail) 
+      console.log('err_msg', err_msg) 
+      console.log('detail', detail) 
 
-      //tmp = detail
+      tmp = detail
 
-      if (typeof(detail) == 'object') {
+      if (detail !== null && typeof(detail) === 'object') {
 
         let validations = {};
         for (let field in jsonData) {
@@ -488,7 +504,7 @@ async function save_row(jsonData, id = null) {
 
         validations = { ...validations, ...detail }; // Incorpora los errores de validación
 
-        //console.log(validations)
+        console.log(validations)
         
         setFormValidations(validations);
 

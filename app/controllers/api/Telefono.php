@@ -2,6 +2,7 @@
 
 namespace simplerest\controllers\api;
 
+use simplerest\core\libs\DB;
 use simplerest\libs\OpenApi;
 use simplerest\core\libs\Url;
 use simplerest\core\libs\Logger;
@@ -16,12 +17,12 @@ class Telefono extends MyApiController
 	];
 
     static protected $hidden = [
-
+        //'response'
     ];
 
     static protected $hide_in_response = false;
 
-    function onPostingAfterCheck($id, Array &$data)
+    function onPost($id, Array &$data)
     {  
         //throw new \Exception("FOO");
 
@@ -71,57 +72,34 @@ class Telefono extends MyApiController
             }
         */
 
-        $data      = $res['data'];
-
-        $status    = $data['status'] ?? $data['stato'] ?? null;
-        $callback  = $data['callback']['url'] ?? null;
-        
-        $cb_params = Url::getQueryParams($callback);
-        $r_sub     = 'r='.$cb_params['r'] .'&sub='. $cb_params['sub'];
-
-        switch($r_sub){
-            case 'r=realstate&sub=elenco_immobili':
-                $endpoint = 'elenco_immobili';
-            break;
-        
-            case 'r=realstate&sub=prospetto_catastale':
-                $endpoint = 'prospetto_catastale';
-            break;
-        
-            case 'r=realstate&sub=ricerca_persona':
-                $endpoint = 'ricerca_persona';
-            break;
-        
-            case 'r=realstate&sub=ricerca_nazionale':
-                $endpoint = 'ricerca_nazionale';
-            break;
-        
-            case '=realstate&sub=indirizzo':
-                $endpoint = 'indirizzo';
-            break;
-        
-            case 'r=company_info&sub=soci':
-                $endpoint = 'soci';
-            break;
-        
-            case 'r=rintracio&sub=telefoni':
-                $endpoint = 'telefono';
-            break;
-        
-            default:
-                throw new \Exception("Invalid callback for '$callback'");            
-        }
-
+        $_data     = $res['data'];
+        $status    = $_data['status'] ?? $_data['stato'] ?? null;
+       
         // $s_eq   = [
         //     'evasa' => 'SENT' // 'PENDING'
         // ];
 
-        dd($status, 'STATUS');
-        dd($callback, 'CALLBACK');
-        dd($endpoint, 'ENDPOINT');
+        //dd($status, 'STATUS');
 
         if ($res['error'] !== null){
             response()->error("OpenAPI error", $res['error'] ?? "Error", $res['message'] ?? null);
         } 
+
+        /*
+            Actualizo en la DB
+        */
+        DB::table($this->table_name)
+        ->find($id)
+        ->fill(['status'])
+        ->update([
+            'status' => $status
+        ]);
+
+        // dd(DB::getLog());
+
+        /*
+            Lo envio en la respuesta
+        */
+        $data['status'] = $status;
     }     
 } 
