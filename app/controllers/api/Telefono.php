@@ -73,7 +73,7 @@ class Telefono extends MyApiController
         */
 
         $_data     = $res['data'];
-        $status    = $_data['status'] ?? $_data['stato'] ?? null;
+        $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');
        
         // $s_eq   = [
         //     'evasa' => 'SENT' // 'PENDING'

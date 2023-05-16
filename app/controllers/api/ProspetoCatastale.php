@@ -2,6 +2,7 @@
 
 namespace simplerest\controllers\api;
 
+use simplerest\core\libs\DB;
 use simplerest\libs\OpenApi;
 use simplerest\controllers\MyApiController; 
 
@@ -27,5 +28,39 @@ class ProspetoCatastale extends MyApiController
         if ($res['error'] !== null){
             response()->error("OpenAPI error", $res['error'], $res['message']);
         }
+
+        $_data     = $res['data'];
+        $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');
+       
+        // $s_eq   = [
+        //     'evasa' => 'SENT' // 'PENDING'
+        // ];
+
+        //dd($status, 'STATUS');
+
+        if ($res['error'] !== null){
+            response()->error("OpenAPI error", $res['error'] ?? "Error", $res['message'] ?? null);
+        } 
+
+        /*
+            Actualizo en la DB
+        */
+        
+        DB::table($this->table_name)
+        ->find($id)
+        ->fill(['status', 'response'])
+        ->update([
+            'status'   => $status,
+            'response' => $res // $_data
+        ]);
+
+        // dd(DB::getLog());
+
+        /*
+            Lo envio en la respuesta
+        */
+
+        $data['status']   = $status;
+        $data['response'] = $res;
     }          
 } 

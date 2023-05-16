@@ -14,7 +14,7 @@ class RicercaNazionaleSchema implements ISchema
 
 			'id_name'		=> 'id',
 
-			'fields'		=> ['id', 'cf_piva', 'tipo_catasto', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'		=> ['id', 'cf_piva', 'tipo_catasto', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
 			'attr_types'	=> [
 				'id' => 'INT',
@@ -22,6 +22,7 @@ class RicercaNazionaleSchema implements ISchema
 				'tipo_catasto' => 'STR',
 				'result' => 'STR',
 				'status' => 'STR',
+				'response' => 'STR',
 				'created_at' => 'STR',
 				'updated_at' => 'STR',
 				'deleted_at' => 'STR'
@@ -31,7 +32,7 @@ class RicercaNazionaleSchema implements ISchema
 
 			'autoincrement' => 'id',
 
-			'nullable'		=> ['id', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
+			'nullable'		=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
 			'required'		=> ['cf_piva', 'tipo_catasto'],
 
@@ -43,6 +44,7 @@ class RicercaNazionaleSchema implements ISchema
 				'tipo_catasto' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'result' => ['type' => 'str'],
 				'status' => ['type' => 'str', 'max' => 20],
+				'response' => ['type' => 'str'],
 				'created_at' => ['type' => 'datetime'],
 				'updated_at' => ['type' => 'datetime'],
 				'deleted_at' => ['type' => 'datetime']

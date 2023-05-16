@@ -14,7 +14,7 @@ class IndirizzoSchema implements ISchema
 
 			'id_name'		=> 'id',
 
-			'fields'		=> ['id', 'id_indirizzo', 'dal_civico', 'al_civico', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'		=> ['id', 'id_indirizzo', 'dal_civico', 'al_civico', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
 			'attr_types'	=> [
 				'id' => 'INT',
@@ -23,6 +23,7 @@ class IndirizzoSchema implements ISchema
 				'al_civico' => 'STR',
 				'result' => 'STR',
 				'status' => 'STR',
+				'response' => 'STR',
 				'created_at' => 'STR',
 				'updated_at' => 'STR',
 				'deleted_at' => 'STR'
@@ -32,7 +33,7 @@ class IndirizzoSchema implements ISchema
 
 			'autoincrement' => 'id',
 
-			'nullable'		=> ['id', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
+			'nullable'		=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
 			'required'		=> ['id_indirizzo', 'dal_civico', 'al_civico'],
 
@@ -45,6 +46,7 @@ class IndirizzoSchema implements ISchema
 				'al_civico' => ['type' => 'str', 'max' => 30, 'required' => true],
 				'result' => ['type' => 'str'],
 				'status' => ['type' => 'str', 'max' => 20],
+				'response' => ['type' => 'str'],
 				'created_at' => ['type' => 'datetime'],
 				'updated_at' => ['type' => 'datetime'],
 				'deleted_at' => ['type' => 'datetime']

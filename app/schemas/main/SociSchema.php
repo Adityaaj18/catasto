@@ -14,13 +14,14 @@ class SociSchema implements ISchema
 
 			'id_name'		=> 'id',
 
-			'fields'		=> ['id', 'piva_cf_or_id', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'		=> ['id', 'piva_cf_or_id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
 			'attr_types'	=> [
 				'id' => 'INT',
 				'piva_cf_or_id' => 'STR',
 				'result' => 'STR',
 				'status' => 'STR',
+				'response' => 'STR',
 				'created_at' => 'STR',
 				'updated_at' => 'STR',
 				'deleted_at' => 'STR'
@@ -30,7 +31,7 @@ class SociSchema implements ISchema
 
 			'autoincrement' => 'id',
 
-			'nullable'		=> ['id', 'result', 'status', 'created_at', 'updated_at', 'deleted_at'],
+			'nullable'		=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
 			'required'		=> ['piva_cf_or_id'],
 
@@ -41,6 +42,7 @@ class SociSchema implements ISchema
 				'piva_cf_or_id' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'result' => ['type' => 'str'],
 				'status' => ['type' => 'str', 'max' => 20],
+				'response' => ['type' => 'str'],
 				'created_at' => ['type' => 'datetime'],
 				'updated_at' => ['type' => 'datetime'],
 				'deleted_at' => ['type' => 'datetime']

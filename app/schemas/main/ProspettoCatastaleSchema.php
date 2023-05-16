@@ -6,15 +6,15 @@ use simplerest\core\interfaces\ISchema;
 
 ### IMPORTS
 
-class ElencoImmobiliSchema implements ISchema
+class ProspettoCatastaleSchema implements ISchema
 { 
 	static function get(){
 		return [
-			'table_name'	=> 'elenco_immobili',
+			'table_name'	=> 'prospetto_catastale',
 
 			'id_name'		=> 'id',
 
-			'fields'		=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response'],
+			'fields'		=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'subalterno', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
 			'attr_types'	=> [
 				'id' => 'INT',
@@ -25,21 +25,22 @@ class ElencoImmobiliSchema implements ISchema
 				'sezione_urbana' => 'STR',
 				'foglio' => 'STR',
 				'particella' => 'STR',
+				'subalterno' => 'STR',
 				'result' => 'STR',
 				'status' => 'STR',
+				'response' => 'STR',
 				'created_at' => 'STR',
 				'updated_at' => 'STR',
-				'deleted_at' => 'STR',
-				'response' => 'STR'
+				'deleted_at' => 'STR'
 			],
 
 			'primary'		=> ['id'],
 
 			'autoincrement' => 'id',
 
-			'nullable'		=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response'],
+			'nullable'		=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'required'		=> ['tipo_catasto', 'provincia', 'comune', 'foglio', 'particella'],
+			'required'		=> ['tipo_catasto', 'provincia', 'comune', 'foglio', 'particella', 'subalterno'],
 
 			'uniques'		=> [],
 
@@ -52,12 +53,13 @@ class ElencoImmobiliSchema implements ISchema
 				'sezione_urbana' => ['type' => 'str', 'max' => 60],
 				'foglio' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'particella' => ['type' => 'str', 'max' => 60, 'required' => true],
+				'subalterno' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'result' => ['type' => 'str'],
 				'status' => ['type' => 'str', 'max' => 20],
+				'response' => ['type' => 'str'],
 				'created_at' => ['type' => 'datetime'],
 				'updated_at' => ['type' => 'datetime'],
-				'deleted_at' => ['type' => 'datetime'],
-				'response' => ['type' => 'str']
+				'deleted_at' => ['type' => 'datetime']
 			],
 
 			'fks' 			=> [],

@@ -2,6 +2,7 @@
 
 namespace simplerest\controllers;
 
+use simplerest\core\libs\DB;
 use simplerest\libs\OpenApi;
 use simplerest\core\libs\Url;
 use simplerest\core\libs\Logger;
@@ -39,7 +40,7 @@ class CallbacksController extends MyController
             return;
         }
 
-        $status    = $dec['status']   ?? $dec['stato'] ?? '';
+        $status    = strtoupper($dec['status']   ?? $dec['stato'] ?? '');
         $result    = $dec['soggetto'] ?? $dec['risultato'] ?? '';
         $callback  = $dec['callback']['url'] ?? null;
         
@@ -79,7 +80,6 @@ class CallbacksController extends MyController
                 throw new \Exception("Invalid callback for '$callback'");            
         }
 
-
         $parametri = [];
 
         if (isset($dec['parametri'])){
@@ -92,15 +92,50 @@ class CallbacksController extends MyController
             }
         }
 
-        dd($endpoint, 'ENDPOINT');
-        dd($parametri,'PARAMS');
-        dd($callback, 'CALLBACK');
+        // dd($endpoint, 'ENDPOINT');
+        // dd($parametri,'PARAMS');
+        // dd($callback, 'CALLBACK');
 
-        dd($status, 'STATUS');
-        dd($result, 'RESULT');
+        // dd($status, 'STATUS');
+        // dd($result, 'RESULT');
 
+        // LOG
         file_put_contents(LOGS_PATH . 'reqs.txt', json_encode($dec) . "\n", FILE_APPEND);
 
+
+        /*
+            Armo el registro
+        */
+
+        $data = $parametri;
+
+        foreach ($data as $key => $dato){
+            if (!in_array($key, DB::table($endpoint)->getFillables())){
+                unset($data[$key]);
+            }
+        }
+
+        // dd($data, $endpoint);
+        // exit;
+
+        $data['status'] = $status;
+        $data['result'] = $req; // $result
+
+        $id = DB::table($endpoint)
+        ->fill([
+            'status',
+            'result'
+        ])
+        ->create($data);
+
+        $data['id'] = $id;
+
+        /*
+            Envio la respuesta
+        */
+
+        return $data;
+        
         /*
             - Generar un log con cada respuesta para que no se pierdan
 
@@ -189,6 +224,8 @@ class CallbacksController extends MyController
                     )
 
         */
+
+
 
         exit;
     }
