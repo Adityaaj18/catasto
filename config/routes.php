@@ -27,9 +27,15 @@ Route::get('mem', function(){
 	dd(System::getMemoryPeakUsage(true), 'Memory peak usage (real)');
 });
 
-Route::get('git/pull', function(){
+Route::get('admin/git/pull', function(){
 	dd(
 		System::exec("git pull")
+	);
+});
+
+Route::get('admin/make/schema', function(){
+	dd(
+		System::com("make schema all --from:main")
 	);
 });
 
@@ -40,7 +46,7 @@ Route::get('git/pull', function(){
 	Esta obligandose a ir de lo especifico a lo general
 */
 
-Route::get('admin/migrate', function(){
+Route::get('admin/migrations/migrate', function(){
 	chdir(ROOT_PATH);
 	
 	exec("php com migrations migrate", $output_lines, $res_code);
