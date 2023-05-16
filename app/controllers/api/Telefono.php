@@ -88,11 +88,13 @@ class Telefono extends MyApiController
         /*
             Actualizo en la DB
         */
+        
         DB::table($this->table_name)
         ->find($id)
-        ->fill(['status'])
+        ->fill(['status', 'response'])
         ->update([
-            'status' => $status
+            'status'   => $status,
+            'response' => $res // $_data
         ]);
 
         // dd(DB::getLog());
@@ -100,6 +102,8 @@ class Telefono extends MyApiController
         /*
             Lo envio en la respuesta
         */
-        $data['status'] = $status;
+
+        $data['status']   = $status;
+        $data['response'] = $res;
     }     
 } 

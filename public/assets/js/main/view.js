@@ -409,8 +409,8 @@ const deleteBtn = (id) => {
   setMode('delete')
 
   Swal.fire({
-    title: 'Are you sure?',
-    text: "You are going to delete!",
+    title: 'Are you sure to delete?',
+    //text: "You are going to delete!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -463,7 +463,7 @@ async function save_row(jsonData, id = null) {
       data: jsonData,
     })
     .then(({ data }) => {
-      console.log(data)
+      //console.log(data)
 
       // TODO: Importante revisar, el data response devuelto en POST difiere mucho del devuelto en PATCH
       if (id) {
