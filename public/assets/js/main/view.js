@@ -108,48 +108,46 @@ document.addEventListener("DOMContentLoaded", () => {
     // checked_count
     const checked_count = selectedRows.length
 
-    if (checked_count < 0) {
+    if (checked_count < 1) {
       return;
     }
 
-    if (!confirm(`Está por borrar ${checked_count} registros. Está seguro?`)) {
-      return;
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You are going to ${checked_count} rows delete!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {        
+        console.log("Procedo a borrar .... !", selectedRows);
 
-     // Cambiar por sweet alert
-    // Swal.fire({
-    //   title: `You are going to delete ${checked_count} rows. Are you sure?`,
-    //   showCancelButton: true,
-    //   confirmButtonText: 'Proceed',
-    //   denyButtonText: `Cancel`,
-    // }).then((result) => {
-    //   /* Read more about isConfirmed, isDenied below */
-    //   if (!result.isConfirmed) {
-    //     return;
-    //   }
-    // })
+        const col_res = create_collection(viewData.entity, selectedRows);
+  
+        col_res
+        .then((res) => {
+          return res.data;
+        })
+        .then((res) => {
+          let col_id = res.data.id;   
+          let resp   = mass_delete(col_id);
+  
+          resp.then(res => {
+  
+            table.setData(viewData.api_url)
+              .catch(function (error) {
+                //handle error loading data
+                console.log('error loading data');
+              });
+          })
+        });
 
-    console.log("Procedo a borrar .... !", selectedRows);
-
-    const col_res = create_collection(viewData.entity, selectedRows);
-
-    col_res
-    .then((res) => {
-      return res.data;
+      }
     })
-    .then((res) => {
-      let col_id = res.data.id;   
-      let resp   = mass_delete(col_id);
 
-      resp.then(res => {
-
-        table.setData(viewData.api_url)
-          .catch(function (error) {
-            //handle error loading data
-            console.log('error loading data');
-          });
-      })
-    });
+   
   };
 
 
@@ -394,14 +392,22 @@ const allowDelete = (belongsTo, userId, userRole) => {
 const deleteBtn = (id) => {
   setMode('delete')
 
-  if (!confirm("Seguro de borrar?")) {
-    // TODO: Agregar notificación de SweetAlert
-    return;
-  }
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You are going to delete!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axiosInstance
+      .delete(`${viewData.entity}/${id}`)
+      .then(() => table.deleteRow(id));
+    }
+  })
 
-  axiosInstance
-    .delete(`${viewData.entity}/${id}`)
-    .then(() => table.deleteRow(id));
 };
 
 const editBtn = (id) => {
@@ -482,7 +488,7 @@ async function save_row(jsonData, id = null) {
 
         validations = { ...validations, ...detail }; // Incorpora los errores de validación
 
-        console.log(validations)
+        //console.log(validations)
         
         setFormValidations(validations);
 
