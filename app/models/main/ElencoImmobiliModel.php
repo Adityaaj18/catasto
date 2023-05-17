@@ -25,9 +25,18 @@ class ElencoImmobiliModel extends MyModel
 	];
 	
 	protected $formatters    = [];
+	
 
     function __construct(bool $connect = false){
         parent::__construct($connect, ElencoImmobiliSchema::class);
+
+        /*
+            Default sort
+        */
+        $this->order       = [
+            $this->id() => 'DESC'
+        ];
+
 	}	
 }
 

@@ -17,6 +17,13 @@ class IndirizzoModel extends MyModel
 
     function __construct(bool $connect = false){
         parent::__construct($connect, IndirizzoSchema::class);
+
+		/*
+            Default sort
+        */
+        $this->order       = [
+            $this->id() => 'DESC'
+        ];
 	}	
 }
 

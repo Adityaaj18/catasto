@@ -46,13 +46,6 @@ class MyModel extends Model
             'result'
         ];
         
-        /*
-            Default sort
-        */
-        $this->order       = [
-            $this->id() => 'DESC'
-        ];
-
         $this->formatters['response'] = 'textarea';
         $this->formatters['result']   = 'textarea';
     }

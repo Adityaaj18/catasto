@@ -18,6 +18,13 @@ class RicercaPersonaModel extends MyModel
 
     function __construct(bool $connect = false){
         parent::__construct($connect, RicercaPersonaSchema::class);
+
+		/*
+            Default sort
+        */
+        $this->order       = [
+            $this->id() => 'DESC'
+        ];
 	}	
 }
 

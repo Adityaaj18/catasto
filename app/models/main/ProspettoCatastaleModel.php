@@ -15,6 +15,13 @@ class ProspettoCatastaleModel extends MyModel
 
     function __construct(bool $connect = false){
         parent::__construct($connect, ProspettoCatastaleSchema::class);
+
+		/*
+            Default sort
+        */
+        $this->order       = [
+            $this->id() => 'DESC'
+        ];
 	}	
 }
 

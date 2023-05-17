@@ -16,6 +16,13 @@ class RicercaNazionaleModel extends MyModel
 
     function __construct(bool $connect = false){
         parent::__construct($connect, RicercaNazionaleSchema::class);
+
+		/*
+            Default sort
+        */
+        $this->order       = [
+            $this->id() => 'DESC'
+        ];
 	}	
 }
 

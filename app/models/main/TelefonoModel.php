@@ -23,6 +23,13 @@ class TelefonoModel extends MyModel
 
     function __construct(bool $connect = false){
         parent::__construct($connect, TelefonoSchema::class);
+
+		/*
+            Default sort
+        */
+        $this->order       = [
+            $this->id() => 'DESC'
+        ];
 	}	
 }
 

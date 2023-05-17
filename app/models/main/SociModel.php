@@ -20,6 +20,13 @@ class SociModel extends MyModel
 
     function __construct(bool $connect = false){
         parent::__construct($connect, SociSchema::class);
+
+		/*
+            Default sort
+        */
+        $this->order       = [
+            $this->id() => 'DESC'
+        ];
 	}	
 }
 
