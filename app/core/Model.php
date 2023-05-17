@@ -3238,8 +3238,11 @@ class Model {
 			return "'$e'";
 		}, $vals);
 
+		/*
+			BLOB, TEXT, GEOMETRY or JSON columns can't have a default value
+		*/
 		foreach($vals as $ix => $val){	
-			if (isset($this->schema['attr_type_detail'][$vars[$ix]]) && !$this->schema['attr_type_detail'][$vars[$ix]] == 'JSON'){
+			if (isset($this->schema['attr_type_detail'][$vars[$ix]]) && in_array($this->schema['attr_type_detail'][$vars[$ix]], ['JSON', 'TEXT', 'BLOB', 'GEOMETRY'])){
 				if ($vals[$ix] == ''){
 					$vals[$ix] = null;
 				} 
