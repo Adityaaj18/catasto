@@ -33,6 +33,24 @@ class ElencoImmobiliSchema implements ISchema
 				'response' => 'STR'
 			],
 
+			// NUEVO
+			'attr_type_detail'	=> [
+				'id' => 'INT',
+				'tipo_catasto' => 'STR',
+				'provincia' => 'STR',
+				'comune' => 'STR',
+				'sezione' => 'STR',
+				'sezione_urbana' => 'STR',
+				'foglio' => 'STR',
+				'particella' => 'STR',
+				'result' => 'JSON',  //
+				'status' => 'STR',
+				'created_at' => 'STR',
+				'updated_at' => 'STR',
+				'deleted_at' => 'STR',
+				'response' => 'JSON' //
+			],
+
 			'primary'		=> ['id'],
 
 			'autoincrement' => 'id',

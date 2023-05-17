@@ -3238,6 +3238,14 @@ class Model {
 			return "'$e'";
 		}, $vals);
 
+		foreach($vals as $ix => $val){	
+			if (isset($this->schema['attr_type_detail'][$vars[$ix]]) && !$this->schema['attr_type_detail'][$vars[$ix]] == 'JSON'){
+				if ($vals[$ix] == ''){
+					$vals[$ix] = null;
+				} 
+			}
+		}
+
 		$str_vars   = implode(', ',$vars);
 		$str_vals   = implode(', ',$symbols);
 		$str_qmarks = implode(', ',$q_marks);

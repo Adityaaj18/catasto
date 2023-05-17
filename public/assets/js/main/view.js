@@ -494,11 +494,11 @@ async function save_row(jsonData, id = null) {
 
       const detail  = error?.response?.data?.error?.detail ?? null // Errores de validación
       let   err_msg = "Unknown error"
-
-      if (error?.response?.status != 200 && error?.response?.status != 201 && error.response.data.status != 200 && error.response.data.status != 201){
-        err_msg = error?.response?.data?.error?.message || "Unknown error"
-      } else {  
-        err_msg = error?.response?.data?.error?.message || error?.message || (!Array.isArray(detail) ? detail : null) || "Unknown error"
+  
+      if (typeof(error.response.data == 'string')){
+        err_msg = error.response.data;
+      } else {
+        err_msg = error?.response?.data?.error?.message || error?.message || (!Array.isArray(detail) ? detail : null) || err_msg
       }
       
       // console.log('err_msg', err_msg) 
