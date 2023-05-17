@@ -23,7 +23,7 @@ class Soci extends MyApiController
      /*
         Este no requiere callback
     */
-    function onPostingAfterCheck($id, Array &$data)
+    function onPost($id, Array &$data)
     {       
         $piva_cf_or_id = $data['piva_cf_or_id'];
 
