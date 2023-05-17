@@ -17,7 +17,8 @@ class MyModel extends Model
 
         $this->unfill([
             'status',
-            'result'
+            // 'response',
+            // 'result'           
         ]);
 
         $this->hide([
@@ -29,10 +30,23 @@ class MyModel extends Model
         $this->field_names = [
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'deleted_at' => 'Deleted At'
+            'deleted_at' => 'Deleted At',
+            'result'     => 'Resultato'
         ];
 
-        $this->formatters['result'] = 'textarea';
+        /*
+            Indicacion para el FronEnd
+
+            Los campos que aparecen primero, deben mostrarse primero
+        */
+        $this->field_order = [
+            'response',
+            'status',
+            'result'
+        ];
+
+        $this->formatters['response'] = 'textarea';
+        $this->formatters['result']   = 'textarea';
     }
 
     function wp(){

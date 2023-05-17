@@ -109,7 +109,12 @@ class Model {
 			// ...
 		]
 	*/
-	protected $field_names = [];
+	protected        $field_names = [];
+
+	/*
+		Solo como indicaicon para el FrontEnd
+	*/
+	protected 		 $field_order = [];
 
 	/*
 		Aca se especificaria si es un checkbox o radiobox por ejemplo
@@ -119,7 +124,7 @@ class Model {
 
 		Tambien otros formatters que puedan estar disponibles en el frontend
 	*/
-	protected $formatters = [];
+	protected        $formatters = [];
 
 	static protected $sql_formatter_callback;
 	protected        $sql_formatter_status;
@@ -3748,6 +3753,10 @@ class Model {
 
 	function getRule(string $name){
 		return $this->schema['rules'][$name] ?? NULL;
+	}
+
+	function getFieldOrder(){
+		return $this->field_order;
 	}
 
 	/**

@@ -40,6 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
   viewData.roles    = roles
   viewData.api_url  = `${window.location.origin}/api/v1/${viewData.entity}`;
 
+  console.log(viewData.defs); //
+
   defaultHeaders["X-TENANT-ID"] = viewData.tenantid
 })
 
