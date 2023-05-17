@@ -10,13 +10,13 @@ class ElencoImmobiliSchema implements ISchema
 { 
 	static function get(){
 		return [
-			'table_name'	=> 'elenco_immobili',
+			'table_name'		=> 'elenco_immobili',
 
-			'id_name'		=> 'id',
+			'id_name'			=> 'id',
 
-			'fields'		=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response'],
+			'fields'			=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response'],
 
-			'attr_types'	=> [
+			'attr_types'		=> [
 				'id' => 'INT',
 				'tipo_catasto' => 'STR',
 				'provincia' => 'STR',
@@ -33,35 +33,22 @@ class ElencoImmobiliSchema implements ISchema
 				'response' => 'STR'
 			],
 
-			// NUEVO
 			'attr_type_detail'	=> [
-				'id' => 'INT',
-				'tipo_catasto' => 'STR',
-				'provincia' => 'STR',
-				'comune' => 'STR',
-				'sezione' => 'STR',
-				'sezione_urbana' => 'STR',
-				'foglio' => 'STR',
-				'particella' => 'STR',
-				'result' => 'JSON',  //
-				'status' => 'STR',
-				'created_at' => 'STR',
-				'updated_at' => 'STR',
-				'deleted_at' => 'STR',
-				'response' => 'JSON' //
+				'result' => 'JSON',
+				'response' => 'JSON'
 			],
 
-			'primary'		=> ['id'],
+			'primary'			=> ['id'],
 
-			'autoincrement' => 'id',
+			'autoincrement' 	=> 'id',
 
-			'nullable'		=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response'],
+			'nullable'			=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response'],
 
-			'required'		=> ['tipo_catasto', 'provincia', 'comune', 'foglio', 'particella'],
+			'required'			=> ['tipo_catasto', 'provincia', 'comune', 'foglio', 'particella'],
 
-			'uniques'		=> [],
+			'uniques'			=> [],
 
-			'rules' 		=> [
+			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'tipo_catasto' => ['type' => 'str', 'required' => true],
 				'provincia' => ['type' => 'str', 'max' => 2, 'required' => true],
@@ -78,7 +65,7 @@ class ElencoImmobiliSchema implements ISchema
 				'response' => ['type' => 'str']
 			],
 
-			'fks' 			=> [],
+			'fks' 				=> [],
 
 			'relationships' => [
 				

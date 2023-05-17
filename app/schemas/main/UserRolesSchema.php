@@ -10,13 +10,13 @@ class UserRolesSchema implements ISchema
 { 
 	static function get(){
 		return [
-			'table_name'	=> 'user_roles',
+			'table_name'		=> 'user_roles',
 
-			'id_name'		=> 'id',
+			'id_name'			=> 'id',
 
-			'fields'		=> ['id', 'user_id', 'role_id', 'created_by', 'created_at', 'updated_by', 'updated_at'],
+			'fields'			=> ['id', 'user_id', 'role_id', 'created_by', 'created_at', 'updated_by', 'updated_at'],
 
-			'attr_types'	=> [
+			'attr_types'		=> [
 				'id' => 'INT',
 				'user_id' => 'INT',
 				'role_id' => 'INT',
@@ -26,17 +26,21 @@ class UserRolesSchema implements ISchema
 				'updated_at' => 'STR'
 			],
 
-			'primary'		=> ['id'],
+			'attr_type_detail'	=> [
 
-			'autoincrement' => 'id',
+			],
 
-			'nullable'		=> ['id', 'created_by', 'updated_by', 'updated_at'],
+			'primary'			=> ['id'],
 
-			'required'		=> ['user_id', 'role_id', 'created_at'],
+			'autoincrement' 	=> 'id',
 
-			'uniques'		=> [],
+			'nullable'			=> ['id', 'created_by', 'updated_by', 'updated_at'],
 
-			'rules' 		=> [
+			'required'			=> ['user_id', 'role_id', 'created_at'],
+
+			'uniques'			=> [],
+
+			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'user_id' => ['type' => 'int', 'required' => true],
 				'role_id' => ['type' => 'int', 'required' => true],
@@ -46,7 +50,7 @@ class UserRolesSchema implements ISchema
 				'updated_at' => ['type' => 'datetime']
 			],
 
-			'fks' 			=> ['role_id', 'user_id'],
+			'fks' 				=> ['role_id', 'user_id'],
 
 			'relationships' => [
 				'roles' => [

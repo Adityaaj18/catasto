@@ -10,13 +10,13 @@ class UserSpPermissionsSchema implements ISchema
 { 
 	static function get(){
 		return [
-			'table_name'	=> 'user_sp_permissions',
+			'table_name'		=> 'user_sp_permissions',
 
-			'id_name'		=> 'id',
+			'id_name'			=> 'id',
 
-			'fields'		=> ['id', 'sp_permission_id', 'user_id', 'created_by', 'created_at', 'updated_by', 'updated_at'],
+			'fields'			=> ['id', 'sp_permission_id', 'user_id', 'created_by', 'created_at', 'updated_by', 'updated_at'],
 
-			'attr_types'	=> [
+			'attr_types'		=> [
 				'id' => 'INT',
 				'sp_permission_id' => 'INT',
 				'user_id' => 'INT',
@@ -26,17 +26,21 @@ class UserSpPermissionsSchema implements ISchema
 				'updated_at' => 'STR'
 			],
 
-			'primary'		=> ['id'],
+			'attr_type_detail'	=> [
 
-			'autoincrement' => 'id',
+			],
 
-			'nullable'		=> ['id', 'created_by', 'created_at', 'updated_by', 'updated_at'],
+			'primary'			=> ['id'],
 
-			'required'		=> ['sp_permission_id', 'user_id'],
+			'autoincrement' 	=> 'id',
 
-			'uniques'		=> [],
+			'nullable'			=> ['id', 'created_by', 'created_at', 'updated_by', 'updated_at'],
 
-			'rules' 		=> [
+			'required'			=> ['sp_permission_id', 'user_id'],
+
+			'uniques'			=> [],
+
+			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'sp_permission_id' => ['type' => 'int', 'required' => true],
 				'user_id' => ['type' => 'int', 'required' => true],
@@ -46,7 +50,7 @@ class UserSpPermissionsSchema implements ISchema
 				'updated_at' => ['type' => 'datetime']
 			],
 
-			'fks' 			=> ['sp_permission_id', 'user_id'],
+			'fks' 				=> ['sp_permission_id', 'user_id'],
 
 			'relationships' => [
 				'sp_permissions' => [

@@ -10,13 +10,13 @@ class ProspettoCatastaleSchema implements ISchema
 { 
 	static function get(){
 		return [
-			'table_name'	=> 'prospetto_catastale',
+			'table_name'		=> 'prospetto_catastale',
 
-			'id_name'		=> 'id',
+			'id_name'			=> 'id',
 
-			'fields'		=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'subalterno', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'			=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'subalterno', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'attr_types'	=> [
+			'attr_types'		=> [
 				'id' => 'INT',
 				'tipo_catasto' => 'STR',
 				'provincia' => 'STR',
@@ -34,17 +34,22 @@ class ProspettoCatastaleSchema implements ISchema
 				'deleted_at' => 'STR'
 			],
 
-			'primary'		=> ['id'],
+			'attr_type_detail'	=> [
+				'result' => 'JSON',
+				'response' => 'JSON'
+			],
 
-			'autoincrement' => 'id',
+			'primary'			=> ['id'],
 
-			'nullable'		=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'autoincrement' 	=> 'id',
 
-			'required'		=> ['tipo_catasto', 'provincia', 'comune', 'foglio', 'particella', 'subalterno'],
+			'nullable'			=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'uniques'		=> [],
+			'required'			=> ['tipo_catasto', 'provincia', 'comune', 'foglio', 'particella', 'subalterno'],
 
-			'rules' 		=> [
+			'uniques'			=> [],
+
+			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'tipo_catasto' => ['type' => 'str', 'required' => true],
 				'provincia' => ['type' => 'str', 'max' => 2, 'required' => true],
@@ -62,7 +67,7 @@ class ProspettoCatastaleSchema implements ISchema
 				'deleted_at' => ['type' => 'datetime']
 			],
 
-			'fks' 			=> [],
+			'fks' 				=> [],
 
 			'relationships' => [
 				

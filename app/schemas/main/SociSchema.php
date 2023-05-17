@@ -10,13 +10,13 @@ class SociSchema implements ISchema
 { 
 	static function get(){
 		return [
-			'table_name'	=> 'soci',
+			'table_name'		=> 'soci',
 
-			'id_name'		=> 'id',
+			'id_name'			=> 'id',
 
-			'fields'		=> ['id', 'piva_cf_or_id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'			=> ['id', 'piva_cf_or_id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'attr_types'	=> [
+			'attr_types'		=> [
 				'id' => 'INT',
 				'piva_cf_or_id' => 'STR',
 				'result' => 'STR',
@@ -27,17 +27,22 @@ class SociSchema implements ISchema
 				'deleted_at' => 'STR'
 			],
 
-			'primary'		=> ['id'],
+			'attr_type_detail'	=> [
+				'result' => 'JSON',
+				'response' => 'JSON'
+			],
 
-			'autoincrement' => 'id',
+			'primary'			=> ['id'],
 
-			'nullable'		=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'autoincrement' 	=> 'id',
 
-			'required'		=> ['piva_cf_or_id'],
+			'nullable'			=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'uniques'		=> [],
+			'required'			=> ['piva_cf_or_id'],
 
-			'rules' 		=> [
+			'uniques'			=> [],
+
+			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'piva_cf_or_id' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'result' => ['type' => 'str'],
@@ -48,7 +53,7 @@ class SociSchema implements ISchema
 				'deleted_at' => ['type' => 'datetime']
 			],
 
-			'fks' 			=> [],
+			'fks' 				=> [],
 
 			'relationships' => [
 				

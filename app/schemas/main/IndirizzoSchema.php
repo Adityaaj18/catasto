@@ -10,13 +10,13 @@ class IndirizzoSchema implements ISchema
 { 
 	static function get(){
 		return [
-			'table_name'	=> 'indirizzo',
+			'table_name'		=> 'indirizzo',
 
-			'id_name'		=> 'id',
+			'id_name'			=> 'id',
 
-			'fields'		=> ['id', 'id_indirizzo', 'dal_civico', 'al_civico', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'			=> ['id', 'id_indirizzo', 'dal_civico', 'al_civico', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'attr_types'	=> [
+			'attr_types'		=> [
 				'id' => 'INT',
 				'id_indirizzo' => 'STR',
 				'dal_civico' => 'STR',
@@ -29,17 +29,22 @@ class IndirizzoSchema implements ISchema
 				'deleted_at' => 'STR'
 			],
 
-			'primary'		=> ['id'],
+			'attr_type_detail'	=> [
+				'result' => 'JSON',
+				'response' => 'JSON'
+			],
 
-			'autoincrement' => 'id',
+			'primary'			=> ['id'],
 
-			'nullable'		=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'autoincrement' 	=> 'id',
 
-			'required'		=> ['id_indirizzo', 'dal_civico', 'al_civico'],
+			'nullable'			=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'uniques'		=> [],
+			'required'			=> ['id_indirizzo', 'dal_civico', 'al_civico'],
 
-			'rules' 		=> [
+			'uniques'			=> [],
+
+			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'id_indirizzo' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'dal_civico' => ['type' => 'str', 'max' => 30, 'required' => true],
@@ -52,7 +57,7 @@ class IndirizzoSchema implements ISchema
 				'deleted_at' => ['type' => 'datetime']
 			],
 
-			'fks' 			=> [],
+			'fks' 				=> [],
 
 			'relationships' => [
 				

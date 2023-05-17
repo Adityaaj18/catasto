@@ -10,13 +10,13 @@ class RicercaNazionaleSchema implements ISchema
 { 
 	static function get(){
 		return [
-			'table_name'	=> 'ricerca_nazionale',
+			'table_name'		=> 'ricerca_nazionale',
 
-			'id_name'		=> 'id',
+			'id_name'			=> 'id',
 
-			'fields'		=> ['id', 'cf_piva', 'tipo_catasto', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'			=> ['id', 'cf_piva', 'tipo_catasto', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'attr_types'	=> [
+			'attr_types'		=> [
 				'id' => 'INT',
 				'cf_piva' => 'STR',
 				'tipo_catasto' => 'STR',
@@ -28,17 +28,22 @@ class RicercaNazionaleSchema implements ISchema
 				'deleted_at' => 'STR'
 			],
 
-			'primary'		=> ['id'],
+			'attr_type_detail'	=> [
+				'result' => 'JSON',
+				'response' => 'JSON'
+			],
 
-			'autoincrement' => 'id',
+			'primary'			=> ['id'],
 
-			'nullable'		=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'autoincrement' 	=> 'id',
 
-			'required'		=> ['cf_piva', 'tipo_catasto'],
+			'nullable'			=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'uniques'		=> [],
+			'required'			=> ['cf_piva', 'tipo_catasto'],
 
-			'rules' 		=> [
+			'uniques'			=> [],
+
+			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'cf_piva' => ['type' => 'str', 'max' => 30, 'required' => true],
 				'tipo_catasto' => ['type' => 'str', 'max' => 60, 'required' => true],
@@ -50,7 +55,7 @@ class RicercaNazionaleSchema implements ISchema
 				'deleted_at' => ['type' => 'datetime']
 			],
 
-			'fks' 			=> [],
+			'fks' 				=> [],
 
 			'relationships' => [
 				

@@ -10,13 +10,13 @@ class RicercaPersonaSchema implements ISchema
 { 
 	static function get(){
 		return [
-			'table_name'	=> 'ricerca_persona',
+			'table_name'		=> 'ricerca_persona',
 
-			'id_name'		=> 'id',
+			'id_name'			=> 'id',
 
-			'fields'		=> ['id', 'cf_piva', 'tipo_catasto', 'provincia', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'			=> ['id', 'cf_piva', 'tipo_catasto', 'provincia', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'attr_types'	=> [
+			'attr_types'		=> [
 				'id' => 'INT',
 				'cf_piva' => 'STR',
 				'tipo_catasto' => 'STR',
@@ -29,17 +29,22 @@ class RicercaPersonaSchema implements ISchema
 				'deleted_at' => 'STR'
 			],
 
-			'primary'		=> ['id'],
+			'attr_type_detail'	=> [
+				'result' => 'JSON',
+				'response' => 'JSON'
+			],
 
-			'autoincrement' => 'id',
+			'primary'			=> ['id'],
 
-			'nullable'		=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'autoincrement' 	=> 'id',
 
-			'required'		=> ['cf_piva', 'tipo_catasto', 'provincia'],
+			'nullable'			=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
 
-			'uniques'		=> [],
+			'required'			=> ['cf_piva', 'tipo_catasto', 'provincia'],
 
-			'rules' 		=> [
+			'uniques'			=> [],
+
+			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'cf_piva' => ['type' => 'str', 'max' => 30, 'required' => true],
 				'tipo_catasto' => ['type' => 'str', 'max' => 5, 'required' => true],
@@ -52,7 +57,7 @@ class RicercaPersonaSchema implements ISchema
 				'deleted_at' => ['type' => 'datetime']
 			],
 
-			'fks' 			=> [],
+			'fks' 				=> [],
 
 			'relationships' => [
 				
