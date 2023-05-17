@@ -19,27 +19,21 @@ class Indirizzo extends MyApiController
 
     static protected $hide_in_response = false;
 
-    function onPostingAfterCheck($id, Array &$data)
+    function onPost($id, Array &$data)
     {       
         $url = 'https://catasto.openapi.it/richiesta/indirizzo/';
 
         $res = OpenApi::makeRequest($data, $url, "?r=realstate&sub=indirizzo");
 
-        if ($res['error'] !== null){
-            response()->error("OpenAPI error", $res['error'], $res['message']);
-        }
+        //dd($res); // JSON
+        $dec = json_decode($res, true); ///
 
-        $_data     = $res['data'];
+
+        $_data     = $dec['data'];
         $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');
-       
-        // $s_eq   = [
-        //     'evasa' => 'SENT' // 'PENDING'
-        // ];
 
-        //dd($status, 'STATUS');
-
-        if ($res['error'] !== null){
-            response()->error("OpenAPI error", $res['error'] ?? "Error", $res['message'] ?? null);
+        if ($dec['error'] !== null){
+            response()->error("OpenAPI error", $dec['error'] ?? "Error", $dec['message'] ?? null);
         } 
 
         /*

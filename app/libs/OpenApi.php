@@ -97,7 +97,44 @@ class OpenApi
 
         return $res;
     }
-
-
 }
+
+
+ /*
+    La respuesta puede ser variada, incluyendo:
+
+    Array
+    (
+        [success] => false
+        [message] => Insufficient Credit in Wallet: 0.7 > 0.6
+        [error] => 223
+        [data] =>
+        [trace] => WyJpbmRleC5waHBAMjY2IiwiY2xhc3MuQXZXcy5waHBAMjE3IiwiaW5kZXgucGhwQDQ0MiJd
+    )
+
+    o...
+
+    array (
+        'success' => false,
+        'message' => 'cf_piva not valid',
+        'error' => 219,
+        'data' => NULL,
+        'trace' => 'WyJpbmRleC5waHBAMjE0IiwiY2xhc3MuQXZXcy5waHBAMjE3IiwiaW5kZXgucGhwQDQ0MiJd',
+    )
+*/
+
+/*
+    Ej:
+
+    {
+        "status": 219,
+        "error": {
+            "type": null,
+            "code": null,
+            "message": "cf_piva not valid",
+            "detail": null,
+            "location": null
+        }
+    }
+*/
 
