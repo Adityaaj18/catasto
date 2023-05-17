@@ -17,32 +17,40 @@ class MyModel extends Model
 
         $this->unfill([
             'status',
-            // 'response',
-            // 'result'           
+            'response',
+            'result'           
         ]);
 
         $this->hide([
             'created_at',
             'updated_at',
-            'deleted_at'
+            'deleted_at',
         ]);
 
-        $this->field_names = [
+        $this->field_names = array_merge($this->field_names, [
+            'id'         => 'ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'deleted_at' => 'Deleted At',
-            'result'     => 'Resultato'
-        ];
+            'result'     => 'Resultato',
+        ]);
 
         /*
             Indicacion para el FronEnd
 
-            Los campos que aparecen primero, deben mostrarse primero
+            Los campos que aparecen primero, deben mostrarse primero. Afecta a get_model_defs() y get_defs()
         */
         $this->field_order = [
             'response',
             'status',
             'result'
+        ];
+        
+        /*
+            Default sort
+        */
+        $this->order       = [
+            $this->id() => 'DESC'
         ];
 
         $this->formatters['response'] = 'textarea';

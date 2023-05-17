@@ -140,6 +140,23 @@ const setAttr = (ids,  prefix = null, attributes = {}) => {
     }
 }
 
+
+/*
+    De alguna forma tengo que poder modificar el selector para en este
+    caso que sea su parent()
+*/
+const setAttrWithCallback = (callback, ids,  prefix = null, attributes) => {
+    for (let id of ids) {
+        let selector = $('#' + (prefix == null ? '' : prefix) + id)
+  
+        if (callback(id, selector)){
+          for (const a in attributes) {
+            selector.parent().attr(a, attributes[a]); // <--- PARENT  
+          }   
+        }
+    }	
+}
+
 const setNotification = (msg) => {
     if (Array.isArray(msg)){    
         let block_elems = [];

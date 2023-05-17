@@ -15,8 +15,11 @@ class TelefonoModel extends MyModel
 	
 	protected $not_fillable = [];
 
-	protected $field_names  = [];
-	protected $formatters    = [];
+	protected $field_names  = [
+		'cf_piva' => 'CF/P.IVA'
+	];
+
+	protected $formatters   = [];
 
     function __construct(bool $connect = false){
         parent::__construct($connect, TelefonoSchema::class);

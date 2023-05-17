@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   viewData.roles    = roles
   viewData.api_url  = `${window.location.origin}/api/v1/${viewData.entity}`;
 
-  console.log(viewData.defs); //
+  // console.log(viewData.defs); //
 
   defaultHeaders["X-TENANT-ID"] = viewData.tenantid
 })
@@ -55,9 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
   /** Envío del formulario en el modal */
   document.getElementById("mainForm").addEventListener("submit", (e) => {
     e.preventDefault();
+
     const serialized = $(e.currentTarget).serializeArray();
-    const jsonData = {};
+    const jsonData   = {};
+    
     serialized.forEach((item) => (jsonData[item.name] = item.value));
+    
     save_row(jsonData, jsonData.id);
   });
 
@@ -298,9 +301,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return true
     },
 
-    initialSort:[
-      {column:"id", dir:"desc"}, //sort by this first
-    ]
+    // initialSort:[
+    //   {column:"id", dir:"desc"}, //sort by this first
+    // ]
   })
 
   /*
@@ -529,10 +532,23 @@ const setMode = (mode) => {
 
   if (mode == 'see'){
     $('#save_row').hide();
-  } else {
+  } else {    
     $('#save_row').show();
   }
 
+  if (mode == 'see'){
+    setAttrWithCallback((id, sel) => {
+      return ("true")
+    
+    }, viewData.fields, 'col-', {"style": "display: block"})
+  } else {
+    setAttrWithCallback((id, sel) => {
+      return (sel.data('visibility') !== "true")
+    
+    }, ['status', 'response', 'result'], 'col-', {"style": "display: none"})
+  }
+
+  
   if (mode == 'create'){
     $('.modal-title').text('New')
     return
@@ -556,3 +572,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     setAttr(viewData.fields, 'col-', { readonly: false })
   };
 })
+
+
+

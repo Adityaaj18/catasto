@@ -5,7 +5,7 @@ use simplerest\core\libs\HtmlBuilder\Tag;
 Tag::registerBuilder(\simplerest\core\libs\HtmlBuilder\Bt5Form::class);
 
 /** Definiciones de la vista */
-$defs = get_defs($entity, $tenantid, false, false);
+$defs = get_defs($entity, $tenantid, false, true);
 
 /**
  * Se utiliza un array temporal para colocar los campos de
@@ -109,11 +109,12 @@ foreach ($defs as $field => $info)
     $is_required = $info['required'] ?? null;
     $is_fillable = $info['fillable'];
     $is_nullable = $info['nullable'];
+    $is_visible  = !$info['hidden'];
     $formatter   = $info['formatter'] ?? null;
 
-    if (!$is_fillable && $field !== 'id'){
-        continue;
-    }
+    // if (!$is_fillable && $field !== 'id'){
+    //     continue;
+    // }
 
     $col_size   = "col-md-6";
 
@@ -138,7 +139,8 @@ foreach ($defs as $field => $info)
             ->id("col-{$id}")
             ->name($id)
             ->attributes([
-                'aria-describedby' => "invalid-col-{$id}"
+                'aria-describedby' => "invalid-col-{$id}",
+                'data-visibility'  => $is_visible ? "true" : "false"
             ])
             ->class('col2save'),
                 

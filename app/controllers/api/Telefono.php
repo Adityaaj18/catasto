@@ -16,8 +16,15 @@ class Telefono extends MyApiController
 		
 	];
 
+    /*
+        Los campos ocultos desde la API si son entregados a la vista
+        pero desde la vista pueden ser "marcados" como no-visibles
+        por ejemplo con un data-visibility="false"
+    */
     static protected $hidden = [
-        //'response'
+        'response',
+        'result',
+        'status'
     ];
 
     static protected $hide_in_response = false;
