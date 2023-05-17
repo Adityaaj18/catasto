@@ -30,22 +30,13 @@ class Soci extends MyApiController
         $url = 'https://imprese.openapi.it/soci/' . $piva_cf_or_id;
 
         $res = OpenApi::makeRequest($data, $url);
+        $dec = json_decode($res, true); ///
 
-        if ($res['error'] !== null){
-            response()->error("OpenAPI error", $res['error'], $res['message']);
-        }
-
-        $_data     = $res['data'];
+        $_data     = $dec['data'];
         $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');
-       
-        // $s_eq   = [
-        //     'evasa' => 'SENT' // 'PENDING'
-        // ];
 
-        //dd($status, 'STATUS');
-
-        if ($res['error'] !== null){
-            response()->error("OpenAPI error", $res['error'] ?? "Error", $res['message'] ?? null);
+        if ($dec['error'] !== null){
+            response()->error("OpenAPI error", $dec['error'] ?? "Error", $dec['message'] ?? null);
         } 
 
         /*
