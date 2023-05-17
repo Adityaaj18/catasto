@@ -496,7 +496,7 @@ async function save_row(jsonData, id = null) {
       let   err_msg = "Unknown error"
   
       if (typeof(error?.response?.data == 'string')){
-        err_msg = error.response.data;
+        err_msg = error.response.data; // corregir
       } else {
         err_msg = error?.response?.data?.error?.message || error?.message || (!Array.isArray(detail) ? detail : null) || err_msg
       }

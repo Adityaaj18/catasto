@@ -24,7 +24,7 @@ class ProspettoCatastale extends MyApiController
         $url = 'https://catasto.openapi.it/richiesta/prospetto_catastale/';
 
         $res = OpenApi::makeRequest($data, $url, "?r=realstate&sub=prospetto_catastale");
-        $dec = json_decode($res, true); ///
+        $dec = Strings::isJSON($res) ? json_decode($res, true) : $res; ///
 
         $_data     = $dec['data'];
         $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');

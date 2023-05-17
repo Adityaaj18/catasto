@@ -4,7 +4,8 @@ namespace simplerest\controllers\api;
 
 use simplerest\core\libs\DB;
 use simplerest\libs\OpenApi;
-use simplerest\controllers\MyApiController; 
+use simplerest\controllers\MyApiController;
+use simplerest\core\libs\Strings;
 
 class ElencoImmobili extends MyApiController
 { 
@@ -23,8 +24,12 @@ class ElencoImmobili extends MyApiController
     {       
         $url = 'https://catasto.openapi.it/richiesta/elenco_immobili/';
 
+        if (config()['mock_responses']){
+            OpenApi::mock(ETC_PATH . 'mocks/'.$this->table_name.'.json'); 
+        }
+
         $res = OpenApi::makeRequest($data, $url, "?r=realstate&sub=elenco_immobili");
-        $dec = json_decode($res, true); ///
+        $dec = Strings::isJSON($res) ? json_decode($res, true) : $res; ///
 
         $_data     = $dec['data'];
         $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');

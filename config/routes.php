@@ -29,7 +29,7 @@ Route::get('mem', function(){
 
 Route::get('admin/git/pull', function(){
 	dd(
-		System::exec("git pull")
+		System::exec("git reset --hard HEAD && git pull")
 	);
 });
 

@@ -24,7 +24,7 @@ class RicercaPersona extends MyApiController
         $url = 'https://catasto.openapi.it/richiesta/ricerca_persona/';
 
         $res = OpenApi::makeRequest($data, $url, "?r=realstate&sub=ricerca_persona");
-        $dec = json_decode($res, true); ///
+        $dec = Strings::isJSON($res) ? json_decode($res, true) : $res; ///
 
         $_data     = $dec['data'];
         $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');

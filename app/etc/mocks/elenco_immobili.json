@@ -1,0 +1,29 @@
+{
+    "data": {
+        "endpoint": "elenco_immobili",
+        "stato": "in_erogazione",
+        "callback": {
+            "url": "https:\\/\\/ticiwe.com\\/callbacks?r=realstate&sub=elenco_immobili",
+            "field": "data",
+            "method": "POST",
+            "data": {}
+        },
+        "parametri": {
+            "tipo_catasto": "F",
+            "provincia": "MATERA Territorio-MT",
+            "comune": "F052#MATERA#0#0",
+            "sezione": null,
+            "sezione_urbana": null,
+            "foglio": 52,
+            "particella": 597
+        },
+        "risultato": null,
+        "esito": null,
+        "timestamp": 1684358527,
+        "owner": "fabio56istrefi@gmail.com",
+        "id": "6465457f652abb0618183d8c"
+    },
+    "success": true,
+    "message": "",
+    "error": null
+}

@@ -63,6 +63,9 @@ return [
 
 	'DateTimeZone' => 'Asia/Manila',
 
+	// local, production, etc
+	'env' => env('APP_ENV'),
+
 	/*
 		Intercepta errores
 	*/

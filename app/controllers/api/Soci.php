@@ -30,7 +30,7 @@ class Soci extends MyApiController
         $url = 'https://imprese.openapi.it/soci/' . $piva_cf_or_id;
 
         $res = OpenApi::makeRequest($data, $url);
-        $dec = json_decode($res, true); ///
+        $dec = Strings::isJSON($res) ? json_decode($res, true) : $res; ///
 
         $_data     = $dec['data'];
         $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');

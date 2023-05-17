@@ -71,6 +71,28 @@ class OpenApi
             ];
         }
 
+        /*
+            Cleaning antes de enviar
+        */
+
+        $remove_from_req = [
+            'status',
+            'response',
+            'result',
+            'created_at'
+        ];
+
+        foreach ($data as $key => $dato){
+            if (in_array($key, $remove_from_req)){
+                unset($data[$key]); 
+            }
+            
+            if ($dato === ''){
+                unset($data[$key]); 
+            }
+        }
+              
+
         $client
         ->when(static::$mock, function($it){
             $it->mock(static::$mock);
@@ -93,7 +115,7 @@ class OpenApi
         }
 
         Logger::dump($client->dump(), null, true);
-        Logger::dump($res, null, true);
+        Logger::dump($client->getRawResponse(), null, true); // *
 
         return $res;
     }
