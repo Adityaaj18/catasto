@@ -490,17 +490,17 @@ async function save_row(jsonData, id = null) {
     })
     .catch((error) => {
       tmp = error
-
       console.log(error)
 
-      if (tmp.response.status != 200 || tmp.response.status != 201 || tmp.response.data.status != 200 || tmp.response.data.status != 201){
-        const detail  = tmp.response.data.error.detail
-        const err_msg = tmp.response.data.error.message 
-      } else {  
-        const detail  = error?.response?.data?.error?.detail; // Errores de validación
-        const err_msg = error?.response?.data?.error?.message || error?.message || (!Array.isArray(detail) ? detail : null) || "Unknown error"
-      }
+      const detail  = error?.response?.data?.error?.detail ?? null // Errores de validación
+      let   err_msg = "Unknown error"
 
+      if (error?.response?.status != 200 && error?.response?.status != 201 && error.response.data.status != 200 && error.response.data.status != 201){
+        err_msg = error?.response?.data?.error?.message || "Unknown error"
+      } else {  
+        err_msg = error?.response?.data?.error?.message || error?.message || (!Array.isArray(detail) ? detail : null) || "Unknown error"
+      }
+      
       // console.log('err_msg', err_msg) 
       // console.log('detail', detail) 
 
@@ -525,7 +525,7 @@ async function save_row(jsonData, id = null) {
         Swal.fire({
           icon: 'error',
           title: 'Oops... something went wrong',
-          text: err_msg,
+          text: err_msg + (typeof(detail) == 'string' ?  `Detalle: ${detail}` : ''),
           // footer: '<a href="">Why do I have this issue?</a>'
         })
 
