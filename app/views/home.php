@@ -8,10 +8,10 @@ Tag::registerBuilder(\simplerest\core\libs\HtmlBuilder\Bt5Form::class);
 echo tag('shadow')
 ->content([
     '<div class="text-center text-uppercase">
-        <h3>CATASTO</h3>
+        <h1>CATASTO</h1>
     </div>',
     '<div class="text-center">
-        <p>Modules</p>
+        <!--p>Modules</p-->
     </div>'
 ])
 ->class("mt-3 p-3 mb-5");
