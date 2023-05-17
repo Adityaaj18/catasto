@@ -33,9 +33,9 @@ class Telefono extends MyApiController
     {  
         $url  = "https://rintraccio.openapi.it/telefoni/";
 
-        if (config()['mock_responses']){
-            OpenApi::mock(ETC_PATH . 'mocks/telefono.json'); // <------- especifico del endpoint
-        }
+        // if (config()['mock_responses']){
+        //     OpenApi::mock(ETC_PATH . 'mocks/telefono.json'); // <------- especifico del endpoint
+        // }
         
         $res  = OpenApi::makeRequest($data, $url, "?r=rintracio&sub=telefoni");
         $dec = json_decode($res, true); ///

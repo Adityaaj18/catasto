@@ -29,6 +29,9 @@ class CallbacksController extends MyController
     {
         $req = file_get_contents("php://input");
 
+        // LOG --untouched-
+        file_put_contents(LOGS_PATH . 'reqs.txt', $req . "\n", FILE_APPEND);
+
         if ($req === null){
             return;
         }
@@ -98,9 +101,6 @@ class CallbacksController extends MyController
 
         // dd($status, 'STATUS');
         // dd($result, 'RESULT');
-
-        // LOG
-        file_put_contents(LOGS_PATH . 'reqs.txt', json_encode($dec) . "\n", FILE_APPEND);
 
 
         /*
