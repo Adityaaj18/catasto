@@ -130,7 +130,7 @@ class CallbacksController extends MyController
             $data['foglio']     = Strings::fromInt($data['foglio']);   // deberia ser fromIntOrFail()
             $data['particella'] = Strings::fromInt($data['particella']);
         } catch (\Exception $e){
-            throw new InvalidValidationException($e->getMessage());
+            error(trans('Data validation error'), 400, $e->getMessage());
         }     
 
         //dd($data, $endpoint);
