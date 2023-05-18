@@ -35,6 +35,8 @@ class Telefono extends MyApiController
 
         $cfg = config();
 
+        // ----------> GENERALIZAR ANTES DE SEGUIR 
+
         if ($cfg['env'] == 'local' && $cfg['mock_responses']){
             OpenApi::mock(ETC_PATH . 'mocks/'.$this->table_name.'.json'); 
         }

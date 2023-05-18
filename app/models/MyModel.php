@@ -32,6 +32,7 @@ class MyModel extends Model
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'deleted_at' => 'Deleted At',
+            'cf_piva'    => 'CF/P.IVA',
             'result'     => 'Resultato',
         ]);
 

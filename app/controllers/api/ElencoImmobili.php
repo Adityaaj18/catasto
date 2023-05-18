@@ -31,11 +31,15 @@ class ElencoImmobili extends MyApiController
         $res = OpenApi::makeRequest($data, $url, "?r=realstate&sub=elenco_immobili");
         $dec = Strings::isJSON($res) ? json_decode($res, true) : $res; ///
 
+        if ($res === false){
+            response()->error("Empty response", 500, "Connection error?");
+        }
+
         $_data     = $dec['data'];
         $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');
 
         if ($dec['error'] !== null){
-            response()->error("OpenAPI error", $dec['error'] ?? "Error", $dec['message'] ?? null);
+            response()->error("OpenAPI error", 500, $dec['message'] ?? null);
         } 
 
         /*

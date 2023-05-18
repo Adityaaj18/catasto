@@ -43,6 +43,8 @@ class CallbacksController extends MyController
             return;
         }
 
+        #dd($dec, 'DEC'); //
+
         $status    = strtoupper($dec['status']   ?? $dec['stato'] ?? '');
         $result    = $dec['soggetto'] ?? $dec['risultato'] ?? '';
         $callback  = $dec['callback']['url'] ?? null;
