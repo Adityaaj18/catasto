@@ -8,7 +8,7 @@ class Strings
 		Extrae la parte numerica de una cadena que contenga una cantidad
 		y la castea a un float
 	*/
-	static function parseCurrency(string $num, $thousand_sep = null, $decimal_sep = null){
+	static function parseFloat(string $num, $thousand_sep = null, $decimal_sep = null){
 		if ($thousand_sep != null){
 			static::replace($thousand_sep, '', $num);
 		}
@@ -22,6 +22,17 @@ class Strings
 		}
 
 		return $result;
+	}
+
+	// alias -- depredicar?
+	static function parseCurrency(string $num, $thousand_sep = null, $decimal_sep = null){
+		return static::parseFloat($num, $thousand_sep, $decimal_sep);
+	}
+
+	static function parseFloatOrFail(string $num, $thousand_sep = null, $decimal_sep = null){
+		if (static::parseFloat($num, $thousand_sep, $decimal_sep) === false){
+			throw new \Exception("String '$num' is not a Float");
+		}
 	}
 
 	/*
@@ -57,11 +68,102 @@ class Strings
 	}
 
 	/*
+		null	=> null|Exception
+		false	=> 0|Exception
+		"{int}" => int|false
+	*/
+	static function toInt($num = null, bool $accept_null = true, bool $accept_false = true){
+		if (is_int($num)){
+			return $num;
+		}
+
+		if ($num === null){
+			if ($accept_null){
+				return null;
+			} else {
+				throw new \InvalidArgumentException("Numberic string can not be null");
+			}			
+		}
+	
+		if ($num === false){
+			if ($accept_false){
+				return 0;
+			} else {
+				throw new \InvalidArgumentException("Boolean can not be false");
+			}			
+		}
+
+		if (!is_numeric($num)){
+			return false;
+		}
+
+		return (int) $num;
+	}
+
+	/*
+		null	=> null|Exception
+		false	=> 0|Exception
+		"{int}" => int|Exception
+	*/
+	static function toIntOrFail($num, bool $accept_null = true, bool $accept_false = true){
+		if (is_int($num)){
+			return $num;
+		}
+
+		if ($num === null){
+			if ($accept_null){
+				return null;
+			} else {
+				throw new \InvalidArgumentException("Numberic string can not be null");
+			}			
+		}
+	
+		if ($num === false){
+			if ($accept_false){
+				return 0;
+			} else {
+				throw new \InvalidArgumentException("Boolean can not be false");
+			}			
+		}
+
+		if (!is_numeric($num)){
+			throw new \Exception("Conversion for '$num' failed");
+		}
+
+		return (int) $num;
+	}
+
+	/*
+		int|string|null => Exception
+	*/
+	static function fromInt($num = null, bool $accept_null = true){
+		if ($num === null){
+			if ($accept_null){
+				return null;
+			} else {
+				throw new \InvalidArgumentException("Int can not be null");
+			}			
+		}
+
+		$num = (string) $num;
+	
+		if ((!is_numeric($num) && !static::match($num, '/([0-9]+)/')) || (Strings::contains('.', $num))){
+			throw new \Exception("Invalid integer for '$num'");
+		}
+
+		return $num;
+	}
+
+	/*
 		Intenta hacer un casting de un string numerico a float 
 
 		Evita castear null o false a 0.0
 	*/
-	static function convertIntoFloat(?string $num = null){
+	static function toFloat($num = null){
+		if (is_float($num)){
+			return $num;
+		}
+
 		if ($num === null){
 			return null;
 		}
@@ -77,8 +179,11 @@ class Strings
 		return (float) $num;
 	}
 
+	static function toFloatOrFail($num){
+		if (is_float($num)){
+			return $num;
+		}
 
-	static function convertIntoFloatOrFail(string $num){
 		if ($num === null){
 			throw new \InvalidArgumentException("'$num' can not be null");
 		}
@@ -88,11 +193,35 @@ class Strings
 		}
 
 		if (!is_numeric($num)){
-			throw new \Exception("Conversion for '$num' fails");
+			throw new \Exception("Conversion for '$num' failed");
 		}
 
 		return (float) $num;
 	}
+
+
+	/*
+		float|string|null => Exception
+	*/
+	static function fromFloat($num = null, bool $accept_null = true){
+		if ($num === null){
+			if ($accept_null){
+				return null;
+			} else {
+				throw new \InvalidArgumentException("Float can not be null");
+			}			
+		}
+
+		$num = (string) $num;
+	
+		if (!is_numeric($num) && !static::match($num, '/([0-9\.]+)/')){
+			throw new \Exception("Invalid float for '$num'");
+		}
+
+		return $num;
+	}
+
+
 
 	static function formatNumber($x, string $locale = "it-IT"){
 		$nf = new \NumberFormatter($locale, \NumberFormatter::DECIMAL);

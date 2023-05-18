@@ -4,8 +4,9 @@ namespace simplerest\controllers\api;
 
 use simplerest\core\libs\DB;
 use simplerest\libs\OpenApi;
-use simplerest\controllers\MyApiController;
 use simplerest\core\libs\Strings;
+use simplerest\controllers\MyApiController;
+use simplerest\core\exceptions\InvalidValidationException;
 
 class ElencoImmobili extends MyApiController
 { 
@@ -19,6 +20,11 @@ class ElencoImmobili extends MyApiController
     ];
 
     static protected $hide_in_response = false;
+
+    function onPostingAfterCheck($id, array &$data)
+    {     
+               
+    }
 
     function onPost($id, Array &$data)
     {       

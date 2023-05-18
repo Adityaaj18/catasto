@@ -8,6 +8,7 @@ use simplerest\core\libs\Url;
 use simplerest\core\libs\Logger;
 use simplerest\core\libs\Strings;
 use simplerest\controllers\MyController;
+use simplerest\core\exceptions\InvalidValidationException;
 
 class CallbacksController extends MyController
 {
@@ -43,7 +44,7 @@ class CallbacksController extends MyController
             return;
         }
 
-        #dd($dec, 'DEC'); //
+        //dd($dec, 'DEC'); //
 
         $status    = strtoupper($dec['status']   ?? $dec['stato'] ?? '');
         $result    = $dec['soggetto'] ?? $dec['risultato'] ?? '';
@@ -117,12 +118,35 @@ class CallbacksController extends MyController
         $data['status'] = $status;
         $data['result'] = $req; // $result
 
-        $id = DB::table($endpoint)
-        ->fill([
-            'status',
-            'result'
-        ])
-        ->create($data);
+        $data['result'] = substr($data['result'], 5);
+        $data['result'] = urldecode($data['result']);
+
+        /*
+            Casting
+        */
+        
+        try {
+            $data['result']     = (empty($data['result']) ? null : $data['result']); 
+            $data['foglio']     = Strings::fromInt($data['foglio']);   // deberia ser fromIntOrFail()
+            $data['particella'] = Strings::fromInt($data['particella']);
+        } catch (\Exception $e){
+            throw new InvalidValidationException($e->getMessage());
+        }     
+
+        //dd($data, $endpoint);
+
+        try {
+
+            $id = DB::table($endpoint)
+            ->fill([
+                'status',
+                'result'
+            ])
+            ->create($data);
+
+        } catch (\Exception $e) {
+            response()->error("Error inserting data", 400, $e->getMessage());
+        }         
 
         $data['id'] = $id;
 

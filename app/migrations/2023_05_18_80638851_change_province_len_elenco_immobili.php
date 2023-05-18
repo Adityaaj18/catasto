@@ -17,8 +17,7 @@ class ChangeProvinceLenElencoImmobili implements IMigration
     {
         $sc = new Schema('elenco_immobili');
         $sc->varchar('provincia', 60);
-		$sc->alter();
-		
+		$sc->alter();		
     }
 
     /**

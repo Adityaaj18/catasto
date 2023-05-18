@@ -51,7 +51,7 @@ class ElencoImmobiliSchema implements ISchema
 			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'tipo_catasto' => ['type' => 'str', 'required' => true],
-				'provincia' => ['type' => 'str', 'max' => 2, 'required' => true],
+				'provincia' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'comune' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'sezione' => ['type' => 'str', 'max' => 60],
 				'sezione_urbana' => ['type' => 'str', 'max' => 60],
