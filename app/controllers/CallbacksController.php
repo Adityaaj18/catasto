@@ -120,6 +120,9 @@ class CallbacksController extends MyController
 
         $data['result'] = substr($data['result'], 5);
         $data['result'] = urldecode($data['result']);
+        //$data['result'] = Strings::formatJSON($data['result']);
+
+        //dd($data['result']);
 
         /*
             Casting

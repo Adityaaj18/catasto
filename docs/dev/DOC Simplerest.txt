@@ -9497,7 +9497,6 @@ La clase Strings provee una batería de métodos para manejo conveniente de cade
 	addTrailingSlash(string $path): string
 	...
 
-
 Strings::match() verifica si el string cumple con el patrón o alguno de los patrones proporcionados.
 
 Ej:
@@ -9538,6 +9537,23 @@ Ej:
 El parámetro *no* lleva argumento y puede ser --dropPrimary o --delPrimary 
 
 	$_dropPrimary  = Strings::matchParam($str, ['dropPrimary', 'delPrimary'], null);
+
+
+# Casting
+
+La clase String provee de varios metodos utiles para realizar casting.
+
+Ej:
+
+En un Controller o Model podria tener esto:
+
+	try {
+		$data['foglio']     = Strings::fromInt($data['foglio']);   // deberia ser fromIntOrFail()
+		$data['particella'] = Strings::fromInt($data['particella']);
+	} catch (\Exception $e){
+		error(trans('Data validation error'), 400, $e->getMessage());
+	}     
+
 
 ### Variable dumping 
 
