@@ -144,9 +144,11 @@ class ApiClient
     /*
         Ejecuta un callback cuano $cond es verdadero
     */
-    function when($cond, $fn, ...$args){
+    function when($cond, callable $fn_success,  callable $fn_fail = null, ...$args){
         if ($cond){
-            $fn($this, ...$args);
+            $fn_success($this, ...$args);
+        } elseif ($fn_fail != null){
+            $fn_fail($this, ...$args);
         }
         
         return $this;

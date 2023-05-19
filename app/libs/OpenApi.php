@@ -103,7 +103,11 @@ class OpenApi
         //->redirect()
         ->setBody($data)
         ->setUrl($url)
-        ->post()
+        ->when(Strings::contains('/soci/', $url), function($it){
+            $it->get();
+        }, function($it){
+            $it->post();
+        })
         ->getResponse();
 
         $res = $client->data();  
