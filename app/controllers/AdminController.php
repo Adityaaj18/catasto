@@ -21,9 +21,8 @@ class AdminController extends MyController
 							<div class="float-right d-none d-sm-inline">
 							</div>
 							
-							<!-- Default to the left -->
-							Copyright &copy; 2023, <strong>Fabio Istrefi</strong> ~ 
-							Developed by P. Bozzolo < <a href="mailto:boctulus@gmail.com">boctulus@gmail.com</a> >'
+							<!-- Default to the left        -->
+							<!-- some info data of creators -->'
 	];	
 	
 	// ..

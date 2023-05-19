@@ -32,6 +32,7 @@ class CallbacksController extends MyController
     {
         try {
 
+            // Read 
             $req = file_get_contents("php://input");
 
             /*
