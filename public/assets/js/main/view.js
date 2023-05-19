@@ -489,18 +489,23 @@ async function save_row(jsonData, id = null) {
 
     })
     .catch((error) => {
-      tmp = error
-      console.log(error)
+      // tmp = error
+      // console.log(error)
 
       const detail  = error?.response?.data?.error?.detail ?? null // Errores de validación
       let   err_msg = "Unknown error"
   
       if (typeof(error?.response?.data == 'string')){
-        err_msg = error.response.data; // corregir
+        err_msg = error?.response?.data || err_msg;
       } else {
         err_msg = error?.response?.data?.error?.message || error?.message || (!Array.isArray(detail) ? detail : null) || err_msg
       }
       
+      if (err_msg == "Unknown error"){
+        tmp = error
+        console.log(error)
+      }
+
       // console.log('err_msg', err_msg) 
       // console.log('detail', detail) 
 

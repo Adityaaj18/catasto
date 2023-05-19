@@ -1,7 +1,6 @@
 <?php
 
 use simplerest\core\Route;
-use simplerest\libs\Debug;
 use simplerest\core\libs\Files;
 use simplerest\core\libs\Logger;
 use simplerest\core\libs\Mail;;;
@@ -9,6 +8,10 @@ use simplerest\core\libs\System;
 use simplerest\core\libs\Strings;
 
 $route = Route::getInstance();
+
+/*
+	Log de callbacks
+*/
 
 Route::get('reqs/truncate', function(){
 	Files::mkDirOrFail(LOGS_PATH . 'bk/');
@@ -24,34 +27,15 @@ Route::get('reqs', function(){
 	, 'CALLBACKS FROM OPENAPI');
 });
 
-
-Route::get('mem', function(){
-	dd(System::getMemoryLimit(), 'Memory limit');
-	dd(System::getMemoryUsage(), 'Memory usage');
-	dd(System::getMemoryUsage(true), 'Memory usage (real)');
-
-	dd(System::getMemoryPeakUsage(), 'Memory peak usage');
-	dd(System::getMemoryPeakUsage(true), 'Memory peak usage (real)');
-});
+/*
+	GIT
+*/
 
 Route::get('admin/git/pull', function(){
 	dd(
 		System::exec("git reset --hard HEAD && git pull")
 	);
 });
-
-Route::get('admin/make/schema', function(){
-	dd(
-		System::com("make schema all --from:main")
-	);
-});
-
-/*
-	Actualmente el orden es importante...... 
-	... que debe corregirse.
-
-	Esta obligandose a ir de lo especifico a lo general
-*/
 
 Route::get('admin/migrations/migrate', function(){
 	chdir(ROOT_PATH);
@@ -65,6 +49,21 @@ Route::get('admin/migrations/migrate', function(){
 	dd($res_code, 'RES_CODE');
 });
 
+
+/*
+	Make
+*/
+
+Route::get('admin/make/schema', function(){
+	dd(
+		System::com("make schema all --from:main")
+	);
+});
+
+
+/*
+	SMTP
+*/
 
 Route::get('admin/test_smtp', function(){
 	Mail::debug(4);
@@ -82,6 +81,25 @@ Route::get('admin/test_smtp', function(){
 	dd(Mail::errors(), 'Error');
 	dd(Mail::status(), 'Status');
 });
+
+
+/*
+	Uso de memoria
+*/
+
+Route::get('mem', function(){
+	dd(System::getMemoryLimit(), 'Memory limit');
+	dd(System::getMemoryUsage(), 'Memory usage');
+	dd(System::getMemoryUsage(true), 'Memory usage (real)');
+
+	dd(System::getMemoryPeakUsage(), 'Memory peak usage');
+	dd(System::getMemoryPeakUsage(true), 'Memory peak usage (real)');
+});
+
+
+/*
+	Tests
+*/
 
 
 Route::get('admin/una-pagina', function(){
