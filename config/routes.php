@@ -2,12 +2,19 @@
 
 use simplerest\core\Route;
 use simplerest\libs\Debug;
+use simplerest\core\libs\Files;
 use simplerest\core\libs\Logger;
 use simplerest\core\libs\Mail;;;
 use simplerest\core\libs\System;
 use simplerest\core\libs\Strings;
 
 $route = Route::getInstance();
+
+Route::get('reqs/truncate', function(){
+	Files::mkDirOrFail(LOGS_PATH . 'bk/');
+	Files::cp(LOGS_PATH . 'reqs.txt', LOGS_PATH . 'bk/' . 'reqs_'. str_replace([':',' '], '-', at()).'.txt');
+	Logger::truncate('reqs.txt');
+});
 
 Route::get('reqs', function(){
 	$lines = Strings::lines(Logger::getContent('reqs.txt'), true, false);
