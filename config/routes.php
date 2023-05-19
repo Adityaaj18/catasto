@@ -14,7 +14,7 @@ Route::get('reqs', function(){
 	
 	dd(
 		$lines
-	);
+	, 'CALLBACKS FROM OPENAPI');
 });
 
 

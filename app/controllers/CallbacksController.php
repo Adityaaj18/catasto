@@ -7,8 +7,10 @@ use simplerest\libs\OpenApi;
 use simplerest\core\libs\Url;
 use simplerest\core\libs\Logger;
 use simplerest\core\libs\Strings;
+use simplerest\core\libs\Files;
 use simplerest\controllers\MyController;
 use simplerest\core\exceptions\InvalidValidationException;
+use Throwable;
 
 class CallbacksController extends MyController
 {
@@ -28,137 +30,149 @@ class CallbacksController extends MyController
     */
     function index()
     {
-        $req = file_get_contents("php://input");
+        try {
 
-        // LOG --untouched-
-        file_put_contents(LOGS_PATH . 'reqs.txt', $req . "\n", FILE_APPEND);
+            $req = file_get_contents("php://input");
 
-        if ($req === null){
-            return;
-        }
+            /*
+                LOG --untouched-
+            */
 
-        // Admito JSON para poder probar en POSTMAN con respuestas ya decodificadas
-        $dec = Strings::isJSON($req) ? json_decode($req, true) : OpenApi::decode($req);
+            Logger::log($req . "\n", 'reqs.txt'); // callbacks
 
-        if (empty($dec)){
-            return;
-        }
-
-        //dd($dec, 'DEC'); //
-
-        $status    = strtoupper($dec['status']   ?? $dec['stato'] ?? '');
-        $result    = $dec['soggetto'] ?? $dec['risultato'] ?? '';
-        $callback  = $dec['callback']['url'] ?? null;
-        
-        $cb_params = Url::getQueryParams($callback);
-        $r_sub     = 'r='.$cb_params['r'] .'&sub='. $cb_params['sub'];
-
-        switch($r_sub){
-            case 'r=realstate&sub=elenco_immobili':
-                $endpoint = 'elenco_immobili';
-            break;
-        
-            case 'r=realstate&sub=prospetto_catastale':
-                $endpoint = 'prospetto_catastale';
-            break;
-        
-            case 'r=realstate&sub=ricerca_persona':
-                $endpoint = 'ricerca_persona';
-            break;
-        
-            case 'r=realstate&sub=ricerca_nazionale':
-                $endpoint = 'ricerca_nazionale';
-            break;
-        
-            case '=realstate&sub=indirizzo':
-                $endpoint = 'indirizzo';
-            break;
-        
-            case 'r=company_info&sub=soci':
-                $endpoint = 'soci';
-            break;
-        
-            case 'r=rintracio&sub=telefoni':
-                $endpoint = 'telefono';
-            break;
-        
-            default:
-                throw new \Exception("Invalid callback for '$callback'");            
-        }
-
-        $parametri = [];
-
-        if (isset($dec['parametri'])){
-            $parametri   = $dec['parametri'];
-        } else {
-            $param_names = OpenApi::getParams($endpoint);
-
-            foreach($param_names as $pn){
-                $parametri[$pn] = $dec[$pn] ?? null;
+            if ($req === null){
+                return;
             }
+
+            // Admito JSON para poder probar en POSTMAN con respuestas ya decodificadas
+            $dec = Strings::isJSON($req) ? json_decode($req, true) : OpenApi::decode($req);
+
+            if (empty($dec)){
+                return;
+            }
+
+            //dd($dec, 'DEC'); //
+
+            $status    = strtoupper($dec['status']   ?? $dec['stato'] ?? '');
+            $result    = $dec['soggetto'] ?? $dec['risultato'] ?? '';
+            $callback  = $dec['callback']['url'] ?? null;
+            
+            $cb_params = Url::getQueryParams($callback);
+            $r_sub     = 'r='.$cb_params['r'] .'&sub='. $cb_params['sub'];
+
+            switch($r_sub){
+                case 'r=realstate&sub=elenco_immobili':
+                    $endpoint = 'elenco_immobili';
+                break;
+            
+                case 'r=realstate&sub=prospetto_catastale':
+                    $endpoint = 'prospetto_catastale';
+                break;
+            
+                case 'r=realstate&sub=ricerca_persona':
+                    $endpoint = 'ricerca_persona';
+                break;
+            
+                case 'r=realstate&sub=ricerca_nazionale':
+                    $endpoint = 'ricerca_nazionale';
+                break;
+            
+                case '=realstate&sub=indirizzo':
+                    $endpoint = 'indirizzo';
+                break;
+            
+                case 'r=company_info&sub=soci':
+                    $endpoint = 'soci';
+                break;
+            
+                case 'r=rintracio&sub=telefoni':
+                    $endpoint = 'telefono';
+                break;
+            
+                default:
+                    throw new \Exception("Invalid callback for '$callback'");            
+            }
+
+            $parametri = [];
+
+            if (isset($dec['parametri'])){
+                $parametri   = $dec['parametri'];
+            } else {
+                $param_names = OpenApi::getParams($endpoint);
+
+                foreach($param_names as $pn){
+                    $parametri[$pn] = $dec[$pn] ?? null;
+                }
+            }
+
+            // dd($endpoint, 'ENDPOINT');
+            // dd($parametri,'PARAMS');
+            // dd($callback, 'CALLBACK');
+
+            // dd($status, 'STATUS');
+            // dd($result, 'RESULT');
+
+
+            /*
+                Armo el registro
+            */
+
+            $data = $parametri;
+
+            // dd($data, $endpoint);
+            // exit;
+
+            $data['status'] = $status;
+            $data['result'] = $req; // $result
+
+            $data['result'] = substr($data['result'], 5);
+            $data['result'] = urldecode($data['result']);
+            //$data['result'] = Strings::formatJSON($data['result']);
+
+            //dd($data['result']);
+
+            /*
+                Casting
+            */
+            
+            try {
+                $data['result']     = (empty($data['result']) ? null : $data['result']); 
+                $data['foglio']     = Strings::fromInt($data['foglio']);   // deberia ser fromIntOrFail()
+                $data['particella'] = Strings::fromInt($data['particella']);
+            } catch (\Exception $e){
+                error(trans('Data validation error'), 400, $e->getMessage());
+            }     
+
+            //dd($data, $endpoint);
+
+            try {
+
+                $id = DB::table($endpoint)
+                ->fill([
+                    'status',
+                    'result'
+                ])
+                ->create($data);
+
+            } catch (\Exception $e) {
+                response()->error("Error inserting data", 400, $e->getMessage());
+            }         
+
+            $data['id'] = $id;
+
+            /*
+                Envio la respuesta
+            */
+
+            return $data;
+
+        } catch (\Throwable $e){
+            Logger::logError("Error in Callback! ". $e->getMessage());
         }
 
-        // dd($endpoint, 'ENDPOINT');
-        // dd($parametri,'PARAMS');
-        // dd($callback, 'CALLBACK');
 
-        // dd($status, 'STATUS');
-        // dd($result, 'RESULT');
-
-
-        /*
-            Armo el registro
-        */
-
-        $data = $parametri;
-
-        // dd($data, $endpoint);
-        // exit;
-
-        $data['status'] = $status;
-        $data['result'] = $req; // $result
-
-        $data['result'] = substr($data['result'], 5);
-        $data['result'] = urldecode($data['result']);
-        //$data['result'] = Strings::formatJSON($data['result']);
-
-        //dd($data['result']);
-
-        /*
-            Casting
-        */
-        
-        try {
-            $data['result']     = (empty($data['result']) ? null : $data['result']); 
-            $data['foglio']     = Strings::fromInt($data['foglio']);   // deberia ser fromIntOrFail()
-            $data['particella'] = Strings::fromInt($data['particella']);
-        } catch (\Exception $e){
-            error(trans('Data validation error'), 400, $e->getMessage());
-        }     
-
-        //dd($data, $endpoint);
-
-        try {
-
-            $id = DB::table($endpoint)
-            ->fill([
-                'status',
-                'result'
-            ])
-            ->create($data);
-
-        } catch (\Exception $e) {
-            response()->error("Error inserting data", 400, $e->getMessage());
-        }         
-
-        $data['id'] = $id;
-
-        /*
-            Envio la respuesta
-        */
-
-        return $data;
-        
+        exit;
+    
         /*
             - Generar un log con cada respuesta para que no se pierdan
 
@@ -250,7 +264,7 @@ class CallbacksController extends MyController
 
 
 
-        exit;
+       
     }
 }
 
