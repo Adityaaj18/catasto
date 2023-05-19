@@ -26,6 +26,51 @@ class Soci extends MyApiController
     */
     function onPost($id, Array &$data)
     {       
+        $piva_cf_or_id = $data['piva_cf_or_id'];
+
+        $url = 'https://imprese.openapi.it/soci/' . $piva_cf_or_id;
+
+        $res = OpenApi::makeRequest($data, $url);
         
+
+        // NO CONTENT
+        if (empty($res) || (isset($res['status']) && $res['status'] == 204) ){
+            response()->error("OpenAPI error", 204, "NO CONTENT");
+        }
+
+
+        $dec = Strings::isJSON($res) ? json_decode($res, true) : $res; ///
+
+        if ($res === false){
+            response()->error("Empty response", 500, "Connection error?");
+        }
+
+        $_data     = $dec['data'];
+        $status    = strtoupper($_data['status'] ?? $_data['stato'] ?? '');
+
+        if ($dec['error'] !== null){
+            response()->error("OpenAPI error", 500, $dec['message'] ?? null);
+        } 
+
+        /*
+            Actualizo en la DB
+        */
+        
+        DB::table($this->table_name)
+        ->find($id)
+        ->fill(['status', 'response'])
+        ->update([
+            'status'   => $status,
+            'response' => $res // $_data
+        ]);
+
+        // dd(DB::getLog());
+
+        /*
+            Lo envio en la respuesta
+        */
+
+        $data['status']   = $status;
+        $data['response'] = $res;
     }         
 } 

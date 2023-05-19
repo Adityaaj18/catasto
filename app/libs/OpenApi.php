@@ -91,7 +91,6 @@ class OpenApi
                 unset($data[$key]); 
             }
         }
-              
 
         $client
         ->when(static::$mock, function($it){
@@ -101,25 +100,31 @@ class OpenApi
         //->clearCache()
         //->cache(17 * 3600)
         //->redirect()
-        ->setBody($data)
+       
         ->setUrl($url)
         ->when(Strings::contains('/soci/', $url), function($it){
+            //dd('GET');
             $it->get();
-        }, function($it){
+        }, function($it) use($data){
+            //dd('POST');
+            $it->setBody($data);
             $it->post();
         })
         ->getResponse();
 
         $res = $client->data();  
 
-        // A veces viene basura antes y luego del JSON 
-        if (isset($res['message']) && Strings::contains('{', $res['message']) && Strings::contains('}', $res['message'])){
-            $res['message'] = '{' . Strings::after($res['message'], '{');
-            $res['message'] =       Strings::beforeLast($res['message'], '}') . '}';
+        // No content
+        if ($client->status() != 204){
+            // A veces viene basura antes y luego del JSON 
+            if (isset($res['message']) && Strings::contains('{', $res['message']) && Strings::contains('}', $res['message'])){
+                $res['message'] = '{' . Strings::after($res['message'], '{');
+                $res['message'] =       Strings::beforeLast($res['message'], '}') . '}';
+            }
         }
 
         Logger::dump($client->dump(), null, true);
-        Logger::dump($client->getRawResponse(), null, true); // *
+        Logger::dump($client->status() != 204 ? "NO CONTENT!" : $client->getRawResponse(), null, true); // *
 
         return $res;
     }

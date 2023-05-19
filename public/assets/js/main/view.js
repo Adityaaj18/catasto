@@ -468,7 +468,31 @@ async function save_row(jsonData, id = null) {
       data: jsonData,
     })
     .then(({ data }) => {
-      //console.log(data)
+      console.log('DATA', data)
+
+      // POSIBLE NO-CONTENT
+
+      if (typeof data === 'undefined' || data === null || data === ""){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops... something went wrong',
+          text: "NO CONTENT"
+          // footer: '<a href="">Why do I have this issue?</a>'
+        })
+
+        return;
+      }
+
+      if (typeof data.data === 'undefined'){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops... something went wrong',
+          text: (typeof(data) == 'string' ? data : JSON.stringify(data))
+          // footer: '<a href="">Why do I have this issue?</a>'
+        })
+
+        return;
+      }
 
       // TODO: Importante revisar, el data response devuelto en POST difiere mucho del devuelto en PATCH
       if (id) {
@@ -510,7 +534,7 @@ async function save_row(jsonData, id = null) {
 
       // console.log('err_msg', err_msg) 
       // console.log('detail', detail) 
-      
+
 
       if (detail !== null && typeof(detail) === 'object') {
 
