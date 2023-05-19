@@ -30,7 +30,9 @@ class ElencoImmobili extends MyApiController
     {       
         $url = 'https://catasto.openapi.it/richiesta/elenco_immobili/';
 
-        if (config()['mock_responses']){
+        $cfg = config();
+
+        if ($cfg['env'] == 'local' && $cfg['mock_responses']){
             OpenApi::mock(ETC_PATH . 'mocks/'.$this->table_name.'.json'); 
         }
 
