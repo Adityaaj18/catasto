@@ -79,9 +79,9 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="/" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
+                <!--li class="nav-item d-none d-sm-inline-block">
                     <a href="https://wa.me/447541919915" class="nav-link" target="_blank">Contact</a>
-                </li>
+                </li-->
             </ul>
 
             <!-- Right navbar links -->

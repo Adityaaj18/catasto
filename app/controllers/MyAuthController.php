@@ -12,7 +12,7 @@ use simplerest\traits\DbAccess;
 
 global $api_version;
 
-if (substr($api_version, 0, 1) != 'v' || !is_numeric(substr($api_version, 1))){
+if (substr($api_version ?? '', 0, 1) != 'v' || !is_numeric(substr($api_version ?? '', 1))){
     throw new \Exception("Invalid API version");
 }
 
