@@ -504,12 +504,13 @@ async function save_row(jsonData, id = null) {
       if (err_msg == "Unknown error"){
         tmp = error
         console.log(error)
+      } else {
+        tmp = detail
       }
 
       // console.log('err_msg', err_msg) 
       // console.log('detail', detail) 
-
-      //tmp = detail
+      
 
       if (detail !== null && typeof(detail) === 'object') {
 

@@ -38,7 +38,7 @@ class CallbacksController extends MyController
                 LOG --untouched-
             */
 
-            Logger::log($req . "\n", 'reqs.txt'); // callbacks
+            Logger::log($req . "\n", 'reqs.txt'); // callback response
 
             if ($req === null){
                 return;

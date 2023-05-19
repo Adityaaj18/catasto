@@ -84,6 +84,15 @@ Route::get('admin/test_smtp', function(){
 
 
 /*
+	PHP info
+*/
+
+Route::get('info', function(){
+	phpinfo();
+});
+
+
+/*
 	Uso de memoria
 */
 
