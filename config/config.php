@@ -1,5 +1,9 @@
 <?php
 
+/*
+	https://ticiwe.com/
+*/
+
 use simplerest\core\Paginator;
 
 require_once __DIR__ . '/constants.php';
@@ -178,7 +182,7 @@ return [
 	/* 
 		Any role listed bellow if it is asked then will be auto-aproved.
 	*/
-	'auto_approval_roles' => ['admin', 'usuario', 'supervisor', 'superadmin'],
+'auto_approval_roles' => [ /* 'admin', 'usuario', 'supervisor', 'superadmin' */ ],
 
 	'default_role' => null,
 	
