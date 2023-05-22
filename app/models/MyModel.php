@@ -47,8 +47,8 @@ class MyModel extends Model
             'result'
         ];
         
-        $this->formatters['response'] = 'textarea';
-        $this->formatters['result']   = 'textarea';
+        $this->formatters['response'] = 'json';
+        $this->formatters['result']   = 'json';
     }
 
     function wp(){

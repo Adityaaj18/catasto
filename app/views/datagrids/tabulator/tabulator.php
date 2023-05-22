@@ -5,20 +5,41 @@ use simplerest\core\libs\HtmlBuilder\Tag;
 Tag::registerBuilder(\simplerest\core\libs\HtmlBuilder\Bt5Form::class);
 
 
-/**
- * Se utiliza un array temporal para colocar los campos de
- * textarea al final en las definiciones y por ende en el formulario
- */
-$textAreas = [];
 foreach ($defs as $field => $info)
 {
-    if(in_array($info['formatter'] ?? '', ['textarea', 'ckdeditor', 'editor'])) {
-        $textAreas[$field] = $info;
-        unset($defs[$field]);
+    //dd($info, $field);
+
+    $formatter = $info['formatter'] ?? null;
+
+    if (!empty($formatter)){
+        switch($formatter){
+
+            /*
+                Reemplazar con "Monaco editor" !!!
+
+                https://stackoverflow.com/a/63179814/980631
+
+                DEMO:
+
+                https://cirosantilli.com/_raw/web-cheat/monaco-editor.html
+
+                Nota:
+
+                Editar tambien en view.js buscando por "codemirror"
+                
+            */
+            case 'codemirror':   
+                css_file('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css');
+
+                js_file ('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js');      
+                js_file ('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js');
+                js_file ('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/lint/javascript-lint.min.js');            
+            break;                
+         
+            // more cases
+        }
     }
 }
-
-$defs = array_merge($defs, $textAreas);
 
 var_encode('defs', $defs);
 var_encode('entity', $entity);
@@ -117,6 +138,9 @@ foreach ($defs as $field => $info)
     $col_size   = "col-md-6";
 
     switch ($formatter){
+        case 'codemirror':
+        case 'javascript':    
+        case 'json':
         case 'textarea':
             $tag_name   = 'area';
             $col_size   = "col-md-12";

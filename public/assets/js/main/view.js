@@ -431,24 +431,13 @@ const deleteBtn = (id) => {
 
 };
 
-const show_modal = (id) => {
-  showModal(id)
-
-  if (typeof(CodeMirror) !== 'undefined'){
-    setTimeout(function() {
-      editor.refresh();
-    },1);
-  }
-
-}
-
 const editBtn = (id) => {
   setMode('edit')
 
   axiosInstance
     .get(`${viewData.entity}/${id}`)
     .then(({ data }) => fillForm(data.data, "col-", { readonly: false }))
-    .then(() => show_modal("row-form-modal"));
+    .then(() => showModal("row-form-modal"));
 };
 
 const seeBtn = (id) => {
@@ -456,8 +445,60 @@ const seeBtn = (id) => {
 
   axiosInstance
     .get(`${viewData.entity}/${id}`)
-    .then(({ data }) => fillForm(data.data, "col-", { readonly: true }))
-    .then(() => show_modal("row-form-modal"));
+    .then(({ data }) => {
+      fillForm(data.data, "col-", { readonly: true })
+
+      for (field of Object.keys(data.data))
+      { 
+        var codeElement = document.getElementById("col-" + field);
+        let value       = codeElement.value; // data.data[field]
+
+        /*
+          Lo ideal es separar "tipo de dato" (que en schema aparece en "detail") del "formateador"
+        */
+        let formatter   = viewData.defs[field].formatter;
+
+        // JSON
+        if (formatter == "json"){ 
+          if (typeof(value) !== 'undefined' && value !== '' && value !== null){
+            value = JSON.stringify(JSON.parse(value), null, 2);
+            codeElement.value = value;
+          }
+          
+          continue;
+        }
+
+        // CODE MIRROR
+        if (formatter == "codemirror"){ 
+          if (typeof(CodeMirror) !== 'undefined'){
+                            
+            // Establece el valor del área de texto
+            codeElement.value = value;
+        
+            let editor;
+
+            editor = CodeMirror.fromTextArea(codeElement, {
+                mode: "javascript",
+                theme: "default",
+                lineNumbers: false,
+            })
+      
+            editor.setValue(value);          
+      
+            setTimeout(function() {
+              editor.refresh();
+            },1);
+          }
+
+          continue;
+        }
+
+      }
+            
+    })
+    .then(() => { 
+      showModal("row-form-modal")     
+    });
 };
 
 /** Funciones de CRUD */
