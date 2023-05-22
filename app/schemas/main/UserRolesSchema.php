@@ -50,34 +50,18 @@ class UserRolesSchema implements ISchema
 				'updated_at' => ['type' => 'datetime']
 			],
 
-			'fks' 				=> ['role_id', 'user_id'],
+			'fks' 				=> ['user_id', 'role_id'],
 
 			'relationships' => [
-				'roles' => [
-					['roles.id','user_roles.role_id']
-				],
 				'users' => [
 					['users.id','user_roles.user_id']
+				],
+				'roles' => [
+					['roles.id','user_roles.role_id']
 				]
 			],
 
 			'expanded_relationships' => array (
-  'roles' => 
-  array (
-    0 => 
-    array (
-      0 => 
-      array (
-        0 => 'roles',
-        1 => 'id',
-      ),
-      1 => 
-      array (
-        0 => 'user_roles',
-        1 => 'role_id',
-      ),
-    ),
-  ),
   'users' => 
   array (
     0 => 
@@ -91,37 +75,37 @@ class UserRolesSchema implements ISchema
       array (
         0 => 'user_roles',
         1 => 'user_id',
+      ),
+    ),
+  ),
+  'roles' => 
+  array (
+    0 => 
+    array (
+      0 => 
+      array (
+        0 => 'roles',
+        1 => 'id',
+      ),
+      1 => 
+      array (
+        0 => 'user_roles',
+        1 => 'role_id',
       ),
     ),
   ),
 ),
 
 			'relationships_from' => [
-				'roles' => [
-					['roles.id','user_roles.role_id']
-				],
 				'users' => [
 					['users.id','user_roles.user_id']
+				],
+				'roles' => [
+					['roles.id','user_roles.role_id']
 				]
 			],
 
 			'expanded_relationships_from' => array (
-  'roles' => 
-  array (
-    0 => 
-    array (
-      0 => 
-      array (
-        0 => 'roles',
-        1 => 'id',
-      ),
-      1 => 
-      array (
-        0 => 'user_roles',
-        1 => 'role_id',
-      ),
-    ),
-  ),
   'users' => 
   array (
     0 => 
@@ -135,6 +119,22 @@ class UserRolesSchema implements ISchema
       array (
         0 => 'user_roles',
         1 => 'user_id',
+      ),
+    ),
+  ),
+  'roles' => 
+  array (
+    0 => 
+    array (
+      0 => 
+      array (
+        0 => 'roles',
+        1 => 'id',
+      ),
+      1 => 
+      array (
+        0 => 'user_roles',
+        1 => 'role_id',
       ),
     ),
   ),

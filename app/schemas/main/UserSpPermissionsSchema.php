@@ -50,34 +50,18 @@ class UserSpPermissionsSchema implements ISchema
 				'updated_at' => ['type' => 'datetime']
 			],
 
-			'fks' 				=> ['sp_permission_id', 'user_id'],
+			'fks' 				=> ['user_id', 'sp_permission_id'],
 
 			'relationships' => [
-				'sp_permissions' => [
-					['sp_permissions.id','user_sp_permissions.sp_permission_id']
-				],
 				'users' => [
 					['users.id','user_sp_permissions.user_id']
+				],
+				'sp_permissions' => [
+					['sp_permissions.id','user_sp_permissions.sp_permission_id']
 				]
 			],
 
 			'expanded_relationships' => array (
-  'sp_permissions' => 
-  array (
-    0 => 
-    array (
-      0 => 
-      array (
-        0 => 'sp_permissions',
-        1 => 'id',
-      ),
-      1 => 
-      array (
-        0 => 'user_sp_permissions',
-        1 => 'sp_permission_id',
-      ),
-    ),
-  ),
   'users' => 
   array (
     0 => 
@@ -91,37 +75,37 @@ class UserSpPermissionsSchema implements ISchema
       array (
         0 => 'user_sp_permissions',
         1 => 'user_id',
+      ),
+    ),
+  ),
+  'sp_permissions' => 
+  array (
+    0 => 
+    array (
+      0 => 
+      array (
+        0 => 'sp_permissions',
+        1 => 'id',
+      ),
+      1 => 
+      array (
+        0 => 'user_sp_permissions',
+        1 => 'sp_permission_id',
       ),
     ),
   ),
 ),
 
 			'relationships_from' => [
-				'sp_permissions' => [
-					['sp_permissions.id','user_sp_permissions.sp_permission_id']
-				],
 				'users' => [
 					['users.id','user_sp_permissions.user_id']
+				],
+				'sp_permissions' => [
+					['sp_permissions.id','user_sp_permissions.sp_permission_id']
 				]
 			],
 
 			'expanded_relationships_from' => array (
-  'sp_permissions' => 
-  array (
-    0 => 
-    array (
-      0 => 
-      array (
-        0 => 'sp_permissions',
-        1 => 'id',
-      ),
-      1 => 
-      array (
-        0 => 'user_sp_permissions',
-        1 => 'sp_permission_id',
-      ),
-    ),
-  ),
   'users' => 
   array (
     0 => 
@@ -135,6 +119,22 @@ class UserSpPermissionsSchema implements ISchema
       array (
         0 => 'user_sp_permissions',
         1 => 'user_id',
+      ),
+    ),
+  ),
+  'sp_permissions' => 
+  array (
+    0 => 
+    array (
+      0 => 
+      array (
+        0 => 'sp_permissions',
+        1 => 'id',
+      ),
+      1 => 
+      array (
+        0 => 'user_sp_permissions',
+        1 => 'sp_permission_id',
       ),
     ),
   ),

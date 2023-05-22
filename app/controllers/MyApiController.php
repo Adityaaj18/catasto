@@ -24,6 +24,11 @@ if (!isset($api_version[0]) || $api_version[0] != 'v' || !is_numeric(substr($api
 if ($api_version == 'v1'){
     class MyApiController extends \simplerest\core\api\v1\ApiController {
         use SubResourcesV2;
+
+        function onGot2($id, ?int $count, array &$data)
+        {
+            dd($data, 'DATA');
+        }
     }
     return;
 }
