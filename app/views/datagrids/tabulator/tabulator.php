@@ -4,8 +4,6 @@ use simplerest\core\libs\HtmlBuilder\Tag;
 
 Tag::registerBuilder(\simplerest\core\libs\HtmlBuilder\Bt5Form::class);
 
-/** Definiciones de la vista */
-$defs = get_defs($entity, $tenantid, false, true);
 
 /**
  * Se utiliza un array temporal para colocar los campos de

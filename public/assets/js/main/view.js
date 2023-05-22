@@ -431,13 +431,24 @@ const deleteBtn = (id) => {
 
 };
 
+const show_modal = (id) => {
+  showModal(id)
+
+  if (typeof(CodeMirror) !== 'undefined'){
+    setTimeout(function() {
+      editor.refresh();
+    },1);
+  }
+
+}
+
 const editBtn = (id) => {
   setMode('edit')
 
   axiosInstance
     .get(`${viewData.entity}/${id}`)
     .then(({ data }) => fillForm(data.data, "col-", { readonly: false }))
-    .then(() => showModal("row-form-modal"));
+    .then(() => show_modal("row-form-modal"));
 };
 
 const seeBtn = (id) => {
@@ -446,7 +457,7 @@ const seeBtn = (id) => {
   axiosInstance
     .get(`${viewData.entity}/${id}`)
     .then(({ data }) => fillForm(data.data, "col-", { readonly: true }))
-    .then(() => showModal("row-form-modal"));
+    .then(() => show_modal("row-form-modal"));
 };
 
 /** Funciones de CRUD */
