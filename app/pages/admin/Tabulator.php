@@ -18,37 +18,32 @@ class Tabulator /* extends Page */
         js_file('vendors/tabulator/dist/js/tabulator.min.js');
     }
 
-    function index($entity = 'emergencias')
+    function index($entity = null)
     {
-        $this->tpl_params['page_name'] = ucfirst(
+        $main       = '';
+        $right_cont = '';
+
+        if (!empty($entity)){
+            $this->tpl_params['page_name'] = ucfirst(
                 str_replace('_', ' ', $entity)
-        );
+            );
 
-        $tenant_id = DB::getCurrentConnectionId(true);
-
-        $incl_rels = false;
-
-        /** Definiciones de la vista */
-        $defs      = get_defs($entity, $tenant_id, false, false, $incl_rels);
-
-        $tabulator = get_view("datagrids/tabulator/tabulator", [
-            'entity'   => $entity,
-            'tenantid' => DB::getCurrentConnectionId(true),
-            'defs'     => $defs
-        ]);  
-
-        switch($entity){
-            case 'emergencias':
-                $right_cont = get_view(VIEWS_PATH . "gmaps/map.php");
-                break;
-            default:
-                $right_cont = null;
-        }
+            $main = get_view("datagrids/tabulator/tabulator", [
+                'entity'   => $entity,
+                'tenantid' => DB::getCurrentConnectionId(true)
+            ]);  
+        } 
+        
+        // switch($entity){
+        //     case 'emergencias':
+        //         $right_cont = get_view(VIEWS_PATH . "gmaps/map.php");
+        //         break;
+        // }
 
         return '
         <div class="row">
             <div class="col-9">
-            '.$tabulator.'
+            '.$main.'
             </div>
             <div class="col-3">
             '. $right_cont .'
@@ -56,4 +51,3 @@ class Tabulator /* extends Page */
         </div>';
     }   
 }
-
