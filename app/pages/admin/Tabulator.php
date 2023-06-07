@@ -18,36 +18,36 @@ class Tabulator /* extends Page */
         js_file('vendors/tabulator/dist/js/tabulator.min.js');
     }
 
-    function index($entity = null)
-    {
-        $main       = '';
-        $right_cont = '';
+    function index($entity = '')
+    { 
+        $tenant_id = DB::getCurrentConnectionId(true);
 
-        if (!empty($entity)){
+        $incl_rels = false;
+
+        if (!empty($entity)){    
+            /** Definiciones de la vista */
+            $defs = get_defs($entity, $tenant_id, false, false, $incl_rels);
+            
             $this->tpl_params['page_name'] = ucfirst(
                 str_replace('_', ' ', $entity)
-            );
-
+            );         
+            
             $main = get_view("datagrids/tabulator/tabulator", [
                 'entity'   => $entity,
-                'tenantid' => DB::getCurrentConnectionId(true)
+                'tenantid' => DB::getCurrentConnectionId(true),
+                'defs'     => $defs
             ]);  
         } 
-        
-        // switch($entity){
-        //     case 'emergencias':
-        //         $right_cont = get_view(VIEWS_PATH . "gmaps/map.php");
-        //         break;
-        // }
 
         return '
         <div class="row">
             <div class="col-9">
-            '.$main.'
+            '. ($main ?? '') . '
             </div>
             <div class="col-3">
-            '. $right_cont .'
+            '. ($right_cont ?? '') . '
             </div>
         </div>';
     }   
 }
+
