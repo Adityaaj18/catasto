@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
     width: 40
   });
 
-  for (var field in viewData.defs) {
+  for (var field in viewData.defs) {   
     let obj = {};
     
     let def             = viewData.defs[field];
@@ -232,8 +232,32 @@ document.addEventListener("DOMContentLoaded", () => {
     obj.vertAlign       = "middle"; // TODO: Ajustar según el tipo de campo
 
     columns.push(obj);
+   
+    /*
+      COLUMNS HOOK
+    */
+      if (field === "id") {
+        // Columna con el campo extra después del campo "ID"
+        columns.push({
+          title: "Res?",
+          field: "checkbox",
+          formatter: function(cell, formatterParams, onRendered) {
+            const data = cell.getRow().getData();
+            const result = data.result;
+            const isChecked = result !== null && result !== "";
+  
+            return `<input type="checkbox" ${isChecked ? "checked" : ""}>`;
+          },
+          headerSort: false,
+          hozAlign: "center",
+          width: 58
+        });
+      }
+  
   }
 
+ 
+  
   columns.push({
     //column definition in the columns array
     formatter: function (cell) {
