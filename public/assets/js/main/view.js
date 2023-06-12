@@ -393,15 +393,17 @@ const getFormatter = (fieldType) => {
 /** Devuelve el formateador de Tabulator */
 const getAlignment = (fieldType) => {
   switch (fieldType) {
+    case 'int':
+        return 'center'
     case 'str':
-      return 'left'
+      return 'center'
     case 'email':
       return 'left'
     case 'bool':
       return 'center'
 
     default:
-      return 'plaintext'
+      return 'center'
   }
 }
 
