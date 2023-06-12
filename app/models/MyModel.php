@@ -5,6 +5,7 @@ namespace simplerest\models;
 use simplerest\core\Model;
 use simplerest\core\libs\DB;
 use simplerest\core\libs\Logger;
+use simplerest\core\libs\Strings;
 
 class MyModel extends Model 
 {
@@ -25,6 +26,7 @@ class MyModel extends Model
             'created_at',
             'updated_at',
             'deleted_at',
+            'req_uid'      // lo oculto
         ]);
 
         $this->field_names = array_merge($this->field_names, [
@@ -50,6 +52,28 @@ class MyModel extends Model
         $this->formatters['response'] = 'json';
         $this->formatters['result']   = 'json';
     }
+
+    function onCreating(array &$data)
+	{
+
+	}
+
+	function onUpdating(array &$data)
+	{
+        Logger::dd($data, "DATA en " . __FUNCTION__ . " para tabla ". $this->table_name);
+
+        if (isset( $data['response'])){
+            $response = $data['response'];
+            $response = json_decode($response, true);
+            $req_uid = $response['data']['id'] ?? null; 
+
+            if (is_null($req_uid)){
+                Logger::dd("req_uid vacio en " . __FUNCTION__ . " para tabla ". $this->table_name, '');
+            } 
+
+            $data['req_uid'] = $req_uid;
+        }
+	}
 
     function wp(){
 		return $this->prefix('wp_');

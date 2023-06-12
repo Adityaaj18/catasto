@@ -19,7 +19,7 @@ return [
 	'callback_base_url'        => 'https://ticiwe.com/callbacks',
 		
 	'openapi_testing_mode'     => false, 
-	'mock_responses'		   => false, // *
+	'mock_responses'		   => true, // *
 
 	/*
 		DO NOT EDIT HERE ------>

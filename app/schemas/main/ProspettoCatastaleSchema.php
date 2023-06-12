@@ -14,7 +14,7 @@ class ProspettoCatastaleSchema implements ISchema
 
 			'id_name'			=> 'id',
 
-			'fields'			=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'subalterno', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'			=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'subalterno', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at', 'req_uid'],
 
 			'attr_types'		=> [
 				'id' => 'INT',
@@ -31,7 +31,8 @@ class ProspettoCatastaleSchema implements ISchema
 				'response' => 'STR',
 				'created_at' => 'STR',
 				'updated_at' => 'STR',
-				'deleted_at' => 'STR'
+				'deleted_at' => 'STR',
+				'req_uid' => 'STR'
 			],
 
 			'attr_type_detail'	=> [
@@ -43,7 +44,7 @@ class ProspettoCatastaleSchema implements ISchema
 
 			'autoincrement' 	=> 'id',
 
-			'nullable'			=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'nullable'			=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at', 'req_uid'],
 
 			'required'			=> ['tipo_catasto', 'provincia', 'comune', 'foglio', 'particella', 'subalterno'],
 
@@ -52,7 +53,7 @@ class ProspettoCatastaleSchema implements ISchema
 			'rules' 			=> [
 				'id' => ['type' => 'int'],
 				'tipo_catasto' => ['type' => 'str', 'required' => true],
-				'provincia' => ['type' => 'str', 'max' => 2, 'required' => true],
+				'provincia' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'comune' => ['type' => 'str', 'max' => 60, 'required' => true],
 				'sezione' => ['type' => 'str', 'max' => 60],
 				'sezione_urbana' => ['type' => 'str', 'max' => 60],
@@ -64,7 +65,8 @@ class ProspettoCatastaleSchema implements ISchema
 				'response' => ['type' => 'str'],
 				'created_at' => ['type' => 'datetime'],
 				'updated_at' => ['type' => 'datetime'],
-				'deleted_at' => ['type' => 'datetime']
+				'deleted_at' => ['type' => 'datetime'],
+				'req_uid' => ['type' => 'str', 'max' => 240]
 			],
 
 			'fks' 				=> [],

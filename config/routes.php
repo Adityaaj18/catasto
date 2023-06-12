@@ -27,6 +27,22 @@ Route::get('reqs', function(){
 	, 'CALLBACKS FROM OPENAPI');
 });
 
+Route::get('admin/logs/errors', function(){
+	$lines = Strings::lines(Logger::getContent('errors.txt'), true, false);
+	
+	dd(
+		$lines
+	, 'ERROR LOGS');
+});
+
+Route::get('admin/logs', function(){
+	$lines = Strings::lines(Logger::getContent('log.txt'), true, false);
+	
+	dd(
+		$lines
+	, 'LOGS');
+});
+
 /*
 	GIT
 */

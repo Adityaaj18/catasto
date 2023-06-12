@@ -3,6 +3,7 @@
 namespace simplerest\models\main;
 
 use simplerest\models\MyModel;
+use simplerest\core\libs\Logger;
 use simplerest\schemas\main\ElencoImmobiliSchema;
 
 class ElencoImmobiliModel extends MyModel
@@ -36,7 +37,6 @@ class ElencoImmobiliModel extends MyModel
         $this->order       = [
             $this->id() => 'DESC'
         ];
-
 	}	
 }
 

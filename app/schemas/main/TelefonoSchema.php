@@ -14,7 +14,7 @@ class TelefonoSchema implements ISchema
 
 			'id_name'			=> 'id',
 
-			'fields'			=> ['id', 'cf_piva', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'fields'			=> ['id', 'cf_piva', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at', 'req_uid'],
 
 			'attr_types'		=> [
 				'id' => 'INT',
@@ -24,7 +24,8 @@ class TelefonoSchema implements ISchema
 				'response' => 'STR',
 				'created_at' => 'STR',
 				'updated_at' => 'STR',
-				'deleted_at' => 'STR'
+				'deleted_at' => 'STR',
+				'req_uid' => 'STR'
 			],
 
 			'attr_type_detail'	=> [
@@ -36,7 +37,7 @@ class TelefonoSchema implements ISchema
 
 			'autoincrement' 	=> 'id',
 
-			'nullable'			=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at'],
+			'nullable'			=> ['id', 'result', 'status', 'response', 'created_at', 'updated_at', 'deleted_at', 'req_uid'],
 
 			'required'			=> ['cf_piva'],
 
@@ -50,7 +51,8 @@ class TelefonoSchema implements ISchema
 				'response' => ['type' => 'str'],
 				'created_at' => ['type' => 'datetime'],
 				'updated_at' => ['type' => 'datetime'],
-				'deleted_at' => ['type' => 'datetime']
+				'deleted_at' => ['type' => 'datetime'],
+				'req_uid' => ['type' => 'str', 'max' => 240]
 			],
 
 			'fks' 				=> [],

@@ -14,7 +14,7 @@ class ElencoImmobiliSchema implements ISchema
 
 			'id_name'			=> 'id',
 
-			'fields'			=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response'],
+			'fields'			=> ['id', 'tipo_catasto', 'provincia', 'comune', 'sezione', 'sezione_urbana', 'foglio', 'particella', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response', 'req_uid'],
 
 			'attr_types'		=> [
 				'id' => 'INT',
@@ -30,7 +30,8 @@ class ElencoImmobiliSchema implements ISchema
 				'created_at' => 'STR',
 				'updated_at' => 'STR',
 				'deleted_at' => 'STR',
-				'response' => 'STR'
+				'response' => 'STR',
+				'req_uid' => 'STR'
 			],
 
 			'attr_type_detail'	=> [
@@ -42,7 +43,7 @@ class ElencoImmobiliSchema implements ISchema
 
 			'autoincrement' 	=> 'id',
 
-			'nullable'			=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response'],
+			'nullable'			=> ['id', 'sezione', 'sezione_urbana', 'result', 'status', 'created_at', 'updated_at', 'deleted_at', 'response', 'req_uid'],
 
 			'required'			=> ['tipo_catasto', 'provincia', 'comune', 'foglio', 'particella'],
 
@@ -62,7 +63,8 @@ class ElencoImmobiliSchema implements ISchema
 				'created_at' => ['type' => 'datetime'],
 				'updated_at' => ['type' => 'datetime'],
 				'deleted_at' => ['type' => 'datetime'],
-				'response' => ['type' => 'str']
+				'response' => ['type' => 'str'],
+				'req_uid' => ['type' => 'str', 'max' => 240]
 			],
 
 			'fks' 				=> [],
