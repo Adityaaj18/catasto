@@ -347,6 +347,7 @@ return [
 			'Ricerca persona'    => '/admin/tabulator/ricerca_persona',
 			'Ricerca nazionale'  => '/admin/tabulator/ricerca_nazionale',
 			'Indirizzo'          => '/admin/tabulator/indirizzo',
+			// 'Visura catastale'   => '/admin/tabulator/visura_catastale',
 			// '' => '/admin/tabulator/',
 			// ...
 		],

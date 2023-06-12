@@ -140,6 +140,7 @@ class CallbacksController extends MyController
                 $data['result']     = (empty($data['result']) ? null : $data['result']); 
                 $data['foglio']     = Strings::fromInt($data['foglio']);   // deberia ser fromIntOrFail()
                 $data['particella'] = Strings::fromInt($data['particella']);
+                $data['subalterno'] = Strings::fromInt($data['subalterno']);
             } catch (\Exception $e){
                 error(trans('Data validation error'), 400, $e->getMessage());
             }     

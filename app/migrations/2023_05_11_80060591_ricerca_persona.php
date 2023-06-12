@@ -25,7 +25,7 @@ class RicercaPersona implements IMigration
         */
         $sc->varchar("cf_piva", 30);
         $sc->varchar("tipo_catasto", 5);
-        $sc->varchar("provincia", 2);  // "RM"
+        $sc->varchar("provincia", 2);  // debe ser 60
 
 
         $sc->json("result")->nullable();  

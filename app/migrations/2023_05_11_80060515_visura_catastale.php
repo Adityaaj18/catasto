@@ -6,9 +6,9 @@ use simplerest\core\libs\Schema;
 use simplerest\core\Model;
 use simplerest\core\libs\DB;
 
-class ProspettoCatastale implements IMigration
+class ElencoImmobili implements IMigration
 {
-   protected $table = 'prospeto_catastale';
+    protected $table = 'visura_catastale';
 
     /**
 	* Run migration.
@@ -21,37 +21,29 @@ class ProspettoCatastale implements IMigration
         $sc->int('id')->pri()->auto();
 
         /*
-            INPUT for Real State ("elenco_immobili")
+            INPUT for Real State ("visura_catastale")
         */
-        $sc->enum("tipo_catasto",["T","F"]);
-        $sc->varchar("provincia", 2);  // debe ser 60 y se cambia en otra migracion
-        $sc->varchar("comune");
-        $sc->varchar("sezione")->nullable();
-        $sc->varchar("sezione_urbana")->nullable();
-        $sc->varchar("foglio");
-        $sc->varchar("particella"); 
-        $sc->varchar("subalterno");
 
-        /*
-            OUTPUT for Real State ("elenco_immobili")
-
-            It can contains:
-
-            "{numero}"                 <------- best case scenario
-            ""
-            "Soppressa" (supressed)
-            "Bene comune non censibile"
-        */
+        $sc->enum("entita", ["immobile", "soggetto"]);
+        $sc->varchar("id_immobile", 240)->nullable();
+        $sc->varchar("tipo_catasto",2); // ["T","F"] ?
+        $sc->varchar("provincia", 60)->nullable();
+        $sc->varchar("comune")->nullable();
+        $sc->varchar("foglio")->nullable();
+        $sc->varchar("particella")->nullable();
+        $sc->int("subalterno")->nullable();
+        $sc->enum("tipo_visura", ["ordinaria", "storica"]); 
+        $sc->varchar("richiedente");
 
         $sc->json("result")->nullable();  
         $sc->varchar("status", 20)->nullable();
+        $sc->json('response')->after('status')->nullable();
         $sc->datetime('created_at')->nullable();
         $sc->datetime('updated_at')->nullable();
         $sc->datetime('deleted_at')->nullable();
 
         $sc->create();		
     }
-
 
     /**
 	* Run undo migration.
@@ -62,6 +54,5 @@ class ProspettoCatastale implements IMigration
     {
         Schema::dropIfExists($this->table);
     }
-
 }
 
