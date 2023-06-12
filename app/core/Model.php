@@ -2376,7 +2376,7 @@ class Model {
 		);
 	}
 
-	protected function _where(?Array $conditions = null, string $group_op = 'AND', $conjunction = null)
+	protected function _where(?array $conditions = null, string $group_op = 'AND', $conjunction = null)
 	{
 		//dd($group_op, 'group_op');
 		//dd($conjunction, 'conjuntion');
@@ -2489,6 +2489,17 @@ class Model {
 	}
 
 	function where($conditions, $conjunction = 'AND'){
+		/*
+			Laravel compatibility
+			
+			In "Laravel mode", $conditions es la key y $conjunction el valor
+		*/
+		if (is_string($conditions)){
+			$key              = $conditions;
+			$conditions       = [];
+			$conditions[$key] = $conjunction;
+		}
+
 		$this->_where($conditions, 'AND', $conjunction);
 		return $this;
 	}
@@ -2844,7 +2855,7 @@ class Model {
 		$q = "UPDATE ". DB::quote($this->from()) .
 				" SET $set WHERE " . $where;		
 
-		dd($q, 'Update statement');
+		// dd($q, 'Update statement');
 
 		$vals = array_merge($vals, $this->w_vals);
 		$vars = array_merge($vars, $this->w_vars);		
@@ -3204,9 +3215,6 @@ class Model {
 			$vals = array_values($data);
 		}
 
-		// no entiendo como puede estar null algunas veces y otras no !!!!
-		$this->validator = new Validator();			
-
 		// dd($this->fillable, 'FILLABLE');
 		// dd($this->not_fillable, 'NOT FILLABLE');
 
@@ -3215,6 +3223,8 @@ class Model {
 		{			
 			$validado = $this->validator->validate($data, $this->getRules(), $this->fillable, $this->not_fillable);
 			if ($validado !== true){
+				dd($this->validator->getErrors());
+
 				throw new InvalidValidationException(json_encode(
 					$this->validator->getErrors()
 				));
@@ -3248,9 +3258,17 @@ class Model {
 			}
 		}
 
-		$str_vars   = implode(', ',$vars);
-		$str_vals   = implode(', ',$symbols);
-		$str_qmarks = implode(', ',$q_marks);
+		if (DB::driver() == DB::MYSQL || DB::isMariaDB()) {
+			$str_vars = implode(', ', array_map(function ($var) {
+				return "`$var`";
+			}, $vars));
+		} else {
+			$str_vars = implode(', ',$vars);
+		}
+
+		$str_vals     = implode(', ',$symbols);
+
+		$str_qmarks   = implode(', ',$q_marks);
 
 		$this->insert_vars = $vars;
 

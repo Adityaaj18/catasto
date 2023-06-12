@@ -60,12 +60,12 @@ class MyModel extends Model
 
 	function onUpdating(array &$data)
 	{
-        Logger::dd($data, "DATA en " . __FUNCTION__ . " para tabla ". $this->table_name);
+        // Logger::dd($data, "DATA en " . __FUNCTION__ . " para tabla ". $this->table_name);
 
         if (isset( $data['response'])){
             $response = $data['response'];
             $response = json_decode($response, true);
-            $req_uid = $response['data']['id'] ?? null; 
+            $req_uid  = $response['data']['id'] ?? null; 
 
             if (is_null($req_uid)){
                 Logger::dd("req_uid vacio en " . __FUNCTION__ . " para tabla ". $this->table_name, '');

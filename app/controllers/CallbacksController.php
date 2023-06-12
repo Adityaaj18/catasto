@@ -128,8 +128,7 @@ class CallbacksController extends MyController
 
             $data['result'] = substr($data['result'], 5);
             $data['result'] = urldecode($data['result']);
-            //$data['result'] = Strings::formatJSON($data['result']);
-
+         
             //dd($data['result']);
 
             /*
@@ -137,27 +136,44 @@ class CallbacksController extends MyController
             */
             
             try {
-                $data['result']     = (empty($data['result']) ? null : $data['result']); 
-                $data['foglio']     = Strings::fromInt($data['foglio']);   // deberia ser fromIntOrFail()
-                $data['particella'] = Strings::fromInt($data['particella']);
-                $data['subalterno'] = Strings::fromInt($data['subalterno']);
+                if (isset($data['result'])){
+                    $data['result']     = (empty($data['result']) ? null : $data['result']); 
+                }    
+
+                if (isset($data['foglio'])){
+                    $data['foglio']     = Strings::fromInt($data['foglio']);   // podria en otro caso ser fromIntOrFail()
+                }    
+
+                if (isset($data['particella'])){
+                    $data['particella'] = Strings::fromInt($data['particella']);
+                }
+
+                if (isset($data['subalterno'])){
+                    $data['subalterno'] = Strings::fromInt($data['subalterno']);
+                }               
+            
             } catch (\Exception $e){
                 error(trans('Data validation error'), 400, $e->getMessage());
             }     
 
-            //dd($data, $endpoint);
+            // mismo "uid" presente en la response del request
+            $req_uid = $dec['id'] ?? null;
+
+            unset($data['id']);
+            $data['req_uid'] = $req_uid;
 
             try {
 
                 $id = DB::table($endpoint)
+                ->where(['req_uid' => $req_uid])
                 ->fill([
                     'status',
                     'result'
                 ])
-                ->create($data);
+                ->update($data);
 
             } catch (\Exception $e) {
-                response()->error("Error inserting data", 400, $e->getMessage());
+                response()->error("Error updating data", 400, $e->getMessage());
             }         
 
             $data['id'] = $id;
@@ -166,6 +182,8 @@ class CallbacksController extends MyController
                 Envio la respuesta
             */
 
+            // $data['result'] = str_replace('\\', '', $data['result']); // Eliminar las barras invertidas
+            
             return $data;
 
         } catch (\Throwable $e){
