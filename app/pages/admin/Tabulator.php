@@ -13,9 +13,9 @@ class Tabulator /* extends Page */
 
     function __construct()
     {   
-        css_file('vendors/tabulator/dist/css/tabulator.min.css');
+        css_file('vendors/tabulator/dist/css/tabulator.min.css?v=1');
         //css_file('vendors/tabulator/dist/css/tabulator_bootstrap5.min.css');
-        js_file('vendors/tabulator/dist/js/tabulator.min.js');
+        js_file('vendors/tabulator/dist/js/tabulator.min.js?v=1');
     }
 
     function index($entity = '')
@@ -41,13 +41,14 @@ class Tabulator /* extends Page */
 
         return '
         <div class="row">
-            <div class="col-9">
+            <div class="col-sm-12 col-md-10 col-9">
             '. ($main ?? '') . '
             </div>
-            <div class="col-3">
+            <div class="col-sm-0 col-md-2 col-3">
             '. ($right_cont ?? '') . '
             </div>
         </div>';
+    
     }   
 }
 

@@ -1,6 +1,7 @@
-.checkbox-green {
-	background-color: green;
-}
+textarea {
+	height: auto;
+	resize: vertical;
+}  
 
 #username_text {
 	color:aqua;

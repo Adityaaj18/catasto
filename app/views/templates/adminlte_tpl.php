@@ -29,7 +29,7 @@
         head();
     ?>
 
-     <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
+     <link rel="stylesheet" href="<?= asset('css/main.css?v=1') ?>">
 
     <!-- jQuery -->
     <script src="<?= asset('vendors/adminlte/plugins/jquery/jquery.min.js') ?>"></script>

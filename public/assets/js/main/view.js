@@ -35,6 +35,15 @@ function addComputedFields(columns, field) {
 }
 
 
+/*
+  Altura automatica para TEXTAREAs
+*/
+function autoResize(textarea) {
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+}
+
+
 /** Constantes Globales */
 
 const uid = localStorage.getItem("uid");

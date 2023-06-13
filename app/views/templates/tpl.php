@@ -86,7 +86,7 @@
     <script src="<?= asset('vendors/adminlte/plugins/daterangepicker/daterangepicker.js') ?>"></script>
     
 
-    <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
+    <link rel="stylesheet" href="<?= asset('css/main.css?v=1') ?>">
 
 </head>
 <body>

@@ -55,7 +55,7 @@ js_file('vendors/axios/axios.min.js', null, true);
 js_file('js/bootstrap/bt_validation_ss.js');
 js_file('js/bootstrap/bt-utilities.js');
 js_file('js/utilities.js', null, true);
-js_file('js/main/view.js', null, true); // Scripts de la vista
+js_file('js/main/view.js?v=1', null, true); // Scripts de la vista
 js_file('js/plugins/jsPDF/jspdf.umd.min.js');
 js_file('js/plugins/jsPDF/autotable/jspdf.plugin.autotable.min.js');
 js_file('vendors/sweetalert2/sweetalert2@11.js');
@@ -152,6 +152,16 @@ foreach ($defs as $field => $info)
     }
 
     if($field !== 'id'){
+        $atts = [
+            'aria-describedby' => "invalid-col-{$id}",
+            'data-visibility'  => $is_visible ? "true" : "false"
+        ];
+
+        if ($tag_name == 'area'){
+            $atts['oninput']  = 'autoResize(this)';
+            $atts['onchange'] = 'autoResize(this)';
+        }
+
         $fields[] = tag('div')->class("$col_size position-relative")
         ->content([
             tag('label')->for("col-{$id}")->text($is_required ? "$title *" : $title),
@@ -160,10 +170,7 @@ foreach ($defs as $field => $info)
             ->style('font-size:1rem')
             ->id("col-{$id}")
             ->name($id)
-            ->attributes([
-                'aria-describedby' => "invalid-col-{$id}",
-                'data-visibility'  => $is_visible ? "true" : "false"
-            ])
+            ->attributes($atts)
             ->class('col2save'),
                 
             tag('div')
