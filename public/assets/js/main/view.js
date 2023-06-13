@@ -34,6 +34,15 @@ function addComputedFields(columns, field) {
   // mas propiedades computadas
 }
 
+/*
+  Eventos 
+*/
+
+const onViewResult = () => {
+	$('#col-result').removeAttr('readonly');
+	$('#col-result').val($('#col-result').val() + ' ');
+	$('#col-result').trigger('input');	
+}
 
 /*
   Altura automatica para TEXTAREAs
@@ -548,12 +557,10 @@ const seeBtn = (id) => {
     .then(() => {
       showModal("row-form-modal")
 
-      // HOOK "ON VIEW RESULT" 
-
-      $('#col-result').removeAttr('readonly');
-      $('#col-result').val($('#col-result').val() + ' ');
-      $('#col-result').trigger('input');
-
+      // HOOK ON "VIEW RESULT" EVENT 
+      if (typeof onViewResult !== 'undefined'){
+        onViewResult();
+      }      
     });
 };
 
