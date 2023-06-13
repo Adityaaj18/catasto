@@ -1,10 +1,43 @@
+
 /*
-  Renombrar a main.js
+  Computed properties
+ 
 */
+
+function addComputedFields(columns, field) {
+  // Resto del código...
+
+  // Ejemplo: Agregar un campo computado después del campo "id"
+  if (field === "id") {
+    const computedField = {
+      title: "Res?",
+      field: "checkbox",
+      formatter: function (cell, formatterParams, onRendered) {
+        const data = cell.getRow().getData();
+        const result = data.result;
+        const isChecked = result !== null && result !== "";
+
+        return `<input type="checkbox" ${isChecked ? "checked" : ""}>`;
+      },
+      headerSort: false,
+      hozAlign: "center",
+      width: 58
+    };
+
+    // Buscar la posición del campo "id"
+    const idIndex = columns.findIndex(column => column.field === "id");
+
+    // Insertar el campo computado después del campo "id"
+    columns.splice(idIndex + 1, 0, computedField);
+  }
+
+  // mas propiedades computadas
+}
+
 
 /** Constantes Globales */
 
-const uid   = localStorage.getItem("uid");
+const uid = localStorage.getItem("uid");
 const token = localStorage.getItem("access_token");
 const roles = localStorage.getItem("roles");
 
@@ -23,7 +56,7 @@ const axiosInstance = axios.create({
 const viewData = {};
 
 /** Variables y constantes globales para el DataGrid*/
-var   table = undefined;
+var table = undefined;
 const columns = [];
 
 // create, edit, see
@@ -32,13 +65,13 @@ let view_mode;
 // * Obtiene los parámetros para la vista provistos desde el servidor mediante campos ocultos
 // * Los parámetros están codificados en base64
 document.addEventListener("DOMContentLoaded", () => {
-  viewData.defs     = var_decode('defs');
+  viewData.defs = var_decode('defs');
   viewData.tenantid = var_decode('tenantid');
-  viewData.entity   = var_decode('entity');
-  viewData.fields   = Object.keys(viewData.defs)
-  viewData.userId   = uid;
-  viewData.roles    = roles
-  viewData.api_url  = `${window.location.origin}/api/v1/${viewData.entity}`;
+  viewData.entity = var_decode('entity');
+  viewData.fields = Object.keys(viewData.defs)
+  viewData.userId = uid;
+  viewData.roles = roles
+  viewData.api_url = `${window.location.origin}/api/v1/${viewData.entity}`;
 
   // console.log(viewData.defs); //
 
@@ -57,20 +90,20 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     const serialized = $(e.currentTarget).serializeArray();
-    const jsonData   = {};
-    
+    const jsonData = {};
+
     serialized.forEach((item) => (jsonData[item.name] = item.value));
-    
+
     save_row(jsonData, jsonData.id);
   });
 
   /** Limpieza del formulario al cerrar modal */
   document
-  .getElementById("row-form-modal")
-  .addEventListener("hidden.bs.modal", function (e) {
-    clearForm("mainForm"); // Reinicia los campos visibles del formulario
-    $("#col-id").val(""); // Limpia el campo oculto del Id
-  });
+    .getElementById("row-form-modal")
+    .addEventListener("hidden.bs.modal", function (e) {
+      clearForm("mainForm"); // Reinicia los campos visibles del formulario
+      $("#col-id").val(""); // Limpia el campo oculto del Id
+    });
 
 
   async function create_collection(entity, selectedRows) {
@@ -126,33 +159,33 @@ document.addEventListener("DOMContentLoaded", () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-      if (result.isConfirmed) {        
+      if (result.isConfirmed) {
         console.log("Procedo a borrar .... !", selectedRows);
 
         const col_res = create_collection(viewData.entity, selectedRows);
-  
+
         col_res
-        .then((res) => {
-          return res.data;
-        })
-        .then((res) => {
-          let col_id = res.data.id;   
-          let resp   = mass_delete(col_id);
-  
-          resp.then(res => {
-  
-            table.setData(viewData.api_url)
-              .catch(function (error) {
-                //handle error loading data
-                console.log('error loading data');
-              });
+          .then((res) => {
+            return res.data;
           })
-        });
+          .then((res) => {
+            let col_id = res.data.id;
+            let resp = mass_delete(col_id);
+
+            resp.then(res => {
+
+              table.setData(viewData.api_url)
+                .catch(function (error) {
+                  //handle error loading data
+                  console.log('error loading data');
+                });
+            })
+          });
 
       }
     })
 
-   
+
   };
 
 
@@ -219,51 +252,33 @@ document.addEventListener("DOMContentLoaded", () => {
     width: 40
   });
 
-  for (var field in viewData.defs) {   
+  for (var field in viewData.defs) {
     let obj = {};
-    
-    let def             = viewData.defs[field];
-    obj.field           = field;
-    obj.title           = def.name === undefined ? ucfirst(field) : def.name;
-    obj.formatter       = getFormatter(def.type),
-    obj.formatterParams = getFormatterParams(def.type, field)
-    obj.editor          = viewData.defs[field].fillable != 0;
-    obj.hozAlign        = getAlignment(def.type)
-    obj.vertAlign       = "middle"; // TODO: Ajustar según el tipo de campo
+
+    let def = viewData.defs[field];
+    obj.field = field;
+    obj.title = def.name === undefined ? ucfirst(field) : def.name;
+    obj.formatter = getFormatter(def.type),
+      obj.formatterParams = getFormatterParams(def.type, field)
+    obj.editor = viewData.defs[field].fillable != 0;
+    obj.hozAlign = getAlignment(def.type)
+    obj.vertAlign = "middle"; // TODO: Ajustar según el tipo de campo
 
     columns.push(obj);
-   
+
     /*
       COLUMNS HOOK
     */
-      if (field === "id") {
-        // Columna con el campo extra después del campo "ID"
-        columns.push({
-          title: "Res?",
-          field: "checkbox",
-          formatter: function(cell, formatterParams, onRendered) {
-            const data = cell.getRow().getData();
-            const result = data.result;
-            const isChecked = result !== null && result !== "";
-  
-            return `<input type="checkbox" ${isChecked ? "checked" : ""}>`;
-          },
-          headerSort: false,
-          hozAlign: "center",
-          width: 58
-        });
-      }
-  
+    addComputedFields(columns, field); // no estas pasandole el field y no sabe por donde va  
   }
 
- 
-  
+
   columns.push({
     //column definition in the columns array
     formatter: function (cell) {
-      const { id }         = cell.getRow().getData();
-      const belongs_to     = cell.getRow().getData().belongs_to;
-      const deleteAllowed  = allowDelete(belongs_to, viewData.userId, viewData.roles)
+      const { id } = cell.getRow().getData();
+      const belongs_to = cell.getRow().getData().belongs_to;
+      const deleteAllowed = allowDelete(belongs_to, viewData.userId, viewData.roles)
 
       const del_btn = `<button type="button" onclick="deleteBtn(${id})" class="btn btn-danger tabulator-btn" ><i class="fa fa-trash text-white"></i></button>`
       const edt_btn = `<button type="button" onclick='editBtn(${id})' class="btn btn-success tabulator-btn" ><i class="fa fa-pen text-white"></i></button>`;
@@ -341,17 +356,17 @@ document.addEventListener("DOMContentLoaded", () => {
   //   ]);
   // }, 100);
 
- 
+
   /** Edición de celdas del DataGrid */
   table.on("cellEdited", async (proxy) => {
     const { oldValue, value } = proxy._cell;
-    const { field }           = proxy.getColumn()._column;
-    const row                 = proxy.getData();
+    const { field } = proxy.getColumn()._column;
+    const row = proxy.getData();
 
     if (value === oldValue) {
       return;
     }
-    
+
     save_row({ [field]: value }, row.id);
   });
 
@@ -394,7 +409,7 @@ const getFormatter = (fieldType) => {
 const getAlignment = (fieldType) => {
   switch (fieldType) {
     case 'int':
-        return 'center'
+      return 'center'
     case 'str':
       return 'center'
     case 'email':
@@ -450,8 +465,8 @@ const deleteBtn = (id) => {
   }).then((result) => {
     if (result.isConfirmed) {
       axiosInstance
-      .delete(`${viewData.entity}/${id}`)
-      .then(() => table.deleteRow(id));
+        .delete(`${viewData.entity}/${id}`)
+        .then(() => table.deleteRow(id));
     }
   })
 
@@ -474,56 +489,55 @@ const seeBtn = (id) => {
     .then(({ data }) => {
       fillForm(data.data, "col-", { readonly: true })
 
-      for (field of Object.keys(data.data))
-      { 
+      for (field of Object.keys(data.data)) {
         var codeElement = document.getElementById("col-" + field);
-        let value       = codeElement.value; // data.data[field]
+        let value = codeElement.value; // data.data[field]
 
         /*
           Lo ideal es separar "tipo de dato" (que en schema aparece en "detail") del "formateador"
         */
-        let formatter   = viewData.defs[field].formatter;
+        let formatter = viewData.defs[field].formatter;
 
         // JSON
-        if (formatter == "json"){ 
-          if (typeof(value) !== 'undefined' && value !== '' && value !== null){
+        if (formatter == "json") {
+          if (typeof (value) !== 'undefined' && value !== '' && value !== null) {
             value = JSON.stringify(JSON.parse(value), null, 2);
             codeElement.value = value;
           }
-          
+
           continue;
         }
 
         // CODE MIRROR
-        if (formatter == "codemirror"){ 
-          if (typeof(CodeMirror) !== 'undefined'){
-                            
+        if (formatter == "codemirror") {
+          if (typeof (CodeMirror) !== 'undefined') {
+
             // Establece el valor del área de texto
             codeElement.value = value;
-        
+
             let editor;
 
             editor = CodeMirror.fromTextArea(codeElement, {
-                mode: "javascript",
-                theme: "default",
-                lineNumbers: false,
+              mode: "javascript",
+              theme: "default",
+              lineNumbers: false,
             })
-      
-            editor.setValue(value);          
-      
-            setTimeout(function() {
+
+            editor.setValue(value);
+
+            setTimeout(function () {
               editor.refresh();
-            },1);
+            }, 1);
           }
 
           continue;
         }
 
       }
-            
+
     })
-    .then(() => { 
-      showModal("row-form-modal")     
+    .then(() => {
+      showModal("row-form-modal")
     });
 };
 
@@ -533,12 +547,12 @@ let tmp;
 
 async function save_row(jsonData, id = null) {
   delete jsonData.id;
-  
+
   const uri = id
     ? `${window.location.origin}/api/v1/${viewData.entity}/${id}`
     : `${window.location.origin}/api/v1/${viewData.entity}`;
-  
-    axiosInstance
+
+  axiosInstance
     .request({
       url: uri,
       method: id ? "PATCH" : "POST",
@@ -550,7 +564,7 @@ async function save_row(jsonData, id = null) {
 
       // POSIBLE NO-CONTENT
 
-      if (typeof data === 'undefined' || data === null || data === ""){
+      if (typeof data === 'undefined' || data === null || data === "") {
         Swal.fire({
           icon: 'error',
           title: 'Oops... something went wrong',
@@ -561,11 +575,11 @@ async function save_row(jsonData, id = null) {
         return;
       }
 
-      if (typeof data.data === 'undefined'){
+      if (typeof data.data === 'undefined') {
         Swal.fire({
           icon: 'error',
           title: 'Oops... something went wrong',
-          text: (typeof(data) == 'string' ? data : JSON.stringify(data))
+          text: (typeof (data) == 'string' ? data : JSON.stringify(data))
           // footer: '<a href="">Why do I have this issue?</a>'
         })
 
@@ -582,7 +596,7 @@ async function save_row(jsonData, id = null) {
       }
 
       hideModal("row-form-modal");
-    
+
       Swal.fire(
         'Request accepted',
         '',
@@ -594,16 +608,16 @@ async function save_row(jsonData, id = null) {
       // tmp = error
       // console.log(error)
 
-      const detail  = error?.response?.data?.error?.detail ?? null // Errores de validación
-      let   err_msg = "Unknown error"
-  
-      if (typeof(error?.response?.data == 'string')){
+      const detail = error?.response?.data?.error?.detail ?? null // Errores de validación
+      let err_msg = "Unknown error"
+
+      if (typeof (error?.response?.data == 'string')) {
         err_msg = error?.response?.data || err_msg;
       } else {
         err_msg = error?.response?.data?.error?.message || error?.message || (!Array.isArray(detail) ? detail : null) || err_msg
       }
-      
-      if (err_msg == "Unknown error"){
+
+      if (err_msg == "Unknown error") {
         tmp = error
         console.log(error)
       } else {
@@ -614,26 +628,26 @@ async function save_row(jsonData, id = null) {
       // console.log('detail', detail) 
 
 
-      if (detail !== null && typeof(detail) === 'object') {
+      if (detail !== null && typeof (detail) === 'object') {
 
         let validations = {};
         for (let field in jsonData) {
           validations[field] =
-           [{ error: false }]; // Inicializa con error false todos los campos
+            [{ error: false }]; // Inicializa con error false todos los campos
         }
 
         validations = { ...validations, ...detail }; // Incorpora los errores de validación
 
         console.log(validations)
-        
+
         setFormValidations(validations);
 
-      } else {        
-  
+      } else {
+
         Swal.fire({
           icon: 'error',
           title: 'Oops... something went wrong',
-          text: err_msg + (typeof(detail) == 'string' ?  `Detalle: ${detail}` : ''),
+          text: err_msg + (typeof (detail) == 'string' ? `Detalle: ${detail}` : ''),
           // footer: '<a href="">Why do I have this issue?</a>'
         })
 
@@ -645,43 +659,43 @@ async function save_row(jsonData, id = null) {
 const setMode = (mode) => {
   view_mode = mode
 
-  if (mode == 'see'){
+  if (mode == 'see') {
     $('#save_row').hide();
-  } else {    
+  } else {
     $('#save_row').show();
   }
 
-  if (mode == 'see'){
+  if (mode == 'see') {
     setAttrWithCallback((id, sel) => {
       return ("true")
-    
-    }, viewData.fields, 'col-', {"style": "display: block"})
+
+    }, viewData.fields, 'col-', { "style": "display: block" })
   } else {
     setAttrWithCallback((id, sel) => {
       return (sel.data('visibility') !== "true")
-    
-    }, ['status', 'response', 'result'], 'col-', {"style": "display: none"})
+
+    }, ['status', 'response', 'result'], 'col-', { "style": "display: none" })
   }
 
-  
-  if (mode == 'create'){
+
+  if (mode == 'create') {
     $('.modal-title').text('New')
     return
   }
 
-  if (mode == 'edit'){
+  if (mode == 'edit') {
     $('.modal-title').text('Edit')
     return
   }
 
-  if (mode == 'see'){
+  if (mode == 'see') {
     $('.modal-title').text('')
     return
   }
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  document.getElementById('btn-create').onclick = function () { 
+  document.getElementById('btn-create').onclick = function () {
     setMode('create')
 
     setAttr(viewData.fields, 'col-', { readonly: false })
