@@ -547,6 +547,11 @@ const seeBtn = (id) => {
     })
     .then(() => {
       showModal("row-form-modal")
+
+      $('#col-result').removeAttr('readonly');
+      $('#col-result').val($('#col-result').val() + ' ');
+      $('#col-result').trigger('input');
+
     });
 };
 
