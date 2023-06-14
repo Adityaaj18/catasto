@@ -4,6 +4,7 @@ namespace simplerest\controllers\api;
 
 use simplerest\core\libs\DB;
 use simplerest\libs\OpenApi;
+use simplerest\core\libs\Strings;
 use simplerest\controllers\MyApiController; 
 
 class RicercaPersona extends MyApiController
