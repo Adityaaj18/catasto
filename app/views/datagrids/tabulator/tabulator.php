@@ -55,10 +55,11 @@ js_file('vendors/axios/axios.min.js', null, true);
 js_file('js/bootstrap/bt_validation_ss.js');
 js_file('js/bootstrap/bt-utilities.js');
 js_file('js/utilities.js', null, true);
-js_file('js/main/view.js?v=1', null, true); // Scripts de la vista
 js_file('js/plugins/jsPDF/jspdf.umd.min.js');
 js_file('js/plugins/jsPDF/autotable/jspdf.plugin.autotable.min.js');
 js_file('vendors/sweetalert2/sweetalert2@11.js');
+js_file('js/my_datatables/main.js?v=1', null, true); // Scripts de la vista
+
 
 echo tag('div')->content([
     tag('openButton')

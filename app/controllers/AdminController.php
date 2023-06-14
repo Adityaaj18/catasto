@@ -35,6 +35,7 @@ class AdminController extends MyController
 		*/
 		
 		js_file('vendors/sweetalert2/sweetalert2@11.js');
+		js_file('js/my_datatables/custom.js');
 	}
 	
 	// ..
