@@ -2828,6 +2828,7 @@ class Model {
 		foreach($vars as $ix => $var){
 			$set .= " $var = ?, ";
 		}
+
 		$set =trim(substr($set, 0, strlen($set)-2));
 
 		if ($set_updated_at && $this->inSchema([$this->updatedAt])){
@@ -2856,6 +2857,17 @@ class Model {
 				" SET $set WHERE " . $where;		
 
 		// dd($q, 'Update statement');
+
+		/*
+			JSON no puede ser un string vacio ('')
+		*/
+		foreach($vals as $ix => $val){	
+			if (isset($this->schema['attr_type_detail'][$vars[$ix]]) && in_array($this->schema['attr_type_detail'][$vars[$ix]], ['JSON'])){
+				if ($vals[$ix] == ''){
+					$vals[$ix] = null;
+				} 
+			}
+		}
 
 		$vals = array_merge($vals, $this->w_vals);
 		$vars = array_merge($vars, $this->w_vars);		
