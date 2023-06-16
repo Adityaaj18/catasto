@@ -825,7 +825,5 @@ class ApiClient
 	{
 		return function_exists('curl_init');
 	}
-
-
 }
 

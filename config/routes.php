@@ -9,6 +9,11 @@ use simplerest\core\libs\Strings;
 
 $route = Route::getInstance();
 
+Route::get('credits',  'HomeController', [
+	'credits' => true
+]);
+
+
 /*
 	Log de callbacks
 */

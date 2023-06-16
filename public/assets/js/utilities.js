@@ -205,3 +205,8 @@ const clearForm = (formId) => {
     $(`#${formId}`).trigger('reset')
     clearFormValidations()
 }
+
+const onReady = (callback) => {
+    document.addEventListener("DOMContentLoaded", callback);
+}
+  

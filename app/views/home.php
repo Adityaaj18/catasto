@@ -3,6 +3,8 @@
 use simplerest\core\libs\HtmlBuilder\Bt5Form;
 use simplerest\core\libs\HtmlBuilder\Tag;
 
+js_file('js/utilities.js', null, true);
+
 Tag::registerBuilder(\simplerest\core\libs\HtmlBuilder\Bt5Form::class);
 
 echo tag('shadow')
@@ -16,6 +18,24 @@ echo tag('shadow')
 ])
 ->class("mt-3 p-3 mb-5");
 ?>
+
+<script>
+    onReady(event => {
+        const url = new URL(window.location.href);
+
+        // Verificar si la URL contiene la variable "credits" en diferentes formas
+        if (url.searchParams.has("credits") || url.searchParams.has("author") || url.pathname.includes("credits") || url.pathname.includes("author")) {
+            jQuery('footer').html(`
+            <div class="container py-4" style="margin-top:150px">
+                <hr>
+                <div class="text-center">
+                <p>Developed by Pablo Bozzolo < boctulus AT gmail.com ></p>
+                </div>
+            </div>
+            `)
+        }
+    });
+</script>
 
 <div class="row">
 
