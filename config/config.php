@@ -34,7 +34,7 @@ return [
 		base_url' => /folder'
 	*/
 
-	'base_url' => '',   
+	'base_url' => '/catasto/public',   
 
 	'router' => true,
 	'front_controller' => true,
