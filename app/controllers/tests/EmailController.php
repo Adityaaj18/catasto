@@ -139,7 +139,7 @@ class EmailController extends MyController
     }
 
     // function sendinblue_ori(){
-    //     $api_key = "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";
+    
 
     //     $credentials = Configuration::getDefaultConfiguration()->setApiKey('api-key', $api_key);
     //     $apiInstance = new TransactionalEmailsApi(new GuzzleHttp\Client(),$credentials);
