@@ -54,6 +54,11 @@ class CallbacksController extends MyController
 
             //dd($dec, 'DEC'); //
 
+            // Handle new JSON format where data is wrapped in a "data" key
+            if (isset($dec['data']) && is_array($dec['data']) && isset($dec['data']['endpoint'])){
+                $dec = $dec['data'];
+            }
+
             $status    = strtoupper($dec['status']   ?? $dec['stato'] ?? '');
             $result    = $dec['soggetto'] ?? $dec['risultato'] ?? '';
             $callback  = $dec['callback']['url'] ?? null;
@@ -124,10 +129,16 @@ class CallbacksController extends MyController
             // exit;
 
             $data['status'] = $status;
-            $data['result'] = $req; // $result
 
-            $data['result'] = substr($data['result'], 5);
-            $data['result'] = urldecode($data['result']);
+            // Determine result based on callback format
+            if (Strings::isJSON($req)){
+                // New JSON format: use the decoded result directly
+                $data['result'] = is_array($result) ? json_encode($result) : $result;
+            } else {
+                // Old URL-encoded format: strip "data=" prefix and decode
+                $data['result'] = substr($req, 5);
+                $data['result'] = urldecode($data['result']);
+            }
          
             //dd($data['result']);
 
@@ -170,7 +181,10 @@ class CallbacksController extends MyController
                     'status',
                     'result'
                 ])
-                ->update($data);
+                ->update([
+                    'status' => $data['status'],
+                    'result' => $data['result']
+                ]);
 
             } catch (\Exception $e) {
                 response()->error("Error updating data", 400, $e->getMessage());

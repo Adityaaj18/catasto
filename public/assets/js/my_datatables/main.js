@@ -12,7 +12,7 @@ const defaultHeaders = {
 
 const axiosInstance = axios.create({
   baseURL: `${window.location.origin}/api/v1/`,
-  timeout: 1000,
+  timeout: 30000,
   headers: defaultHeaders,
 });
 
