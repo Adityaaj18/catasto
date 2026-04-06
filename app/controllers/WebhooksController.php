@@ -63,7 +63,7 @@ class WebhooksController extends MyController
 
             $current  = $payload['current'] ?? [];
             $leadId   = (int) ($current['id'] ?? 0);
-            $provincia = strtoupper(trim($current['cf_60'] ?? ''));
+            $provincia = trim($current['cf_60'] ?? '');
             $tipo      = strtoupper(trim($current['cf_28'] ?? '')) ?: env('CATASTO_DEFAULT_TIPO', 'F');
 
             Logger::log("FlowLu webhook: leadId=$leadId provincia=$provincia tipo=$tipo\n", 'flowlu_webhooks.txt');
