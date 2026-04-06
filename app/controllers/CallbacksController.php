@@ -8,6 +8,7 @@ use simplerest\core\libs\Url;
 use simplerest\core\libs\Logger;
 use simplerest\core\libs\Strings;
 use simplerest\core\libs\Files;
+use simplerest\libs\FlowLu;
 use simplerest\controllers\MyController;
 use simplerest\core\exceptions\InvalidValidationException;
 use Throwable;
@@ -53,6 +54,11 @@ class CallbacksController extends MyController
             }
 
             //dd($dec, 'DEC'); //
+
+            // Handle new JSON format where data is wrapped in a "data" key
+            if (isset($dec['data']) && is_array($dec['data']) && isset($dec['data']['endpoint'])){
+                $dec = $dec['data'];
+            }
 
             $status    = strtoupper($dec['status']   ?? $dec['stato'] ?? '');
             $result    = $dec['soggetto'] ?? $dec['risultato'] ?? '';
@@ -124,12 +130,16 @@ class CallbacksController extends MyController
             // exit;
 
             $data['status'] = $status;
-            $data['result'] = $req; // $result
 
-            $data['result'] = substr($data['result'], 5);
-            $data['result'] = urldecode($data['result']);
-         
-            //dd($data['result']);
+            // Determine result based on callback format
+            if (Strings::isJSON($req)){
+                // New JSON format: use the decoded result directly
+                $data['result'] = is_array($result) ? json_encode($result) : $result;
+            } else {
+                // Old URL-encoded format: strip "data=" prefix and decode
+                $data['result'] = substr($req, 5);
+                $data['result'] = urldecode($data['result']);
+            }
 
             /*
                 Casting
@@ -170,7 +180,10 @@ class CallbacksController extends MyController
                     'status',
                     'result'
                 ])
-                ->update($data);
+                ->update([
+                    'status' => $data['status'],
+                    'result' => $data['result']
+                ]);
 
             } catch (\Exception $e) {
                 response()->error("Error updating data", 400, $e->getMessage());
@@ -178,12 +191,14 @@ class CallbacksController extends MyController
 
             $data['id'] = $id;
 
-            /*
-                Envio la respuesta
-            */
+            // If this callback belongs to a FlowLu lead, update it now
+            $leadId = isset($cb_params['lead_id']) ? (int) $cb_params['lead_id'] : 0;
 
-            // $data['result'] = str_replace('\\', '', $data['result']); // Eliminar las barras invertidas
-            
+            if ($leadId && $endpoint === 'prospetto_catastale' && $status === 'EVASA') {
+                Logger::log("Callback: updating FlowLu lead $leadId from prospetto_catastale result\n", 'flowlu_webhooks.txt');
+                $this->updateFlowLuFromResult($leadId, $result, $parametri);
+            }
+
             return $data;
 
         } catch (\Throwable $e){
@@ -284,7 +299,93 @@ class CallbacksController extends MyController
 
 
 
-       
+
+    }
+
+    private function updateFlowLuFromResult(int $leadId, $risultato, array $parametri = []): void
+    {
+        if (is_string($risultato)) {
+            $risultato = json_decode($risultato, true);
+        }
+
+        if (empty($risultato)) {
+            Logger::log("FlowLu callback: empty risultato for lead $leadId\n", 'flowlu_webhooks.txt');
+            // Still move stage to Unassigned
+            $unassignedStage = (int) env('FLOWLU_UNASSIGNED_STAGE_ID', 49);
+            FlowLu::updateLead($leadId, ['pipeline_stage_id' => $unassignedStage]);
+            return;
+        }
+
+        $foglio     = (string) ($parametri['foglio']     ?? '');
+        $particella = (string) ($parametri['particella'] ?? '');
+        $comune     = (string) ($parametri['comune']     ?? '');
+
+        // Collect owners keyed by taxCode|foglio|particella
+        $allOwners = [];
+
+        foreach ($risultato['immobili'] ?? [] as $immobile) {
+            foreach ($immobile['intestatari'] ?? [] as $owner) {
+                $taxCode = $owner['cf'] ?? null;
+                if (!$taxCode) continue;
+
+                $key = $taxCode . '|' . $foglio . '|' . $particella;
+                if (isset($allOwners[$key])) continue;
+
+                $allOwners[$key] = [
+                    'denominazione' => $owner['denominazione'] ?? '',
+                    'cf'            => $taxCode,
+                    'proprieta'     => $owner['proprieta']    ?? '',
+                    'quota'         => $owner['quota']        ?? '',
+                    'rendita'       => $immobile['rendita']   ?? '',
+                    'categoria'     => $immobile['categoria'] ?? $immobile['qualita'] ?? '',
+                    'indirizzo'     => $immobile['indirizzo'] ?? '',
+                    'foglio'        => $foglio,
+                    'particella'    => $particella,
+                    'comune'        => $comune,
+                ];
+            }
+        }
+
+        Logger::log("FlowLu callback: owners found for lead $leadId: " . json_encode($allOwners) . "\n", 'flowlu_webhooks.txt');
+
+        $listId = (int) env('FLOWLU_LAND_OWNERS_LIST_ID', 0);
+
+        foreach ($allOwners as $owner) {
+            $taxCode = $owner['cf'];
+
+            // Find or create contact
+            $contact = FlowLu::searchContactByTaxCode($taxCode);
+            if ($contact === null) {
+                $name      = $this->extractName($owner['denominazione']);
+                $contactId = FlowLu::createContact($name, $taxCode);
+                Logger::log("FlowLu callback: created contact $contactId for $taxCode\n", 'flowlu_webhooks.txt');
+            } else {
+                $contactId = isset($contact['id']) ? (int) $contact['id'] : null;
+                Logger::log("FlowLu callback: found contact $contactId for $taxCode\n", 'flowlu_webhooks.txt');
+            }
+
+            if ($contactId) {
+                FlowLu::linkContactToLead($contactId, $leadId);
+            }
+
+            // Create Land Owners record list entry
+            if ($listId) {
+                $res = FlowLu::createLandOwnerRecord($listId, $leadId, $owner, $owner['foglio'], $owner['particella'], $owner['comune']);
+                Logger::log("FlowLu callback: created Land Owner record: " . json_encode($res) . "\n", 'flowlu_webhooks.txt');
+            }
+        }
+
+        // Move opportunity to Unassigned stage
+        $unassignedStage = (int) env('FLOWLU_UNASSIGNED_STAGE_ID', 49);
+        $res = FlowLu::updateLead($leadId, ['pipeline_stage_id' => $unassignedStage]);
+        Logger::log("FlowLu callback: updateLead $leadId response: " . json_encode($res) . "\n", 'flowlu_webhooks.txt');
+    }
+
+    private function extractName(string $denominazione): string
+    {
+        $name = preg_replace('/\s+(nato|nata)\s+.*/i', '', $denominazione);
+        $name = preg_replace('/\s+con\s+sede\s+.*/i', '', $name);
+        return trim($name);
     }
 }
 

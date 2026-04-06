@@ -13,10 +13,10 @@ require_once __DIR__ . '/constants.php';
 
 return [
 	
-	'openapi_it_key'           => '643a8732a6bdca67ac259004',
+	'openapi_it_key'           => '6994c21c40ca770007043e87',
 	'sanbbox_openapi_it_key'   => '6446e9e42a5a2958251a51f2',
 
-	'callback_base_url'        => 'https://ticiwe.com/callbacks',
+	'callback_base_url'        => env('CALLBACK_BASE_URL', 'https://ticiwe.com/callbacks'),
 		
 	'openapi_testing_mode'     => false, 
 	'mock_responses'		   => false, // *

@@ -19,23 +19,23 @@ if (!$acl_cache || is_file($acl_file) !== true) {
     $acl = new Acl();
 
     $acl
-    ->addRole('guest', -1)   
+    ->addRole('guest', 1)
 
     // ...
     //->setAsGuest('guest')
 
-    ->addRole('registered', 1)
+    ->addRole('registered', null)
     ->setAsRegistered('registered')
-    ->addInherit('guest') 
+    ->addInherit('guest')
     ->addResourcePermissions('ricerca', ['read', 'write'])
     //->addSpecialPermissions(['read_all', 'write_all'])
-    
 
-    ->addRole('admin', 50) 
+
+    ->addRole('admin', 2)
     ->addInherit('registered')
     ->addSpecialPermissions(['read_all', 'write_all'])
-    
-    ->addRole('superadmin', 10000)
+
+    ->addRole('superadmin', 3)
     ->addInherit('admin')
     ->addSpecialPermissions([
         'read_all', 
